@@ -6,30 +6,35 @@
 package semesterprojektf19.presentation;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 
 /**
  *
  * @author Benjamin Staugaard | Benz56
  */
 public class FXMLDocumentController implements Initializable {
-    
+
     @FXML
-    private Label label;
-    
+    private ListView<String> citizenListView;
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
-    
+    private ListView<MenuItem> menuListView;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+        menuListView.setItems(FXCollections.observableArrayList(Arrays.asList(new MenuItem("Home", "Face"), new MenuItem("Opret Notat", "Diary"))));
+        menuListView.setCellFactory(listview -> new ListCell<MenuItem>() {
+            @Override
+            protected void updateItem(final MenuItem menuItem, final boolean empty) {
+                super.updateItem(menuItem, empty);
+                setGraphic(!empty && menuItem != null ? menuItem.getItem() : null);
+            }
+        });
+    }
+
 }
