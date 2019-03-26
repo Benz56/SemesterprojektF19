@@ -1,8 +1,3 @@
-/* 
- * Developed by SDU OOP E18 SE/ST grp 21
- * Frederik Alexander Hounsvad, Andreas Kaer Lauritzen,  Patrick Nielsen, Oliver Lind Nordestgaard, Benjamin Eichler Staugaard
- * The use of this work is limited to educational purposes
- */
 package semesterprojektf19.persistence;
 
 import java.io.File;
