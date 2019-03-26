@@ -27,7 +27,7 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        menuListView.setItems(FXCollections.observableArrayList(Arrays.asList(new MenuItem("Home", "Face"), new MenuItem("Opret Notat", "Diary"))));
+        menuListView.setItems(FXCollections.observableArrayList(Arrays.asList(new MenuItem("Hjem", "Face"), new MenuItem("Opret Notat", "Diary"), new MenuItem("Sager", "Case"), new MenuItem("Admin", "Admin"))));
         menuListView.setCellFactory(listview -> new ListCell<MenuItem>() {
             @Override
             protected void updateItem(final MenuItem menuItem, final boolean empty) {
