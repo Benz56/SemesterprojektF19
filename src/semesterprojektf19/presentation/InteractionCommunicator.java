@@ -1,6 +1,5 @@
 package semesterprojektf19.presentation;
 
-import javafx.scene.input.MouseEvent;
 import semesterprojektf19.domain.InteractionHandler;
 import semesterprojektf19.domain.InteractionHandlerImpl;
 
