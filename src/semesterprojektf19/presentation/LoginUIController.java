@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author bemma
+ * @author Benjamin Staugaard | Benz56
  */
 public class LoginUIController implements Initializable {
 
