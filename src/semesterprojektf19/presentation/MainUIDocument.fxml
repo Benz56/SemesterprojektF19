@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" stylesheets="@css/MainUICSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="semesterprojektf19.presentation.MainUIController">
+   <children>
+      <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@resources/images/Logo.png" />
+         </image>
+      </ImageView>
+      <JFXListView fx:id="clientList" prefHeight="700.0" prefWidth="200.0" style="-fx-background-color: #E5E5E5;" styleClass="client-list-view" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="100.0" />
+      <HBox layoutX="200.0" prefHeight="100.0" prefWidth="1000.0" style="-fx-background-color: #E5E5E5;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <JFXButton fx:id="homeBtn" focusTraversable="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #FFFFFF;" text=".">
+               <graphic>
+                  <AnchorPane prefHeight="100.0" prefWidth="100.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="USER" layoutX="24.0" layoutY="57.0" size="50" />
+                        <Label layoutX="27.0" layoutY="69.0" text="Hjem">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="createCaseBtn" focusTraversable="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #E5E5E5;" text=".">
+               <graphic>
+                  <AnchorPane prefHeight="100.0" prefWidth="100.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="STICKY_NOTE" layoutX="20.0" layoutY="57.0" size="50" />
+                        <Label layoutX="7.0" layoutY="69.0" text="Opret Notat">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="casesBtn" focusTraversable="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #E5E5E5;" text=".">
+               <graphic>
+                  <AnchorPane prefHeight="100.0" prefWidth="100.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="ARCHIVE" layoutX="17.0" layoutY="57.0" size="50" />
+                        <Label layoutX="26.0" layoutY="69.0" text="Sager">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="adminBtn" focusTraversable="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #E5E5E5;" text=".">
+               <graphic>
+                  <AnchorPane prefHeight="100.0" prefWidth="100.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="USER_SECRET" layoutX="21.0" layoutY="57.0" size="50" />
+                        <Label layoutX="22.0" layoutY="69.0" text="Admin">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </graphic>
+            </JFXButton>
+         </children>
+      </HBox>
+      <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <AnchorPane fx:id="homePane" prefHeight="700.0" prefWidth="1000.0">
+               <children>
+                  <Label layoutX="50.0" layoutY="50.0" text="1" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="createNotePane" prefHeight="700.0" prefWidth="1000.0" visible="false">
+               <children>
+                  <Label layoutX="50.0" layoutY="50.0" text="2" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="casesPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
+               <children>
+                  <Label layoutX="50.0" layoutY="50.0" text="3" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="adminPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
+               <children>
+                  <Label layoutX="50.0" layoutY="50.0" text="4" />
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
+   </children>
+</AnchorPane>

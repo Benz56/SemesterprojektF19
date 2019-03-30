@@ -1,0 +1,18 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29-03-2019, 22:41:53
+    Author     : bemma
+*/
+
+* {
+    -fx-text-fill: #43A047;
+    -fx-prompt-text-fill: #BFBFBF;
+}
+
+.glyph-icon {
+    -fx-fill: -fx-text-fill;
+}
