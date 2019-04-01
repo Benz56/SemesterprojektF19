@@ -14,20 +14,20 @@ import java.util.ArrayList;
 public class Inquiry {
     private String shortInfo; 
     private String background;
-    private ArrayList services; 
-    private ArrayList offers;
+    private ArrayList<Services> selectedServices; 
+    private ArrayList<Offers> selectedOffers;
     private String origin;
     private boolean citizenAgreed;
 
     public Inquiry(String shortInfo) {
         this.shortInfo = shortInfo;
+        this.selectedServices = new ArrayList();
+        this.selectedOffers = new ArrayList();
     }
     
-    public Inquiry(String shortInfo, String background, ArrayList services, ArrayList offers, String origin, boolean citizenAgreed) {
-        this.shortInfo = shortInfo;
+    public Inquiry(String shortInfo, String background, String origin, boolean citizenAgreed) {
+        this(shortInfo);
         this.background = background;
-        this.services = services;
-        this.offers = offers;
         this.origin = origin;
         this.citizenAgreed = citizenAgreed;
     }
@@ -49,19 +49,19 @@ public class Inquiry {
     }
 
     public ArrayList getServices() {
-        return services;
+        return selectedServices;
     }
 
     public void setServices(ArrayList services) {
-        this.services = services;
+        this.selectedServices = services;
     }
 
     public ArrayList getOffers() {
-        return offers;
+        return selectedOffers;
     }
 
     public void setOffers(ArrayList offers) {
-        this.offers = offers;
+        this.selectedOffers = offers;
     }
 
     public String getOrigin() {
@@ -80,6 +80,16 @@ public class Inquiry {
         this.citizenAgreed = citizenAgreed;
     }
 
-    
-    
+    public void addService(Services service){
+        selectedServices.add(service);
+    }
+    public void removeService (Services service){
+        selectedServices.remove(service);
+    }
+    public void addOffer (Offers offer){
+        selectedOffers.add(offer);
+    }
+    public void removeOffer (Offers offer){
+        selectedOffers.remove(offer);
+    }
 }
