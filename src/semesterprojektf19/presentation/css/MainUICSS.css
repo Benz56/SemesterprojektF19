@@ -1,0 +1,36 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29-03-2019, 22:41:53
+    Author     : Benjamin Staugaard | Benz56
+*/
+
+* {
+    -fx-text-fill: #43A047;
+    -fx-prompt-text-fill: #BFBFBF;
+}
+
+.glyph-icon {
+    -fx-fill: -fx-text-fill;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: #FFFFFF;
+}
+
+.list-cell {
+    -fx-background-color: #E5E5E5;
+    -fx-font-weight: bold;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #FFFFFF;
+}
