@@ -18,13 +18,12 @@ public class Case {
     private Inquiry inquiry;
     private Elucidation elucidation;
 
-    public Case(String shortInfo) {
-        this.inquiry = new Inquiry(shortInfo);
+    public Case(Inquiry inquiry) {
+        this.inquiry = inquiry;
     }
     
-    public Elucidation startElucidation (String background){
+    public void startElucidation (String background){
         elucidation = new Elucidation(background);
-        return elucidation;
     }
 
     public String getGuardianship() {

@@ -15,4 +15,5 @@ public class Elucidation {
     public Elucidation(String background){
         this.inquiryBackground = background;
     }
+    
 }

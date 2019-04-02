@@ -6,6 +6,7 @@
 package semesterprojektf19.domain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,19 +15,17 @@ import java.util.ArrayList;
 public class Inquiry {
     private String shortInfo; 
     private String background;
-    private ArrayList<Services> selectedServices; 
-    private ArrayList<Offers> selectedOffers;
+    private List<Services> selectedServices = new ArrayList<>(); 
+    private List<Offers> selectedOffers = new ArrayList<>();
     private String origin;
     private boolean citizenAgreed;
 
     public Inquiry(String shortInfo) {
-        this.shortInfo = shortInfo;
-        this.selectedServices = new ArrayList();
-        this.selectedOffers = new ArrayList();
+        this(shortInfo, null, null, false);
     }
     
     public Inquiry(String shortInfo, String background, String origin, boolean citizenAgreed) {
-        this(shortInfo);
+        this.shortInfo = shortInfo;
         this.background = background;
         this.origin = origin;
         this.citizenAgreed = citizenAgreed;
@@ -48,7 +47,7 @@ public class Inquiry {
         this.background = background;
     }
 
-    public ArrayList getServices() {
+    public List<Services> getServices() {
         return selectedServices;
     }
 
@@ -56,7 +55,7 @@ public class Inquiry {
         this.selectedServices = services;
     }
 
-    public ArrayList getOffers() {
+    public List<Offers> getOffers() {
         return selectedOffers;
     }
 

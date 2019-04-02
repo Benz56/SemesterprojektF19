@@ -12,16 +12,20 @@ package semesterprojektf19.domain;
 public enum Services {
     HOUSING("midlertidigt ophold", "80");
     
-    private String offer; 
+    private String service; 
     private String paragraph;
 
     private Services (String offer, String paragraph) {
-        this.offer = offer;
+        this.service = offer;
         this.paragraph = paragraph;
     }
 
     public String getParagraph() {
         return paragraph;
+    }
+
+    public String getService() {
+        return service;
     }
     
 }
