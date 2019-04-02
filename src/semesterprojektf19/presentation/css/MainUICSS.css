@@ -13,10 +13,6 @@ and open the template in the editor.
     -fx-prompt-text-fill: #BFBFBF;
 }
 
-.root {
-    -fx-background-color: -fx-primary;
-}
-
 .glyph-icon {
     -fx-fill: -fx-text-fill;
 }
