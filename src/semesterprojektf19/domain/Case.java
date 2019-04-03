@@ -20,6 +20,7 @@ public class Case {
 
     public Case(Inquiry inquiry) {
         this.inquiry = inquiry;
+        Diary diary = new Diary(); // Kan fjernes hvis dagbogen skal oprettes et andet sted, men det skal bare tilhøre sagen.
     }
     
     public void startElucidation (String background){
