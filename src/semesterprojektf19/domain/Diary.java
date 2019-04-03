@@ -11,15 +11,22 @@ public class Diary {
         list = new ArrayList<>();
     }
     
+   
+    // TODO implementer at gemme i fil
+    // TODO implementer i UI.
+    
+    
     public static void main(String[] args) {
         
         Diary d1 = new Diary();
         
         DiaryNote n1 = new DiaryNote("En note her", 1);
         DiaryNote n2 = new DiaryNote("En anden note", 2);
+        DiaryNote n3 = new DiaryNote("En tredje note", 3);
         
         d1.list.add(n1);
         d1.list.add(n2);
+        d1.list.add(n3);
         
         System.out.println(d1.list.toString());
         
