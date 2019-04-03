@@ -6,7 +6,6 @@
 package semesterprojektf19.domain;
 
 import java.io.IOException;
-import java.util.List;
 import semesterprojektf19.persistence.Storage;
 import semesterprojektf19.persistence.StorageImpl;
 
@@ -21,34 +20,22 @@ public class InteractionHandlerImpl implements InteractionHandler {
 
     public InteractionHandlerImpl() {
         try {
-            this.dataAccess = new StorageImpl("storage");
+            dataAccess = new StorageImpl();
         } catch (IOException ex) {
         }
     }
 
     @Override
-    public List<String[]> start(String playerName) {
-        return null;
+    public boolean login(String username, String password) {
+        String[] tokens = dataAccess.authenticate(username, password);
+        if (tokens != null) {
+            // Sæt brugerens rolle som er tokens[2];
+        }
+        return tokens != null;
     }
 
     @Override
-    public List<String> getStoredHighscores() {
-        return null;
+    public boolean register(String username, String password, String firstName, String lastName) {
+        return dataAccess.register(username, password, Role.EMPLOYEE.toString(), firstName, lastName);
     }
-
-    @Override
-    public List<String[]> update(String keyPressed) {
-        return null;
-    }
-
-    @Override
-    public List<String[]> update(String clickedNode, int[] position) {
-        return null;
-    }
-
-    @Override
-    public int storeHighscore(int correctQuizAnswers) {
-        return 0;
-    }
-
 }

@@ -13,7 +13,11 @@ public class InteractionCommunicator {
 
     private final InteractionHandler interactionHandler = new InteractionHandlerImpl();
 
-    public void mouseClickedEvent() {
-        interactionHandler.start("");
+    public boolean login(String username, String password) {
+        return interactionHandler.login(username, password);
+    }
+
+    public boolean register(String username, String password, String firstName, String lastName) {
+        return interactionHandler.register(username, password, firstName, lastName);
     }
 }
