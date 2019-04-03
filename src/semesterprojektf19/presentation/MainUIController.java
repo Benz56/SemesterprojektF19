@@ -21,6 +21,8 @@ import javafx.scene.layout.AnchorPane;
  */
 public class MainUIController implements Initializable {
 
+    private final InteractionCommunicator interactionCommunicator;
+
     @FXML
     private JFXButton homeBtn, createCaseBtn, casesBtn, adminBtn;
     @FXML
@@ -31,6 +33,10 @@ public class MainUIController implements Initializable {
     private JFXListView<String> clientList;
 
     private JFXButton selectedBtn;
+
+    public MainUIController(InteractionCommunicator interactionCommunicator) {
+        this.interactionCommunicator = interactionCommunicator;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
