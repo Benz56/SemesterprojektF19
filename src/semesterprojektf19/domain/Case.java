@@ -17,6 +17,7 @@ public class Case {
     private String payingMunicipality; 
     private Inquiry inquiry;
     private Elucidation elucidation;
+    private Citizen citizen;
 
     public Case(Inquiry inquiry) {
         this.inquiry = inquiry;
