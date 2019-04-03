@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
@@ -42,11 +43,12 @@
                </StackPane.margin>
                <children>
                   <JFXTextField fx:id="firstnameTextField" focusColor="#43a047" labelFloat="true" layoutX="50.0" layoutY="30.0" prefHeight="25.0" prefWidth="140.0" promptText="Fornavn" unFocusColor="#bfbfbf" />
-                  <JFXButton fx:id="registerBtn" layoutX="50.0" layoutY="170.0" prefWidth="300.0" style="-fx-background-color: E5E5E5;" text="Register" />
                   <JFXTextField fx:id="lastnameTextField" focusColor="#43a047" labelFloat="true" layoutX="210.0" layoutY="30.0" prefHeight="25.0" prefWidth="140.0" promptText="Efternavn" unFocusColor="#bfbfbf" />
-                  <JFXTextField fx:id="emailTextField" focusColor="#43a047" labelFloat="true" layoutX="50.0" layoutY="75.0" prefHeight="25.0" prefWidth="300.0" promptText="Email Address" unFocusColor="#bfbfbf" />
-                  <JFXPasswordField fx:id="registerPasswordField" focusColor="#43a047" labelFloat="true" layoutX="50.0" layoutY="120.0" prefHeight="25.0" prefWidth="140.0" promptText="Adgangskode" unFocusColor="#bfbfbf" />
-                  <JFXPasswordField fx:id="confirmPasswordField" focusColor="#43a047" labelFloat="true" layoutX="210.0" layoutY="120.0" prefHeight="25.0" prefWidth="140.0" promptText="Bekræft adgangskode" unFocusColor="#bfbfbf" />
+                  <JFXTextField fx:id="registerUsernameTextField" focusColor="#43a047" labelFloat="true" layoutX="50.0" layoutY="85.0" prefHeight="25.0" prefWidth="140.0" promptText="Username" unFocusColor="#bfbfbf" />
+                  <JFXPasswordField fx:id="registerPasswordField" focusColor="#43a047" labelFloat="true" layoutX="210.0" layoutY="85.0" prefHeight="25.0" prefWidth="140.0" promptText="Adgangskode" unFocusColor="#bfbfbf" />
+                  <JFXPasswordField fx:id="confirmPasswordField" focusColor="#43a047" labelFloat="true" layoutX="50.0" layoutY="130.0" prefHeight="25.0" prefWidth="140.0" promptText="Bekræft adgangskode" unFocusColor="#bfbfbf" />
+                  <Label fx:id="registerLabel" focusTraversable="false" layoutX="210.0" layoutY="134.0" prefHeight="17.0" prefWidth="140.0" />
+                  <JFXButton fx:id="registerBtn" layoutX="50.0" layoutY="170.0" prefWidth="300.0" style="-fx-background-color: E5E5E5;" text="Register" />
                </children>
             </AnchorPane>
          </children>

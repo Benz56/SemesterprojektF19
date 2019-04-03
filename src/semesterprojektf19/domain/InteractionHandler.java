@@ -1,7 +1,5 @@
 package semesterprojektf19.domain;
 
-import java.util.List;
-
 /**
  *
  * Contract detailing methods needed for communication between the presentation
@@ -10,13 +8,7 @@ import java.util.List;
  */
 public interface InteractionHandler {
 
-    List<String[]> start(String playerName);
+    public boolean login(String username, String password);
 
-    List<String> getStoredHighscores();
-
-    List<String[]> update(String keyPressed);
-
-    List<String[]> update(String clickedNode, int[] position);
-
-    public int storeHighscore(int correctQuizAnswers);
+    boolean register(String username, String password, String firstName, String lastName);
 }
