@@ -11,10 +11,10 @@ public class DiaryNote {
     public DiaryNote(String note, int workerID) {
         this.note = note;
         this.workerID = workerID;
-        Date date = new Date();
+        this.date = new Date();
     }
-    
-        public void setNote(String note) {
+
+    public void setNote(String note) {
         this.note = note;
     }
 
@@ -33,5 +33,10 @@ public class DiaryNote {
     public void setDate(Date date) {
         this.date = date;
     }
-    
+
+    @Override
+    public String toString() {
+        return this.note + "\n" + " Note last edited on: " + this.date + " by: " + this.workerID + "\n";
+    }
+
 }
