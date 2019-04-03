@@ -12,26 +12,29 @@ import java.util.List;
  *
  * @author hala_
  */
-public class Citizen {
-    private String firstName; 
+public class Citizen implements Comparable<Citizen> {
+
+    private String firstName;
     private String lastName;
-    private int birthDateDDMMYY;
-    private final int controlNumber; 
+    private String birthDateDDMMYY;
+    private String controlNumber;
+    private String cpr;
     private int phoneNumber;
     private String address;
-    private List<Case> cases; 
+    private List<Case> cases;
 
-    public Citizen(String firstName, String lastName, int birthDateDDMMYY, int controlNumber, int phoneNumber, String address) {
+    public Citizen(String firstName, String lastName, String birthDateDDMMYY, String controlNumber, int phoneNumber, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDateDDMMYY = birthDateDDMMYY;
         this.controlNumber = controlNumber;
+        this.cpr = this.birthDateDDMMYY + "-" + controlNumber;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.cases = new ArrayList<>();
     }
-    
-    public void openCase (Inquiry inquiry){
+
+    public void openCase(Inquiry inquiry) {
         cases.add(new Case(inquiry));
     }
 
@@ -55,12 +58,8 @@ public class Citizen {
         this.lastName = lastName;
     }
 
-    public int getBirthDateDDMMYY() {
+    public String getBirthDateDDMMYY() {
         return birthDateDDMMYY;
-    }
-
-    public void setBirthDateDDMMYY(int birthDateDDMMYY) {
-        this.birthDateDDMMYY = birthDateDDMMYY;
     }
 
     public int getPhoneNumber() {
@@ -71,6 +70,11 @@ public class Citizen {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getCpr() {
+        return cpr;
+    }
+
+    
     public String getAddress() {
         return address;
     }
@@ -78,6 +82,26 @@ public class Citizen {
     public void setAddress(String address) {
         this.address = address;
     }
-    
-    
+
+    @Override
+    public int compareTo(Citizen o) {
+        int r = this.birthDateDDMMYY.compareTo(o.birthDateDDMMYY);
+        if (r == 0) {
+            r = this.lastName.compareTo(o.lastName);
+        }
+        if (r == 0) {
+            r = this.firstName.compareTo(o.firstName);
+        }
+        if (r == 0) {
+            r = Integer.compare(this.phoneNumber, o.phoneNumber);
+        }
+        return r;
+    }
+
+    public String toString() {
+        String output;
+        output = firstName + " " + lastName + "(Birthday: " + birthDateDDMMYY + ")\n";
+        return output;
+    }
+
 }
