@@ -7,13 +7,14 @@ public class DiaryNote {
     private String note;
     private int workerID; // Kan fjernes hvis det ikke passer med logning af systemet.
     private Date date;
-
+    
     public DiaryNote(String note, int workerID) {
         this.note = note;
         this.workerID = workerID;
         this.date = new Date();
-    }
 
+    }    
+    
     public void setNote(String note) {
         this.note = note;
     }

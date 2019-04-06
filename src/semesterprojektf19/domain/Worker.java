@@ -23,4 +23,5 @@ public class Worker extends Person {
         cases = new ArrayList<>();
     }
     
+    
 }

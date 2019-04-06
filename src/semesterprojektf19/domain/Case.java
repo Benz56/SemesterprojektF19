@@ -19,8 +19,8 @@ public class Case {
     private Elucidation elucidation;
 
     // Tilføjet Jacob
-    Diary diary;
-    private Worker worker;
+    private Diary diary;
+    private Worker worker; 
     private final String shortinfo = inquiry.getShortInfo();
     // Tilføjet Jacob
             
@@ -28,7 +28,6 @@ public class Case {
         this.inquiry = inquiry;
         this.diary = new Diary(); // Kan fjernes hvis dagbogen skal oprettes et andet sted, men det skal bare tilhøre sagen.
     }
-    
     
     
     public void startElucidation (String background){
