@@ -18,10 +18,18 @@ public class Case {
     private Inquiry inquiry;
     private Elucidation elucidation;
 
+    // Tilføjet Jacob
+    Diary diary;
+    private Worker worker;
+    private final String shortinfo = inquiry.getShortInfo();
+    // Tilføjet Jacob
+            
     public Case(Inquiry inquiry) {
         this.inquiry = inquiry;
-        Diary diary = new Diary(); // Kan fjernes hvis dagbogen skal oprettes et andet sted, men det skal bare tilhøre sagen.
+        this.diary = new Diary(); // Kan fjernes hvis dagbogen skal oprettes et andet sted, men det skal bare tilhøre sagen.
     }
+    
+    
     
     public void startElucidation (String background){
         elucidation = new Elucidation(background);
