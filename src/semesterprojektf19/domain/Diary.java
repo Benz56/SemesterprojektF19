@@ -12,10 +12,8 @@ public class Diary {
     }
     
     public void createNote(String note){
-        list.add(new DiaryNote(note, 0));
-        
+        list.add(new DiaryNote(note, 0)); 
         //TODO implementere worker firstname, lastname eller andet.
- 
     }
     
     public void editNote(int index,String note, int workerID){
