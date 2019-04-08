@@ -11,41 +11,41 @@ public class Diary {
         list = new ArrayList<>();
     }
     
-    public void createNote(){
-        //TODO implementer mig 
+    public void createNote(String note){
+        list.add(new DiaryNote(note, 0));
         
-        // noget i stil med:
-        // list.add(new DiaryNote(notat,arbejder navn))
-        // hvordan får vi arbejder navn??
+        //TODO implementere worker firstname, lastname eller andet.
+ 
     }
     
-    
-    
-    
-    
-    
+    public void editNote(int index,String note, int workerID){
+        DiaryNote diaryNote = list.get(index);
+        diaryNote.setNote(note,workerID);
+    }
     
     
     // TODO implementer at gemme i fil
     // TODO implementer i UI.
     
     
-//    public static void main(String[] args) {
-//        
-//        Diary d1 = new Diary();
-//        
-//        DiaryNote n1 = new DiaryNote("En note her", 1);
-//        DiaryNote n2 = new DiaryNote("En anden note", 2);
-//        DiaryNote n3 = new DiaryNote("En tredje note", 3);
-//        
-//        d1.list.add(n1);
-//        d1.list.add(n2);
-//        d1.list.add(n3);
-//        
-//        System.out.println(d1.list.toString());
-//        
-//        
-//    }
+    public static void main(String[] args) throws InterruptedException {
+        
+        Diary d1 = new Diary();
+        
+        d1.createNote("hej med dig");
+        d1.createNote("en anden besked");
+        System.out.println(d1.list.toString());
+        
+        Thread.sleep(1000);
+        d1.editNote(0, "ikke længere hej med dig",2);
+        System.out.println(d1.list.toString());
+        
+       
+        
+    
+        
+        
+    }
     
     
     

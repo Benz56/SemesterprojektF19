@@ -15,8 +15,10 @@ public class DiaryNote {
 
     }    
     
-    public void setNote(String note) {
+    public void setNote(String note, int workerID) {
         this.note = note;
+        this.date = new Date();
+        this.workerID = workerID;
     }
 
     public int getWorkerID() {
@@ -31,9 +33,6 @@ public class DiaryNote {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     @Override
     public String toString() {
