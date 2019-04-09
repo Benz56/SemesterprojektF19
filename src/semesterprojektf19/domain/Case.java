@@ -1,10 +1,12 @@
 package semesterprojektf19.domain;
 
+import java.io.Serializable;
+
 /**
  *
  * @author sofielouise & hala
  */
-public class Case {
+public class Case implements Serializable {
     private String guardianship;
     private String representation;
     private boolean rightToRepresentation;
@@ -17,12 +19,8 @@ public class Case {
     private String payingMunicipality; 
     private Inquiry inquiry;
     private Elucidation elucidation;
-
-    // Tilføjet Jacob
     private Diary diary;
-    private Worker worker; 
-    private final String shortinfo = inquiry.getShortInfo();
-    // Tilføjet Jacob
+
             
     public Case(Inquiry inquiry) {
         this.inquiry = inquiry;
