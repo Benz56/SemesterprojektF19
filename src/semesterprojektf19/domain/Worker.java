@@ -7,6 +7,7 @@ package semesterprojektf19.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -15,18 +16,15 @@ import java.util.List;
 public class Worker extends Person {
 
     // TODO implementer rolle.
-    
     private List<Case> cases;
-    
-    public Worker(String firstName, String lastName, int phoneNumber, String address) {
-        super(firstName, lastName, phoneNumber, address);
+
+    public Worker(UUID uuid, String firstName, String lastName, int phoneNumber, String address) {
+        super(uuid, firstName, lastName, phoneNumber, address, Role.EMPLOYEE);
         cases = new ArrayList<>();
     }
-    
+  
     public Case addCase(Case case1){
         cases.add(case1);
         return case1;
     }
-    
-    
 }
