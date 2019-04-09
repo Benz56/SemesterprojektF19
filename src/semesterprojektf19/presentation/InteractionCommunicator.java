@@ -21,7 +21,9 @@ public class InteractionCommunicator {
         return interactionHandler.register(username, password, firstName, lastName);
     }
     
-    public void addCitizen(String firstName, String lastName, String birthday, String controlNumber, int phoneNumber, String address){
-        interactionHandler.addCitizen(firstName, lastName, birthday, controlNumber, phoneNumber, address);
+    public void createCase(String firstName, String lastName, String birthday, 
+            String controlNumber, int phoneNumber, String address, String shortInfo){
+        interactionHandler.createCase(firstName, lastName, birthday, controlNumber, 
+                phoneNumber, address, shortInfo);
     }
 }

@@ -12,5 +12,5 @@ public interface InteractionHandler {
 
     boolean register(String username, String password, String firstName, String lastName);
     
-    void addCitizen(String firstName, String lastName, String birthday, String controlNumber, int phoneNumber, String address); 
+    void createCase(String firstName, String lastName, String birthday, String controlNumber, int phoneNumber, String address, String shortInfo);
 }

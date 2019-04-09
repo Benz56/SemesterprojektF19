@@ -8,6 +8,8 @@ package semesterprojektf19.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
@@ -15,18 +17,19 @@ import java.util.List;
  */
 public class CitizenManager implements Serializable {
 
-    private List<Citizen> citizens;
+    private Map<String, Citizen> citizensMap;
 
     public CitizenManager() {
-        citizens = new ArrayList<>();
+        citizensMap = new TreeMap<>();
     }
 
-    public void createCitizen(Citizen citizen) {
-        citizens.add(citizen);
+    public Citizen createCitizen(Citizen citizen) {
+        citizensMap.putIfAbsent(citizen.getCpr(), citizen);
+        return citizensMap.get(citizen.getCpr());
     }
 
     public void removeCitizen(Citizen citizen) {
-        citizens.remove(citizen);
+        citizensMap.remove(citizen.getCpr());
     }
 
     /**
@@ -50,10 +53,10 @@ public class CitizenManager implements Serializable {
         return citizensResult;
     }
 
-    public List<Citizen> searchCitizensByBirthday(String birthDateDDMMYY) {
+    public List<Citizen> searchCitizensByBirthday(String birthday) {
         List<Citizen> citizensWithSameBirthday = new ArrayList<>();
-        for (Citizen citizen : citizens) {
-            if (citizen.getBirthday().equals(birthDateDDMMYY)) {
+        for (Citizen citizen : citizensMap.values()) {
+            if (citizen.getBirthday().equals(birthday)) {
                 citizensWithSameBirthday.add(citizen);
             }
         }
@@ -62,21 +65,21 @@ public class CitizenManager implements Serializable {
 
     public List<Citizen> searchCitizensByName(String name) {
         List<Citizen> citizensWithSameName = new ArrayList<>();
-        for (Citizen citizen : citizens) {
+        for (Citizen citizen : citizensMap.values()) {
             if (name.contains(citizen.getLastName()) || name.contains(citizen.getFirstName())) {
                 citizensWithSameName.add(citizen);
             }
         }
         return citizensWithSameName;
     }
-
-    public List<Citizen> getCitizens() {
-        return citizens;
+    
+    public Map<String, Citizen> getCitizens() {
+        return citizensMap;
     }
 
-    public boolean isCitizenCreated(String cprNumber) {
-        for (Citizen citizen : citizens) {
-            if (citizen.getCpr().equals(cprNumber)) {
+    public boolean isCitizenCreated(String birthday, String controlNumber) {
+        for (Citizen citizen : citizensMap.values()) {
+            if (citizen.getBirthday().equals(birthday) && citizen.getControlNumber().equals(controlNumber)) {
                 return true;
             }
         }

@@ -23,5 +23,10 @@ public class Worker extends Person {
         cases = new ArrayList<>();
     }
     
+    public Case addCase(Case case1){
+        cases.add(case1);
+        return case1;
+    }
+    
     
 }

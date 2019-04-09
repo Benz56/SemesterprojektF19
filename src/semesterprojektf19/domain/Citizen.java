@@ -29,14 +29,14 @@ public class Citizen implements Comparable<Citizen>, Serializable {
         this.lastName = lastName;
         this.birthday = birthday;
         this.controlNumber = controlNumber;
-        this.cpr = this.birthday + "-" + controlNumber;
+        this.cpr = this.birthday + controlNumber;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.cases = new ArrayList<>();
     }
 
-    public void openCase(Inquiry inquiry) {
-        cases.add(new Case(inquiry));
+    public void addCase(Case case1) {
+        cases.add(case1);
     }
 
     public List<Case> getCases() {
@@ -62,17 +62,21 @@ public class Citizen implements Comparable<Citizen>, Serializable {
     public String getBirthday() {
         return birthday;
     }
-
+    
+    public String getControlNumber() {
+        return controlNumber;
+    }
+    
+    public String getCpr() {
+        return cpr;
+    }
+    
     public int getPhoneNumber() {
         return phoneNumber;
     }
 
     public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getCpr() {
-        return cpr;
     }
 
     public String getAddress() {
@@ -98,10 +102,10 @@ public class Citizen implements Comparable<Citizen>, Serializable {
         return r;
     }
 
+    @Override
     public String toString() {
         String output;
         output = firstName + " " + lastName + "(Birthday: " + birthday + ")\n";
         return output;
     }
-
 }
