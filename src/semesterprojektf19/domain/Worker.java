@@ -22,5 +22,9 @@ public class Worker extends Person {
         super(uuid, firstName, lastName, phoneNumber, address, Role.EMPLOYEE);
         cases = new ArrayList<>();
     }
-
+  
+    public Case addCase(Case case1){
+        cases.add(case1);
+        return case1;
+    }
 }

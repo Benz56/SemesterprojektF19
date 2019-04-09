@@ -18,6 +18,7 @@ import semesterprojektf19.persistence.StorageImpl;
 public class InteractionHandlerImpl implements InteractionHandler {
 
     private Storage dataAccess;
+    private CitizenManager citizens;
     private Person person;
 
     public InteractionHandlerImpl() {
@@ -25,6 +26,7 @@ public class InteractionHandlerImpl implements InteractionHandler {
             dataAccess = new StorageImpl();
         } catch (IOException ex) {
         }
+        citizens = new CitizenManager();
     }
 
     @Override
@@ -52,5 +54,11 @@ public class InteractionHandlerImpl implements InteractionHandler {
         return dataAccess.register(username, password, person.getUuid(), person);
     }
 
-    
+    @Override
+    public void createCase(String firstName, String lastName, String birthday, String controlNumber, int phoneNumber, String address, String shortInfo) {
+        Citizen citizen = citizens.createCitizen(new Citizen(firstName, lastName, birthday, controlNumber, phoneNumber, address));
+        Case case1 = new Case(new Inquiry(shortInfo));
+        citizen.addCase(case1);
+        //tilføj sag til aktuel sagsbehandlers liste
+    }
 }

@@ -5,6 +5,7 @@
  */
 package semesterprojektf19.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  *
  * @author hala_ & Soffi
  */
-public class Inquiry {
+public class Inquiry implements Serializable{
     private String shortInfo; 
     private String background;
     private List<Services> selectedServices = new ArrayList<>(); 

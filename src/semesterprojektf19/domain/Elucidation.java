@@ -5,11 +5,13 @@
  */
 package semesterprojektf19.domain;
 
+import java.io.Serializable;
+
 /**
  *
  * @author hala_ & Soffi
  */
-public class Elucidation {
+public class Elucidation implements Serializable{
     private String inquiryBackground;
     
     public Elucidation(String background){
