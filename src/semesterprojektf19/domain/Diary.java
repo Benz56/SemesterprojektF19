@@ -1,6 +1,7 @@
 package semesterprojektf19.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Diary {
@@ -12,13 +13,15 @@ public class Diary {
     }
     
     public void createNote(String note){
-        list.add(new DiaryNote(note, 0)); 
+        list.add(new DiaryNote(note)); 
         //TODO implementere worker firstname, lastname eller andet.
     }
     
-    public void editNote(int index,String note, int workerID){
+    public void editNote(int index,String note){
         DiaryNote diaryNote = list.get(index);
-        diaryNote.setNote(note,workerID);
+        diaryNote.setNote(note);
+        Date tempDate = diaryNote.getDate();
+        diaryNote.setDate(tempDate = new Date());
     }
     
     
@@ -35,14 +38,8 @@ public class Diary {
         System.out.println(d1.list.toString());
         
         Thread.sleep(1000);
-        d1.editNote(0, "ikke længere hej med dig",2);
-        System.out.println(d1.list.toString());
-        
-       
-        
-    
-        
-        
+        d1.editNote(0,"ikke længere hej med dig");
+        System.out.println(d1.list.toString());   
     }
     
     
