@@ -5,6 +5,7 @@
  */
 package semesterprojektf19.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  *
  * @author hala_
  */
-public class Citizen implements Comparable<Citizen> {
+public class Citizen implements Comparable<Citizen>, Serializable {
 
     private String firstName;
     private String lastName;
