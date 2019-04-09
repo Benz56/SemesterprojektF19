@@ -17,6 +17,7 @@ import semesterprojektf19.persistence.StorageImpl;
 public class InteractionHandlerImpl implements InteractionHandler {
 
     private Storage dataAccess;
+    private Person person;
 
     public InteractionHandlerImpl() {
         try {
@@ -29,6 +30,16 @@ public class InteractionHandlerImpl implements InteractionHandler {
     public boolean login(String username, String password) {
         String[] tokens = dataAccess.authenticate(username, password);
         if (tokens != null) {
+            Role role = Role.valueOf(tokens[3]);
+            switch(role){
+                case EMPLOYEE:
+                    break;
+                case ADMIN:
+                    break;
+                default:
+                    throw new AssertionError(role.name());
+                
+            }
             // Sæt brugerens rolle som er tokens[2];
         }
         return tokens != null;
@@ -38,4 +49,6 @@ public class InteractionHandlerImpl implements InteractionHandler {
     public boolean register(String username, String password, String firstName, String lastName) {
         return dataAccess.register(username, password, Role.EMPLOYEE.toString(), firstName, lastName);
     }
+
+    
 }
