@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXButton;
@@ -20,11 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Benjamin Staugaard | Benz56
- */
 public class LoginUIController implements Initializable {
 
     /**
@@ -39,9 +29,7 @@ public class LoginUIController implements Initializable {
     private boolean isLoginMenu = true;
 
     @FXML
-    private AnchorPane loginPane;
-    @FXML
-    private AnchorPane registerPane;
+    private AnchorPane loginPane, registerPane;
     @FXML
     private JFXButton loginMenuBtn, registerMenuBtn, loginBtn, registerBtn, forgotPasswordBtn;
     @FXML

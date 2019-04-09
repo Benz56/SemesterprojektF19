@@ -3,10 +3,8 @@ package semesterprojektf19.persistence;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -14,11 +12,6 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * A class to store and load strings delimited by '\n'
- *
- */
 public class StorageImpl implements Storage {
 
     private final Map<FileType, File> files = new HashMap<>();

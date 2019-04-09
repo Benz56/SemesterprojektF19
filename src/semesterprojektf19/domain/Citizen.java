@@ -1,25 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author hala_
- */
 public class Citizen implements Comparable<Citizen>, Serializable {
 
-    private String firstName;
-    private String lastName;
-    private String birthday;
-    private String controlNumber;
-    private String cpr;
+    private String firstName, lastName, birthday, controlNumber, cpr;
     private int phoneNumber;
     private String address;
     private List<Case> cases;
@@ -62,15 +49,15 @@ public class Citizen implements Comparable<Citizen>, Serializable {
     public String getBirthday() {
         return birthday;
     }
-    
+
     public String getControlNumber() {
         return controlNumber;
     }
-    
+
     public String getCpr() {
         return cpr;
     }
-    
+
     public int getPhoneNumber() {
         return phoneNumber;
     }

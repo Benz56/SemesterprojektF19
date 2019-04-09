@@ -1,24 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.domain;
 
 import java.io.Serializable;
 import java.util.UUID;
 
-/**
- *
- * @author Glumby
- */
 public class Person implements Serializable {
 
     private final UUID uuid;
-    private String firstName;
-    private String lastName;
+    private String firstName, lastName, address;
     private int phoneNumber;
-    private String address;
     private Role role;
 
     public Person(UUID uuid, String firstName, String lastName, int phoneNumber, String address, Role role) {
@@ -33,7 +22,7 @@ public class Person implements Serializable {
     public UUID getUuid() {
         return uuid;
     }
-    
+
     public String getFirstName() {
         return firstName;
     }
@@ -74,5 +63,4 @@ public class Person implements Serializable {
         this.role = role;
     }
 
-    
 }

@@ -2,33 +2,20 @@ package semesterprojektf19.domain;
 
 import java.io.Serializable;
 
-/**
- *
- * @author sofielouise & hala
- */
 public class Case implements Serializable {
-    private String guardianship;
-    private String representation;
-    private boolean rightToRepresentation;
-    private boolean informedOnElectronicInfo;
-    private String agreementsAboutFurtherProcess;
-    private boolean consentRelevant; 
-    private boolean consentObtained; 
-    private String specialCircumstances;
-    private String executingMunicipality;
-    private String payingMunicipality; 
+
+    private String guardianship, representation, agreementsAboutFurtherProcess, specialCircumstances, executingMunicipality, payingMunicipality;
+    private boolean rightToRepresentation, informedOnElectronicInfo, consentRelevant, consentObtained;
     private Inquiry inquiry;
     private Elucidation elucidation;
     private Diary diary;
 
-            
     public Case(Inquiry inquiry) {
         this.inquiry = inquiry;
         this.diary = new Diary(); // Kan fjernes hvis dagbogen skal oprettes et andet sted, men det skal bare tilhøre sagen.
     }
-    
-    
-    public void startElucidation (String background){
+
+    public void startElucidation(String background) {
         elucidation = new Elucidation(background);
     }
 
@@ -127,7 +114,5 @@ public class Case implements Serializable {
     public void setElucidation(Elucidation elucidation) {
         this.elucidation = elucidation;
     }
-    
-    
-    
+
 }

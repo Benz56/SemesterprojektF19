@@ -1,18 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.domain;
 
-/**
- *
- * @author hala_ & Soffi
- */
 public class TargetArea {
-    private String informationFromCitizen;
-    private String informationFromOthers;
-    private String comments;
+
+    private String informationFromCitizen, informationFromOthers, comments;
     private int functionalAbility;
 
     public TargetArea(String informationFromCitizen, String informationFromOthers, String comments, int functionalAbility) {
@@ -53,7 +43,5 @@ public class TargetArea {
     public void setFunctionalAbility(int functionalAbility) {
         this.functionalAbility = functionalAbility;
     }
-    
-    
-    
+
 }
