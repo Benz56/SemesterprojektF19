@@ -17,19 +17,19 @@ public class Citizen implements Comparable<Citizen>, Serializable {
 
     private String firstName;
     private String lastName;
-    private String birthDateDDMMYY;
+    private String birthday;
     private String controlNumber;
     private String cpr;
     private int phoneNumber;
     private String address;
     private List<Case> cases;
 
-    public Citizen(String firstName, String lastName, String birthDateDDMMYY, String controlNumber, int phoneNumber, String address) {
+    public Citizen(String firstName, String lastName, String birthday, String controlNumber, int phoneNumber, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthDateDDMMYY = birthDateDDMMYY;
+        this.birthday = birthday;
         this.controlNumber = controlNumber;
-        this.cpr = this.birthDateDDMMYY + "-" + controlNumber;
+        this.cpr = this.birthday + "-" + controlNumber;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.cases = new ArrayList<>();
@@ -59,8 +59,8 @@ public class Citizen implements Comparable<Citizen>, Serializable {
         this.lastName = lastName;
     }
 
-    public String getBirthDateDDMMYY() {
-        return birthDateDDMMYY;
+    public String getBirthday() {
+        return birthday;
     }
 
     public int getPhoneNumber() {
@@ -75,7 +75,6 @@ public class Citizen implements Comparable<Citizen>, Serializable {
         return cpr;
     }
 
-    
     public String getAddress() {
         return address;
     }
@@ -86,7 +85,7 @@ public class Citizen implements Comparable<Citizen>, Serializable {
 
     @Override
     public int compareTo(Citizen o) {
-        int r = this.birthDateDDMMYY.compareTo(o.birthDateDDMMYY);
+        int r = this.birthday.compareTo(o.birthday);
         if (r == 0) {
             r = this.lastName.compareTo(o.lastName);
         }
@@ -101,7 +100,7 @@ public class Citizen implements Comparable<Citizen>, Serializable {
 
     public String toString() {
         String output;
-        output = firstName + " " + lastName + "(Birthday: " + birthDateDDMMYY + ")\n";
+        output = firstName + " " + lastName + "(Birthday: " + birthday + ")\n";
         return output;
     }
 

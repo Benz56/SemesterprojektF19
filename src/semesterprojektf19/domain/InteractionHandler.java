@@ -8,7 +8,9 @@ package semesterprojektf19.domain;
  */
 public interface InteractionHandler {
 
-    public boolean login(String username, String password);
+    boolean login(String username, String password);
 
     boolean register(String username, String password, String firstName, String lastName);
+    
+    void addCitizen(String firstName, String lastName, String birthday, String controlNumber, int phoneNumber, String address); 
 }

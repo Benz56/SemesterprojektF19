@@ -17,12 +17,14 @@ import semesterprojektf19.persistence.StorageImpl;
 public class InteractionHandlerImpl implements InteractionHandler {
 
     private Storage dataAccess;
+    private CitizenManager citzens;
 
     public InteractionHandlerImpl() {
         try {
             dataAccess = new StorageImpl();
         } catch (IOException ex) {
         }
+        citzens = new CitizenManager();
     }
 
     @Override
@@ -37,5 +39,11 @@ public class InteractionHandlerImpl implements InteractionHandler {
     @Override
     public boolean register(String username, String password, String firstName, String lastName) {
         return dataAccess.register(username, password, Role.EMPLOYEE.toString(), firstName, lastName);
+    }
+
+    @Override
+    public void addCitizen(String firstName, String lastName, String birthday, String controlNumber, int phoneNumber, String address) {
+        citzens.createCitizen(new Citizen(firstName, lastName, birthday, controlNumber, phoneNumber, address));
+        // gem borger i datalaget
     }
 }

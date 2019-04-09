@@ -20,4 +20,8 @@ public class InteractionCommunicator {
     public boolean register(String username, String password, String firstName, String lastName) {
         return interactionHandler.register(username, password, firstName, lastName);
     }
+    
+    public void addCitizen(String firstName, String lastName, String birthday, String controlNumber, int phoneNumber, String address){
+        interactionHandler.addCitizen(firstName, lastName, birthday, controlNumber, phoneNumber, address);
+    }
 }

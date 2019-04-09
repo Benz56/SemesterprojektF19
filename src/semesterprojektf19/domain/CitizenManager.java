@@ -53,7 +53,7 @@ public class CitizenManager implements Serializable {
     public List<Citizen> searchCitizensByBirthday(String birthDateDDMMYY) {
         List<Citizen> citizensWithSameBirthday = new ArrayList<>();
         for (Citizen citizen : citizens) {
-            if (citizen.getBirthDateDDMMYY().equals(birthDateDDMMYY)) {
+            if (citizen.getBirthday().equals(birthDateDDMMYY)) {
                 citizensWithSameBirthday.add(citizen);
             }
         }
