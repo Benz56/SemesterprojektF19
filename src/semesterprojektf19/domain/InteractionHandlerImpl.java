@@ -1,8 +1,3 @@
-/* 
- * Developed by SDU OOP E18 SE/ST grp 21
- * Frederik Alexander Hounsvad, Andreas Kaer Lauritzen,  Patrick Nielsen, Oliver Lind Nordestgaard, Benjamin Eichler Staugaard
- * The use of this work is limited to educational purposes
- */
 package semesterprojektf19.domain;
 
 import java.io.IOException;
@@ -10,11 +5,6 @@ import java.util.UUID;
 import semesterprojektf19.persistence.Storage;
 import semesterprojektf19.persistence.StorageImpl;
 
-/**
- *
- * A handler for the domain layer of world of safety
- *
- */
 public class InteractionHandlerImpl implements InteractionHandler {
 
     private Storage dataAccess;
@@ -34,14 +24,14 @@ public class InteractionHandlerImpl implements InteractionHandler {
         String[] tokens = dataAccess.authenticate(username, password);
         if (tokens != null) {
             Role role = Role.valueOf(tokens[3]);
-            switch(role){
+            switch (role) {
                 case EMPLOYEE:
                     break;
                 case ADMIN:
                     break;
                 default:
                     throw new AssertionError(role.name());
-                
+
             }
             // Sæt brugerens rolle som er tokens[2];
         }
@@ -59,6 +49,6 @@ public class InteractionHandlerImpl implements InteractionHandler {
         Citizen citizen = citizens.createCitizen(new Citizen(firstName, lastName, birthday, controlNumber, phoneNumber, address));
         Case case1 = new Case(new Inquiry(shortInfo));
         citizen.addCase(case1);
-        //tilføj sag til aktuel sagsbehandlers liste
+        // Tilføj sag til aktuel sagsbehandlers liste
     }
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXButton;
@@ -15,10 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 
-/**
- *
- * @author Benjamin Staugaard | Benz56
- */
 public class MainUIController implements Initializable {
 
     private final InteractionCommunicator interactionCommunicator;

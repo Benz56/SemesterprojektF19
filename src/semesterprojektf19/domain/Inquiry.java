@@ -1,30 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author hala_ & Soffi
- */
-public class Inquiry implements Serializable{
-    private String shortInfo; 
-    private String background;
-    private List<Services> selectedServices = new ArrayList<>(); 
+public class Inquiry implements Serializable {
+
+    private String shortInfo, background, origin;
+    private List<Services> selectedServices = new ArrayList<>();
     private List<Offers> selectedOffers = new ArrayList<>();
-    private String origin;
     private boolean citizenAgreed;
 
     public Inquiry(String shortInfo) {
         this(shortInfo, null, null, false);
     }
-    
+
     public Inquiry(String shortInfo, String background, String origin, boolean citizenAgreed) {
         this.shortInfo = shortInfo;
         this.background = background;
@@ -80,16 +70,19 @@ public class Inquiry implements Serializable{
         this.citizenAgreed = citizenAgreed;
     }
 
-    public void addService(Services service){
+    public void addService(Services service) {
         selectedServices.add(service);
     }
-    public void removeService (Services service){
+
+    public void removeService(Services service) {
         selectedServices.remove(service);
     }
-    public void addOffer (Offers offer){
+
+    public void addOffer(Offers offer) {
         selectedOffers.add(offer);
     }
-    public void removeOffer (Offers offer){
+
+    public void removeOffer(Offers offer) {
         selectedOffers.remove(offer);
     }
 }
