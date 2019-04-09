@@ -21,21 +21,11 @@ public class InteractionHandlerImpl implements InteractionHandler {
 
     @Override
     public boolean login(String username, String password) {
-        String[] tokens = dataAccess.authenticate(username, password);
-        if (tokens != null) {
-            Role role = Role.valueOf(tokens[3]);
-            switch (role) {
-                case EMPLOYEE:
-                    break;
-                case ADMIN:
-                    break;
-                default:
-                    throw new AssertionError(role.name());
-
-            }
-            // Sæt brugerens rolle som er tokens[2];
+        Object person = dataAccess.authenticate(username, password);
+        if (person != null) {
+            this.person = person instanceof Worker ? (Worker) person : (Admin) person;
         }
-        return tokens != null;
+        return person != null;
     }
 
     @Override
