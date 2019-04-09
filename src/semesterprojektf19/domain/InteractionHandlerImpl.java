@@ -6,6 +6,7 @@
 package semesterprojektf19.domain;
 
 import java.io.IOException;
+import java.util.UUID;
 import semesterprojektf19.persistence.Storage;
 import semesterprojektf19.persistence.StorageImpl;
 
@@ -36,6 +37,7 @@ public class InteractionHandlerImpl implements InteractionHandler {
 
     @Override
     public boolean register(String username, String password, String firstName, String lastName) {
-        return dataAccess.register(username, password, Role.EMPLOYEE.toString(), firstName, lastName);
+        Person person = new Person(UUID.randomUUID(), firstName, lastName, 0, "", Role.EMPLOYEE);
+        return dataAccess.register(username, password, person.getUuid(), person);
     }
 }

@@ -1,5 +1,7 @@
 package semesterprojektf19.persistence;
 
+import java.util.UUID;
+
 /**
  *
  * An interface to contract the methods for storing the highscore
@@ -7,7 +9,7 @@ package semesterprojektf19.persistence;
  */
 public interface Storage {
 
-    String[] authenticate(String username, String password);
+    Object authenticate(String username, String password);
 
-    public boolean register(String username, String password, String role, String firstName, String lastName);
+    public boolean register(String username, String password, UUID uuid, Object person);
 }
