@@ -13,6 +13,7 @@ public class EGBoosted extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("presentation/LoginUIDocument.fxml"));
 
         Scene scene = new Scene(root);
+        stage.setResizable(false);
 
         stage.setScene(scene);
         stage.show();
