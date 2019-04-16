@@ -29,6 +29,7 @@ public enum Persistence {
 
     private Persistence() {
         new File("persons").mkdirs();
+        new File("citizens").mkdirs();
         for (FileType fileType : FileType.values()) {
             File file = new File("./", fileType.getFileName());
             if (!file.exists()) {

@@ -1,5 +1,7 @@
 package semesterprojektf19.domain;
 
+import java.util.Arrays;
+import java.util.List;
 import semesterprojektf19.domain.accesscontrol.Role;
 import java.util.UUID;
 import semesterprojektf19.persistence.Persistence;
@@ -14,9 +16,12 @@ public class LoginFacadeImpl implements LoginFacade {
     }
 
     @Override
-    public boolean login(String username, String password) {
+    public List<String> login(String username, String password) {
         Object person = Persistence.INSTANCE.authenticate(username, password);
-        return (this.person = person != null ? (Person) person : null) != null;
+        this.person = person != null ? (Person) person : null;
+        if (this.person != null) {
+            return Arrays.asList(this.person.getFirstName() + " " + this.person.getLastName()); //Her skal tilføjes bogsted og fagområder.
+        } else return null;
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +24,7 @@ public class LoginUIController implements Initializable {
      * An instance of the InteractionCommunicator used to communicate the events
      * received from the various listeners in this controller.
      */
-    private final LoginFacade loginController = new LoginFacadeImpl();
+    private final LoginFacade loginFacade = new LoginFacadeImpl();
 
     /**
      * Determines whether the logon menu is selected or the register menu.
@@ -49,10 +50,12 @@ public class LoginUIController implements Initializable {
         loginMenuBtn.setOnAction(event -> togglePane(true));
         registerMenuBtn.setOnAction(event -> togglePane(false));
         loginBtn.setOnAction(event -> {
-            if (loginController.login(usernameTextField.getText(), loginPasswordField.getText())) {
+            List<String> userDetails = loginFacade.login(usernameTextField.getText(), loginPasswordField.getText());
+            if (userDetails != null) {
                 ((Stage) loginBtn.getScene().getWindow()).close();
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("MainUIDocument.fxml"));
+                    loader.setControllerFactory(controllerFactory -> new MainUIController(userDetails));
                     Stage stage = new Stage();
                     stage.setScene(new Scene(loader.load()));
                     stage.show();
@@ -68,7 +71,7 @@ public class LoginUIController implements Initializable {
         registerBtn.setOnAction(event -> {
             if (!registerUsernameTextField.getText().isEmpty() && !registerPasswordField.getText().isEmpty() && !firstnameTextField.getText().isEmpty() && !lastnameTextField.getText().isEmpty()) {
                 if (registerPasswordField.getText().equals(confirmPasswordField.getText())) {
-                    if (loginController.register(registerUsernameTextField.getText(), registerPasswordField.getText(), firstnameTextField.getText(), lastnameTextField.getText())) {
+                    if (loginFacade.register(registerUsernameTextField.getText(), registerPasswordField.getText(), firstnameTextField.getText(), lastnameTextField.getText())) {
                         Arrays.asList(registerUsernameTextField, firstnameTextField, lastnameTextField).forEach(field -> field.clear());
                         Arrays.asList(registerPasswordField, confirmPasswordField).forEach(field -> field.clear());
                         togglePane(true);
