@@ -12,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 
 public class MainUIController implements Initializable {
 
-    private final InteractionCommunicator interactionCommunicator;
+    //En instans af et modul i domænelaget mangler her. (Ligesom i Login)
 
     @FXML
     private JFXButton homeBtn, createCaseBtn, casesBtn, adminBtn;
@@ -24,10 +24,6 @@ public class MainUIController implements Initializable {
     private JFXListView<String> clientList;
 
     private JFXButton selectedBtn;
-
-    public MainUIController(InteractionCommunicator interactionCommunicator) {
-        this.interactionCommunicator = interactionCommunicator;
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
