@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class Diary implements Serializable {
 
@@ -17,7 +18,6 @@ public class Diary implements Serializable {
 
     public void createNote(Person person, String note) {
         list.add(new DiaryNote(person, note));
-        //TODO implementere worker firstname, lastname eller andet.
     }
 
     public void editNote(int index, Person person, String note) {
@@ -27,8 +27,20 @@ public class Diary implements Serializable {
         diaryNote.setDate(tempDate = new Date());
         Person tempPerson = diaryNote.getCreator();
         diaryNote.setCreator(tempPerson = editor);
+        diaryNote.addNoteVersion(diaryNote);
+    }
+    
+    // Spaghetti kode, ved ikke om det vil virke i praksis. 
+    public List<DiaryNote> searchTopic(Topic topic) {
+        List<DiaryNote> searchResult = new ArrayList<>();
+        for (DiaryNote diaryNote : list) {
+            for (int i = 0; i < diaryNote.getTopicList().size(); i++) {
+                if (diaryNote.getTopic(i) == topic) {
+                    searchResult.add(diaryNote);
+                }
+            }
+        }
+        return searchResult;
     }
 
-    // TODO implementer at gemme i fil
-    // TODO implementer i UI.
 }
