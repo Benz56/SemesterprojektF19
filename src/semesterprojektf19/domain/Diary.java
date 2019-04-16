@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public class Diary implements Serializable {
 
@@ -35,14 +34,12 @@ public class Diary implements Serializable {
         diaryNote.addTopic(topic);
     }
     
-    // ved ikke om det vil virke i praksis. 
+    
     public List<DiaryNote> searchTopic(Topic topic) {
         List<DiaryNote> searchResult = new ArrayList<>();
         for (DiaryNote diaryNote : list) {
-            for (int i = 0; i < diaryNote.getTopicList().size(); i++) {
-                if (diaryNote.getTopic(i) == topic) {
-                    searchResult.add(diaryNote);
-                }
+            if (diaryNote.getTopicList().contains(topic)) {
+                searchResult.add(diaryNote);
             }
         }
         return searchResult;
