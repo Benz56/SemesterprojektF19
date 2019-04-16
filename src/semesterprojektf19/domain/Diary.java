@@ -30,7 +30,12 @@ public class Diary implements Serializable {
         diaryNote.addNoteVersion(diaryNote);
     }
     
-    // Spaghetti kode, ved ikke om det vil virke i praksis. 
+    public void addTopic(int index, Topic topic){
+        DiaryNote diaryNote = list.get(index);
+        diaryNote.addTopic(topic);
+    }
+    
+    // ved ikke om det vil virke i praksis. 
     public List<DiaryNote> searchTopic(Topic topic) {
         List<DiaryNote> searchResult = new ArrayList<>();
         for (DiaryNote diaryNote : list) {
