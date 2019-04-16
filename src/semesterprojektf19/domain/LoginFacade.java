@@ -1,6 +1,6 @@
 package semesterprojektf19.domain;
 
-public interface LoginController {
+public interface LoginFacade {
 
     boolean login(String username, String password);
 

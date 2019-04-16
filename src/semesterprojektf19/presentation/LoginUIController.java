@@ -14,8 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import semesterprojektf19.domain.LoginController;
-import semesterprojektf19.domain.LoginControllerImpl;
+import semesterprojektf19.domain.LoginFacadeImpl;
+import semesterprojektf19.domain.LoginFacade;
 
 public class LoginUIController implements Initializable {
 
@@ -23,7 +23,7 @@ public class LoginUIController implements Initializable {
      * An instance of the InteractionCommunicator used to communicate the events
      * received from the various listeners in this controller.
      */
-    private final LoginController loginController = new LoginControllerImpl();
+    private final LoginFacade loginController = new LoginFacadeImpl();
 
     /**
      * Determines whether the logon menu is selected or the register menu.

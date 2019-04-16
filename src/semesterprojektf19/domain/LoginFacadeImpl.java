@@ -4,12 +4,12 @@ import semesterprojektf19.domain.accesscontrol.Role;
 import java.util.UUID;
 import semesterprojektf19.persistence.Persistence;
 
-public class LoginControllerImpl implements LoginController {
+public class LoginFacadeImpl implements LoginFacade {
 
     private final CitizenManager citizens;
     private Person person;
 
-    public LoginControllerImpl() {
+    public LoginFacadeImpl() {
         citizens = new CitizenManager();
     }
 
