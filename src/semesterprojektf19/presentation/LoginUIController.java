@@ -5,8 +5,8 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,17 +30,16 @@ public class LoginUIController implements Initializable {
      * Determines whether the logon menu is selected or the register menu.
      */
     private boolean isLoginMenu = true;
-
     @FXML
-    private AnchorPane loginPane, registerPane;
+    private JFXButton loginMenuBtn, registerMenuBtn, loginBtn, forgotPasswordBtn;
     @FXML
-    private JFXButton loginMenuBtn, registerMenuBtn, loginBtn, registerBtn, forgotPasswordBtn;
+    private AnchorPane loginPane;
     @FXML
-    private JFXTextField usernameTextField, firstnameTextField, lastnameTextField, registerUsernameTextField;
+    private JFXTextField usernameTextField;
     @FXML
-    private JFXPasswordField loginPasswordField, registerPasswordField, confirmPasswordField;
+    private JFXPasswordField loginPasswordField;
     @FXML
-    private Label registerLabel;
+    private AnchorPane registerPane;
 
     /**
      * Initializes the controller class.
@@ -49,8 +48,9 @@ public class LoginUIController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         loginMenuBtn.setOnAction(event -> togglePane(true));
         registerMenuBtn.setOnAction(event -> togglePane(false));
+        forgotPasswordBtn.setOnAction(event -> togglePane(false));
         loginBtn.setOnAction(event -> {
-            List<String> userDetails = loginFacade.login(usernameTextField.getText(), loginPasswordField.getText());
+            Map<String, String> userDetails = loginFacade.login(usernameTextField.getText(), loginPasswordField.getText());
             if (userDetails != null) {
                 ((Stage) loginBtn.getScene().getWindow()).close();
                 try {
@@ -65,24 +65,6 @@ public class LoginUIController implements Initializable {
                 usernameTextField.requestFocus();
                 usernameTextField.setText("");
                 loginPasswordField.setText("");
-            }
-        });
-        registerLabel.setStyle("-fx-text-fill: red;");
-        registerBtn.setOnAction(event -> {
-            if (!registerUsernameTextField.getText().isEmpty() && !registerPasswordField.getText().isEmpty() && !firstnameTextField.getText().isEmpty() && !lastnameTextField.getText().isEmpty()) {
-                if (registerPasswordField.getText().equals(confirmPasswordField.getText())) {
-                    if (loginFacade.register(registerUsernameTextField.getText(), registerPasswordField.getText(), firstnameTextField.getText(), lastnameTextField.getText())) {
-                        Arrays.asList(registerUsernameTextField, firstnameTextField, lastnameTextField).forEach(field -> field.clear());
-                        Arrays.asList(registerPasswordField, confirmPasswordField).forEach(field -> field.clear());
-                        togglePane(true);
-                    } else {
-                        registerLabel.setText("Brugernavn findes!");
-                    }
-                } else {
-                    registerLabel.setText("Kodeord ikke ens!");
-                }
-            } else {
-                registerLabel.setText("Udfyld venligst alt!");
             }
         });
     }

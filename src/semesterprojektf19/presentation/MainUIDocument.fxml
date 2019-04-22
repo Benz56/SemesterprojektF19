@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" stylesheets="@css/MainUICSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="semesterprojektf19.presentation.MainUIController">
+<AnchorPane id="AnchorPane" fx:id="parentAnchorPane" prefHeight="800.0" prefWidth="1200.0" stylesheets="@css/MainUICSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="semesterprojektf19.presentation.MainUIController">
    <children>
       <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -27,7 +27,7 @@
                   <AnchorPane prefHeight="100.0" prefWidth="100.0">
                      <children>
                         <FontAwesomeIconView glyphName="USER" layoutX="24.0" layoutY="57.0" size="50" />
-                        <Label layoutX="27.0" layoutY="69.0" text="Hjem">
+                        <Label layoutX="27.0" layoutY="69.0" style="-fx-text-fill: #43A047;" text="Hjem">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -41,7 +41,7 @@
                   <AnchorPane prefHeight="100.0" prefWidth="100.0">
                      <children>
                         <FontAwesomeIconView glyphName="STICKY_NOTE" layoutX="20.0" layoutY="57.0" size="50" />
-                        <Label layoutX="7.0" layoutY="69.0" text="Opret Notat">
+                        <Label layoutX="7.0" layoutY="69.0" style="-fx-text-fill: #43A047;" text="Opret Notat">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -55,7 +55,7 @@
                   <AnchorPane prefHeight="100.0" prefWidth="100.0">
                      <children>
                         <FontAwesomeIconView glyphName="ARCHIVE" layoutX="17.0" layoutY="57.0" size="50" />
-                        <Label layoutX="32.0" layoutY="69.0" text="Sag">
+                        <Label layoutX="32.0" layoutY="69.0" style="-fx-text-fill: #43A047;" text="Sag">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -69,7 +69,7 @@
                   <AnchorPane prefHeight="100.0" prefWidth="100.0">
                      <children>
                         <FontAwesomeIconView glyphName="ARCHIVE" layoutX="17.0" layoutY="57.0" size="50" />
-                        <Label layoutX="14.0" layoutY="69.0" text="Opret Sag">
+                        <Label layoutX="14.0" layoutY="69.0" style="-fx-text-fill: #43A047;" text="Opret Sag">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -83,7 +83,7 @@
                   <AnchorPane prefHeight="100.0" prefWidth="100.0">
                      <children>
                         <FontAwesomeIconView glyphName="USER_SECRET" layoutX="21.0" layoutY="57.0" size="50" />
-                        <Label layoutX="22.0" layoutY="69.0" text="Admin">
+                        <Label layoutX="22.0" layoutY="69.0" style="-fx-text-fill: #43A047;" text="Admin">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -96,7 +96,7 @@
       </HBox>
       <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
-            <AnchorPane fx:id="homePane" prefHeight="700.0" prefWidth="1000.0" visible="false">
+            <AnchorPane fx:id="homePane" prefHeight="700.0" prefWidth="1000.0">
                <children>
                   <Label fx:id="homeHelloLabel" layoutX="50.0" layoutY="50.0" prefHeight="35.0" prefWidth="757.0" text="Hej " AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
                      <font>
@@ -161,7 +161,14 @@
                   </JFXButton>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="adminPane" prefHeight="700.0" prefWidth="1000.0" visible="false" />
+            <AnchorPane fx:id="adminPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
+               <children>
+                  <JFXButton fx:id="createUserBtn" layoutX="74.0" layoutY="147.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5; -fx-text-fill: #43A047;" text="Opret Bruger">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </JFXButton>
+               </children></AnchorPane>
          </children>
       </StackPane>
    </children>

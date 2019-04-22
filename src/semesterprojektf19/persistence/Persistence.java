@@ -62,7 +62,7 @@ public enum Persistence {
         File file = files.get(FileType.ACCOUNTS);
         try (Scanner scanner = new Scanner(file); BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
             while (scanner.hasNextLine()) {
-                if (username.equalsIgnoreCase(scanner.nextLine().split(",")[0])) {
+                if (username.equalsIgnoreCase(scanner.nextLine().split(",")[1])) {
                     return false;
                 }
             }

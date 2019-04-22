@@ -68,9 +68,9 @@ public class CitizenManager implements Serializable {
         return citizensMap;
     }
 
-    public boolean isCitizenCreated(String birthday, String controlNumber) {
+    public boolean isCitizenCreated(String birthday, int controlNumber) {
         for (Citizen citizen : citizensMap.values()) {
-            if (citizen.getBirthday().equals(birthday) && citizen.getControlNumber().equals(controlNumber)) {
+            if (citizen.getBirthday().equals(birthday) && citizen.getControlNumber() == controlNumber) {
                 return true;
             }
         }
@@ -78,14 +78,14 @@ public class CitizenManager implements Serializable {
     }
 
     public static void main(String[] args) {
-        Citizen c1 = new Citizen("Hala", "Al-Janabi", "280195", "1111", 00000000, "HC Ørstedskollegiet");
+        /*Citizen c1 = new Citizen("Hala", "Al-Janabi", "280195", "1111", 00000000, "HC Ørstedskollegiet");
         Citizen c2 = new Citizen("Soffi", "Madsen", "290698", "2222", 00000000, "Cortex Park");
-        Citizen c3 = new Citizen("Soffi", "Madsen", "280195", "3333", 00000000, "HC Ørstedskollegiet");
+        Citizen c3 = new Citizen("Soffi", "Madsen", "280195", "3333", 00000000, "HC Ørstedskollegiet");*/
 
         CitizenManager cm = new CitizenManager();
-        cm.createCitizen(c1);
-        cm.createCitizen(c2);
-        cm.createCitizen(c3);
+        //cm.createCitizen(c1);
+        //cm.createCitizen(c2);
+        // cm.createCitizen(c3);
 
         System.out.println(cm.getCitizens());
         System.out.println("--------------------------------------");

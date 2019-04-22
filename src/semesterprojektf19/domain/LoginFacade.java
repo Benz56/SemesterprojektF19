@@ -1,12 +1,11 @@
 package semesterprojektf19.domain;
 
 import java.util.List;
+import java.util.Map;
 
 public interface LoginFacade {
 
-    List<String> login(String username, String password);
-
-    boolean register(String username, String password, String firstName, String lastName);
+    Map<String, String> login(String username, String password);
 
     //void createCase(String firstName, String lastName, String birthday, String controlNumber, int phoneNumber, String address, String shortInfo);
 }

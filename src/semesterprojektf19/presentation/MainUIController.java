@@ -6,7 +6,6 @@ import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -17,16 +16,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class MainUIController implements Initializable {
 
-    private final List<String> userDetails;
+    private final Map<String, String> userDetails;
     //En instans af et modul i domænelaget mangler her. (Ligesom i Login)
     @FXML
-    private JFXButton homeBtn, createCaseBtn, casesBtn, adminBtn,createCitizenBtn,casesCreateBtn;;
+    private JFXButton homeBtn, createCaseBtn, casesBtn, adminBtn, createCitizenBtn, casesCreateBtn, createUserBtn;
     @FXML
-    private AnchorPane homePane, createNotePane, casesPane, adminPane,createCasePane;
+    private AnchorPane parentAnchorPane, homePane, createNotePane, casesPane, adminPane, createCasePane;
     private final Map<JFXButton, AnchorPane> btnPaneMap = new HashMap<>();
 
     @FXML
@@ -39,21 +39,23 @@ public class MainUIController implements Initializable {
     private JFXTextField caseCitizenNameLabel, caseCPRLabel, caseAddressLabel;
     @FXML
     private JFXListView<?> caseLatestNotesListView;
- 
- 
 
-    public MainUIController(List<String> userDetails) {
+    public MainUIController(Map<String, String> userDetails) {
         this.userDetails = userDetails;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        homeHelloLabel.setText(homeHelloLabel.getText() + userDetails.get(0));
+        homeHelloLabel.setText(homeHelloLabel.getText() + userDetails.get("firstname") + " " + userDetails.get("lastname"));
         selectedBtn = homeBtn;
         btnPaneMap.put(homeBtn, homePane);
         btnPaneMap.put(createCaseBtn, createNotePane);
         btnPaneMap.put(casesBtn, casesPane);
-        btnPaneMap.put(adminBtn, adminPane);
+        if (userDetails.get("role").equals("admin")) {
+            btnPaneMap.put(adminBtn, adminPane);
+        } else {
+            ((HBox) adminBtn.getParent()).getChildren().remove(adminBtn);
+        }
         btnPaneMap.put(casesCreateBtn, createCasePane);
         homeBtn.setOnAction(event -> changePane(homeBtn));
         casesCreateBtn.setOnAction(event -> changePane(casesCreateBtn));
@@ -61,20 +63,45 @@ public class MainUIController implements Initializable {
         adminBtn.setOnAction(event -> changePane(adminBtn));
         createCaseBtn.setOnAction(event -> changePane(createCaseBtn));
         createCitizenBtn.setOnAction(event -> {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("RegisterCitizenUIDocument.fxml"));
             Stage stage = new Stage();
+            stage.setTitle("Opret Borger");
+            stage.setResizable(false);
+            stage.focusedProperty().addListener((observable, oldFocus, newFocus) -> {
+                if (!newFocus) {
+                    stage.close();
+                }
+            });
             try {
-                stage.setScene(new Scene(loader.load()));
+                stage.setScene(new Scene(new FXMLLoader(getClass().getResource("RegisterCitizenUIDocument.fxml")).load()));
+                stage.show();
             } catch (IOException ex) {
                 Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            stage.show();
+        });
+        createUserBtn.setOnAction(event -> {
+            Stage stage = new Stage();
+            stage.setTitle("Opret Bruger");
+            stage.setResizable(false);
+            stage.focusedProperty().addListener((observable, oldFocus, newFocus) -> {
+                if (!newFocus) {
+                    stage.close();
+                }
+            });
+            try {
+                stage.setScene(new Scene(new FXMLLoader(getClass().getResource("RegisterEmployeeUIDocument.fxml")).load()));
+                stage.show();
+            } catch (IOException ex) {
+                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
 
+        if (!userDetails.get("role").equals("admin")) {
+            clientList.getItems().addAll(userDetails.get("citizens").split("\n"));
+        }
         clientList.getItems().add("Jan Jansen");
         clientList.getItems().add("Fisayo Et Eller Andet");
         clientList.getItems().add("Lone Borgersen");
-        
+
         homeCitizenCountLabel.setText(homeCitizenCountLabel.getText() + clientList.getItems().size());
     }
 

@@ -1,33 +1,41 @@
 package semesterprojektf19.domain;
 
-import java.util.Arrays;
-import java.util.List;
-import semesterprojektf19.domain.accesscontrol.Role;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import semesterprojektf19.domain.accesscontrol.Role;
 import semesterprojektf19.persistence.Persistence;
 
 public class LoginFacadeImpl implements LoginFacade {
 
     private final CitizenManager citizens;
-    private Person person;
+    private Worker worker;
 
     public LoginFacadeImpl() {
         citizens = new CitizenManager();
     }
 
     @Override
-    public List<String> login(String username, String password) {
-        Object person = Persistence.INSTANCE.authenticate(username, password);
-        this.person = person != null ? (Person) person : null;
-        if (this.person != null) {
-            return Arrays.asList(this.person.getFirstName() + " " + this.person.getLastName()); //Her skal tilføjes bogsted og fagområder.
-        } else return null;
-    }
-
-    @Override
-    public boolean register(String username, String password, String firstName, String lastName) {
-        Person person = new Person(UUID.randomUUID(), firstName, lastName, 0, "", Role.EMPLOYEE);
-        return Persistence.INSTANCE.register(username, password, person.getUuid(), person);
+    public Map<String, String> login(String username, String password) {
+        Map<String, String> details = new HashMap<>();
+        if (username.equals("admin") && password.equals("admin")) { //Tillader at logge ind uden bruger.
+            details.put("role", "admin");
+        } else {
+            Object person = Persistence.INSTANCE.authenticate(username, password);
+            worker = person != null ? (Worker) person : null;
+            if (this.worker != null) {
+                worker.addCase(new Case(worker, new Citizen(UUID.randomUUID(), "Poul", "Jensen", "01-08-1997", 4535, "Ryttergade", 23543434, Role.CITIZEN), new Inquiry("Hej")));
+                worker.addCase(new Case(worker, new Citizen(UUID.randomUUID(), "sdf", "sdf", "01-08-1997", 4535, "sdf", 23543434, Role.CITIZEN), new Inquiry("sfsd")));
+                worker.addCase(new Case(worker, new Citizen(UUID.randomUUID(), "klih", "gdf", "01-08-1997", 4535, "dsf", 23543434, Role.CITIZEN), new Inquiry("sdfdshh")));
+                details.put("role", worker.getRole().toString().toLowerCase());
+                details.put("firstname", worker.getFirstName());
+                details.put("lastname", worker.getLastName());
+                details.put("citizens", worker.getCitizens().stream().map(Citizen::toString).collect(Collectors.joining()));
+                //Her skal tilføjes bogsted og fagområder.
+            }
+        }
+        return details.isEmpty() ? null : details;
     }
 
     /*@Override
