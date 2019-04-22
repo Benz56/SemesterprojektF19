@@ -12,6 +12,10 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,24 +30,26 @@ import semesterprojektf19.domain.DomainFacadeImpl;
 public class MainUIController implements Initializable {
 
     private final DomainFacade domainFacade = new DomainFacadeImpl();
-
     private final Map<String, String> userDetails;
-
+    private final Map<JFXButton, AnchorPane> btnPaneMap = new HashMap<>();
     private JFXButton selectedBtn;
 
+    //Global nodes:
     @FXML
-    private JFXButton homeBtn, createCaseBtn, casesBtn, adminBtn, casesCreateBtn;
+    private JFXButton homeBtn, createCaseBtn, casesBtn, adminBtn, casesCreateBtn, diaryBtn;
     @FXML
-    private AnchorPane homePane, createNotePane, casesPane, adminPane, createCasePane;
-    private final Map<JFXButton, AnchorPane> btnPaneMap = new HashMap<>();
+    private AnchorPane homePane, createNotePane, casesPane, adminPane, createCasePane, diaryPane;
 
     @FXML
     private JFXListView<String> clientList;
 
+    //Home nodes:
     @FXML
     private Label homeHelloLabel, homePlaceLabel, homeCitizenCountLabel, homeTargetAreasLabel;
+
+    // Case nodes:
     @FXML
-    private JFXTextField caseCitizenNameLabel, caseCPRLabel, caseAddressLabel;
+    private JFXTextField caseCitizenNameTextField, caseCPRTextField, caseAddressTextField;
     @FXML
     private JFXListView<?> caseLatestNotesListView;
 
@@ -59,9 +65,9 @@ public class MainUIController implements Initializable {
     @FXML
     private JFXCheckBox ccRightToRepCB, ccInformedECardCB, ccConsentRelevantCB, ccConsentGivenCB;
 
-    //Admin nodes
+    //Admin nodes:
     @FXML
-    private JFXButton createUserBtn;
+    private JFXButton adminCreateUserBtn, adminEditUserBtn, adminDeleteUserBtn;
 
     public MainUIController(Map<String, String> userDetails) {
         this.userDetails = userDetails;
@@ -74,17 +80,14 @@ public class MainUIController implements Initializable {
         btnPaneMap.put(homeBtn, homePane);
         btnPaneMap.put(createCaseBtn, createNotePane);
         btnPaneMap.put(casesBtn, casesPane);
+        btnPaneMap.put(diaryBtn, diaryPane);
         if (userDetails.get("role").equals("admin")) {
             btnPaneMap.put(adminBtn, adminPane);
         } else {
             ((HBox) adminBtn.getParent()).getChildren().remove(adminBtn);
         }
         btnPaneMap.put(casesCreateBtn, createCasePane);
-        homeBtn.setOnAction(event -> changePane(homeBtn));
-        casesCreateBtn.setOnAction(event -> changePane(casesCreateBtn));
-        casesBtn.setOnAction(event -> changePane(casesBtn));
-        adminBtn.setOnAction(event -> changePane(adminBtn));
-        createCaseBtn.setOnAction(event -> changePane(createCaseBtn));
+        btnPaneMap.keySet().forEach(btn -> btn.setOnAction(event -> changePane((JFXButton) event.getSource())));
         ccCreateCitizenBtn.setOnAction(event -> {
             Stage stage = new Stage();
             stage.setTitle("Opret Borger");
@@ -106,7 +109,7 @@ public class MainUIController implements Initializable {
             }
         });
 
-        createUserBtn.setOnAction(event -> {
+        adminCreateUserBtn.setOnAction(event -> {
             Stage stage = new Stage();
             stage.setTitle("Opret Bruger");
             stage.setResizable(false);
@@ -125,9 +128,12 @@ public class MainUIController implements Initializable {
 
         ccSearchCitizenTextField.textProperty().addListener(listener -> refresh());
 
-        if (!userDetails.get("role").equals("admin")) {
-            clientList.getItems().addAll(userDetails.get("citizens").split("\n"));
-        }
+        clientList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            Map<String, String> citizenDetails = domainFacade.getCitizenDetails(newValue);
+            caseCitizenNameTextField.setText(citizenDetails.get("name"));
+            caseCPRTextField.setText(citizenDetails.get("cpr"));
+            caseAddressTextField.setText(citizenDetails.get("address"));
+        });
 
         refresh();
     }
@@ -153,6 +159,7 @@ public class MainUIController implements Initializable {
             caseDetails.put("specialCircumstances", ccSpecialCircumstancesTextArea.getText());
             caseDetails.put("shortInfo", ccShortInfoTextArea.getText());
             domainFacade.createCase(caseDetails);
+            refresh();
         }
     }
 
@@ -168,7 +175,10 @@ public class MainUIController implements Initializable {
     }
 
     private void refresh() {
-        homeCitizenCountLabel.setText(homeCitizenCountLabel.getText() + clientList.getItems().size());
+        if (!userDetails.get("role").equals("admin")) {
+            clientList.getItems().setAll(domainFacade.getUserCitizens());
+        }
+        homeCitizenCountLabel.setText(homeCitizenCountLabel.getText() + domainFacade.getUserCitizens().size());
         ccCitizenListView.getItems().setAll(domainFacade.matchCitizens(ccSearchCitizenTextField.getText()));
     }
 

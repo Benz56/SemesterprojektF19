@@ -19,4 +19,8 @@ public interface DomainFacade {
     public List<String> matchCitizens(String contains);
 
     public void refresh();
+
+    public List<String> getUserCitizens();
+
+    public Map<String, String> getCitizenDetails(String citizen);
 }

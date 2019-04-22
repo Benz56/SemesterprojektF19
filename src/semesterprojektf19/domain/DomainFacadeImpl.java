@@ -5,13 +5,21 @@
  */
 package semesterprojektf19.domain;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import semesterprojektf19.persistence.Persistence;
 
 public class DomainFacadeImpl implements DomainFacade {
 
-    private final CitizenManager citizenManager = new CitizenManager();
+    private final CitizenManager citizenManager;
+
+    public DomainFacadeImpl() {
+        Persistence.INSTANCE.toString(); //Initialize persistence i.e. create required files.
+        citizenManager = new CitizenManager();
+    }
 
     @Override
     public void createCase(Map<String, String> caseDetails) {
@@ -28,7 +36,9 @@ public class DomainFacadeImpl implements DomainFacade {
         c.setAgreementsAboutFurtherProcess(caseDetails.get("agreementsAboutFurtherProcess"));
         c.setSpecialCircumstances(caseDetails.get("specialCircumstances"));
         ((Worker) UserContainer.getUser()).addCase(c);
+        UserContainer.getUser().saveToFile();
         citizen.addCase(c);
+        citizen.saveToFile();
     }
 
     @Override
@@ -37,7 +47,27 @@ public class DomainFacadeImpl implements DomainFacade {
     }
 
     @Override
+    public List<String> getUserCitizens() {
+        Person user = UserContainer.getUser();
+        if (user != null) {
+            return ((Worker) UserContainer.getUser()).getCitizens().stream().map(Citizen::toString).collect(Collectors.toList());
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
     public void refresh() {
         citizenManager.refresh();
+    }
+
+    @Override
+    public Map<String, String> getCitizenDetails(String citizenString) {
+        Map<String, String> details = new HashMap<>();
+        Citizen citizen = citizenManager.getCitizen(citizenString);
+        details.put("name", citizen.getFirstName() + " " + citizen.getLastName());
+        details.put("cpr", citizen.getCpr());
+        details.put("address", citizen.getAddress());
+        return details;
     }
 }

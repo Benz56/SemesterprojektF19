@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import semesterprojektf19.domain.accesscontrol.Role;
+import semesterprojektf19.persistence.Persistence;
 
 public class Citizen extends Person {
 
@@ -30,5 +31,10 @@ public class Citizen extends Person {
     @Override
     public String toString() {
         return getFirstName() + " " + getLastName() + " (Birthday: " + getBirthday() + ")\n";
+    }
+
+    @Override
+    public void saveToFile() {
+        Persistence.INSTANCE.writeObjectToFile("citizens/" + cpr + ".ser", this, false);
     }
 }

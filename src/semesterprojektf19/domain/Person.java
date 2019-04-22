@@ -3,6 +3,7 @@ package semesterprojektf19.domain;
 import semesterprojektf19.domain.accesscontrol.Role;
 import java.io.Serializable;
 import java.util.UUID;
+import semesterprojektf19.persistence.Persistence;
 
 public class Person implements Comparable<Person>, Serializable {
 
@@ -89,5 +90,9 @@ public class Person implements Comparable<Person>, Serializable {
             r = Integer.compare(phoneNumber, o.phoneNumber);
         }
         return r;
+    }
+
+    public void saveToFile() {
+        Persistence.INSTANCE.writeObjectToFile("persons/" + uuid.toString() + ".ser", this, false);
     }
 }
