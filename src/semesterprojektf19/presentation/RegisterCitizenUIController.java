@@ -109,7 +109,7 @@ public class RegisterCitizenUIController implements Initializable {
             return false;
         }
         if (addressTextField.getText().isEmpty()) {
-            statusTextField.setText("Addresse mangler!");
+            statusTextField.setText("Adresse mangler!");
             return false;
         }
         statusTextField.setStyle("-fx-text-fill: green;");

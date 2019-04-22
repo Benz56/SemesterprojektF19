@@ -15,8 +15,8 @@ public class Citizen extends Person {
         this.cpr = birthday + controlNumber;
     }
 
-    public void addCase(Case case1) {
-        cases.add(case1);
+    public void addCase(Case c) {
+        cases.add(c);
     }
 
     public List<Case> getCases() {

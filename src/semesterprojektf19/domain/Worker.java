@@ -14,9 +14,9 @@ public class Worker extends Person {
         super(uuid, firstName, lastName, birthday, controlNumber, address, phoneNumber, role);
     }
 
-    public Case addCase(Case case1) {
-        cases.add(case1);
-        return case1;
+    public Case addCase(Case c) {
+        cases.add(c);
+        return c;
     }
 
     public List<Case> getCases() {

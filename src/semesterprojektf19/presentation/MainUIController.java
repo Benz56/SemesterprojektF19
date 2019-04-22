@@ -1,7 +1,9 @@
 package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
@@ -18,27 +20,48 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import semesterprojektf19.domain.DomainFacade;
+import semesterprojektf19.domain.DomainFacadeImpl;
 
 public class MainUIController implements Initializable {
 
+    private final DomainFacade domainFacade = new DomainFacadeImpl();
+
     private final Map<String, String> userDetails;
-    //En instans af et modul i domænelaget mangler her. (Ligesom i Login)
+
+    private JFXButton selectedBtn;
+
     @FXML
-    private JFXButton homeBtn, createCaseBtn, casesBtn, adminBtn, createCitizenBtn, casesCreateBtn, createUserBtn;
+    private JFXButton homeBtn, createCaseBtn, casesBtn, adminBtn, casesCreateBtn;
     @FXML
-    private AnchorPane parentAnchorPane, homePane, createNotePane, casesPane, adminPane, createCasePane;
+    private AnchorPane homePane, createNotePane, casesPane, adminPane, createCasePane;
     private final Map<JFXButton, AnchorPane> btnPaneMap = new HashMap<>();
 
     @FXML
     private JFXListView<String> clientList;
 
-    private JFXButton selectedBtn;
     @FXML
     private Label homeHelloLabel, homePlaceLabel, homeCitizenCountLabel, homeTargetAreasLabel;
     @FXML
     private JFXTextField caseCitizenNameLabel, caseCPRLabel, caseAddressLabel;
     @FXML
     private JFXListView<?> caseLatestNotesListView;
+
+    //Create case nodes:
+    @FXML
+    private JFXButton ccCreateCitizenBtn;
+    @FXML
+    private JFXListView<String> ccCitizenListView;
+    @FXML
+    private JFXTextField ccSearchCitizenTextField, ccGuardianTextField, ccRepresentationTextField, ccExecutingMuniTextField, ccPayingMuniTextField;
+    @FXML
+    private JFXTextArea ccSpecialCircumstancesTextArea, ccProcessAgreementsTextArea, ccShortInfoTextArea;
+    @FXML
+    private JFXCheckBox ccRightToRepCB, ccInformedECardCB, ccConsentRelevantCB, ccConsentGivenCB;
+
+    //Admin nodes
+    @FXML
+    private JFXButton createUserBtn;
 
     public MainUIController(Map<String, String> userDetails) {
         this.userDetails = userDetails;
@@ -62,7 +85,7 @@ public class MainUIController implements Initializable {
         casesBtn.setOnAction(event -> changePane(casesBtn));
         adminBtn.setOnAction(event -> changePane(adminBtn));
         createCaseBtn.setOnAction(event -> changePane(createCaseBtn));
-        createCitizenBtn.setOnAction(event -> {
+        ccCreateCitizenBtn.setOnAction(event -> {
             Stage stage = new Stage();
             stage.setTitle("Opret Borger");
             stage.setResizable(false);
@@ -74,10 +97,15 @@ public class MainUIController implements Initializable {
             try {
                 stage.setScene(new Scene(new FXMLLoader(getClass().getResource("RegisterCitizenUIDocument.fxml")).load()));
                 stage.show();
+                stage.setOnHiding(listener -> {
+                    domainFacade.refresh();
+                    refresh();
+                });
             } catch (IOException ex) {
                 Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+
         createUserBtn.setOnAction(event -> {
             Stage stage = new Stage();
             stage.setTitle("Opret Bruger");
@@ -95,14 +123,37 @@ public class MainUIController implements Initializable {
             }
         });
 
+        ccSearchCitizenTextField.textProperty().addListener(listener -> refresh());
+
         if (!userDetails.get("role").equals("admin")) {
             clientList.getItems().addAll(userDetails.get("citizens").split("\n"));
         }
-        clientList.getItems().add("Jan Jansen");
-        clientList.getItems().add("Fisayo Et Eller Andet");
-        clientList.getItems().add("Lone Borgersen");
 
-        homeCitizenCountLabel.setText(homeCitizenCountLabel.getText() + clientList.getItems().size());
+        refresh();
+    }
+
+    @FXML
+    private void onCreateCase() {
+        if (ccCitizenListView.getSelectionModel().getSelectedItem() != null
+                && !ccExecutingMuniTextField.getText().isEmpty()
+                && !ccRepresentationTextField.getText().isEmpty()
+                && !ccPayingMuniTextField.getText().isEmpty()
+                && !ccShortInfoTextArea.getText().isEmpty()) {
+            Map<String, String> caseDetails = new HashMap<>();
+            caseDetails.put("citizen", ccCitizenListView.getSelectionModel().getSelectedItem());
+            caseDetails.put("guardian", ccGuardianTextField.getText());
+            caseDetails.put("executingMunicipality", ccExecutingMuniTextField.getText());
+            caseDetails.put("representation", ccRepresentationTextField.getText());
+            caseDetails.put("payingMunicipality", ccPayingMuniTextField.getText());
+            caseDetails.put("consentRelevant", String.valueOf(ccConsentRelevantCB.isSelected()));
+            caseDetails.put("consentGiven", String.valueOf(ccConsentGivenCB.isSelected()));
+            caseDetails.put("rightToRepresentation", String.valueOf(ccRightToRepCB.isSelected()));
+            caseDetails.put("informedOnElectronicInfo", String.valueOf(ccInformedECardCB.isSelected()));
+            caseDetails.put("agreementsAboutFurtherProcess", ccProcessAgreementsTextArea.getText());
+            caseDetails.put("specialCircumstances", ccSpecialCircumstancesTextArea.getText());
+            caseDetails.put("shortInfo", ccShortInfoTextArea.getText());
+            domainFacade.createCase(caseDetails);
+        }
     }
 
     private void changePane(JFXButton clickedBtn) {
@@ -115,4 +166,10 @@ public class MainUIController implements Initializable {
             btnPaneMap.get(selectedBtn).setVisible(true);
         }
     }
+
+    private void refresh() {
+        homeCitizenCountLabel.setText(homeCitizenCountLabel.getText() + clientList.getItems().size());
+        ccCitizenListView.getItems().setAll(domainFacade.matchCitizens(ccSearchCitizenTextField.getText()));
+    }
+
 }

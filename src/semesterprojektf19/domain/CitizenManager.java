@@ -1,26 +1,34 @@
 package semesterprojektf19.domain;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import semesterprojektf19.persistence.Persistence;
 
 public class CitizenManager implements Serializable {
 
-    private Map<String, Citizen> citizensMap;
+    private final Map<String, Citizen> citizensMap;
 
     public CitizenManager() {
         citizensMap = new TreeMap<>();
+        Arrays.asList(new File("citizens").listFiles()).forEach(file -> addCitizen((Citizen) Persistence.INSTANCE.readObjectFromFile("citizens/" + file.getName())));
     }
 
-    public Citizen createCitizen(Citizen citizen) {
+    public Citizen addCitizen(Citizen citizen) {
         citizensMap.putIfAbsent(citizen.getCpr(), citizen);
         return citizensMap.get(citizen.getCpr());
     }
 
     public void removeCitizen(Citizen citizen) {
         citizensMap.remove(citizen.getCpr());
+    }
+
+    public Citizen getCitizen(String stringValue) {
+        return citizensMap.values().stream().filter(citizen -> citizen.toString().equalsIgnoreCase(stringValue)).findFirst().orElse(null);
     }
 
     /**
@@ -41,6 +49,7 @@ public class CitizenManager implements Serializable {
         } else if (birthday.isEmpty() && !name.isEmpty()) {
             citizensResult.addAll(searchCitizensByName(name));
         }
+
         return citizensResult;
     }
 
@@ -94,4 +103,8 @@ public class CitizenManager implements Serializable {
         System.out.println(cm.searchCitizens("280195", ""));
     }
 
+    public void refresh() {
+        citizensMap.clear();
+        Arrays.asList(new File("citizens").listFiles()).forEach(file -> addCitizen((Citizen) Persistence.INSTANCE.readObjectFromFile("citizens/" + file.getName())));
+    }
 }

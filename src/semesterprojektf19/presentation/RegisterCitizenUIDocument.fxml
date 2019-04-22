@@ -16,6 +16,6 @@
       <JFXTextField fx:id="addressTextField" focusColor="#43a047" labelFloat="true" layoutX="200.0" layoutY="140.0" prefHeight="25.0" prefWidth="140.0" promptText="Adresse" unFocusColor="#bfbfbf" />
       <JFXButton layoutX="30.0" layoutY="245.0" onAction="#onCreate" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #E5E5E5;" text="Opret" />
       <JFXButton layoutX="200.0" layoutY="245.0" onAction="#onCancel" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #E5E5E5;" text="Afbryd" />
-      <TextField fx:id="statusTextField" editable="false" layoutX="30.0" layoutY="195.0" prefHeight="25.0" prefWidth="310.0" style="-fx-text-fill: red;" text="Alle felter skal udfyldes" />
+      <TextField fx:id="statusTextField" editable="false" focusTraversable="false" layoutX="30.0" layoutY="195.0" prefHeight="25.0" prefWidth="310.0" style="-fx-text-fill: red;" text="Alle felter skal udfyldes" />
    </children>
 </AnchorPane>
