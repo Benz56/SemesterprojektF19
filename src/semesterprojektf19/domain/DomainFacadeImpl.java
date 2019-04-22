@@ -68,6 +68,7 @@ public class DomainFacadeImpl implements DomainFacade {
         details.put("name", citizen.getFirstName() + " " + citizen.getLastName());
         details.put("cpr", citizen.getCpr());
         details.put("address", citizen.getAddress());
+        details.put("cases", citizen.getCases().stream().map(c -> c.getInquiry().getShortInfo()).collect(Collectors.joining("\n")));
         return details;
     }
 }

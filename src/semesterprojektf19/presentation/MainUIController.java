@@ -2,25 +2,29 @@ package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import java.awt.MouseInfo;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -51,6 +55,8 @@ public class MainUIController implements Initializable {
     @FXML
     private JFXTextField caseCitizenNameTextField, caseCPRTextField, caseAddressTextField;
     @FXML
+    private JFXComboBox<String> caseCasesCB;
+    @FXML
     private JFXListView<?> caseLatestNotesListView;
 
     //Create case nodes:
@@ -59,9 +65,9 @@ public class MainUIController implements Initializable {
     @FXML
     private JFXListView<String> ccCitizenListView;
     @FXML
-    private JFXTextField ccSearchCitizenTextField, ccGuardianTextField, ccRepresentationTextField, ccExecutingMuniTextField, ccPayingMuniTextField;
+    private JFXTextField ccSearchCitizenTextField, ccGuardianTextField, ccRepresentationTextField, ccExecutingMuniTextField, ccPayingMuniTextField, ccShortInfoTextField;
     @FXML
-    private JFXTextArea ccSpecialCircumstancesTextArea, ccProcessAgreementsTextArea, ccShortInfoTextArea;
+    private JFXTextArea ccSpecialCircumstancesTextArea, ccProcessAgreementsTextArea;
     @FXML
     private JFXCheckBox ccRightToRepCB, ccInformedECardCB, ccConsentRelevantCB, ccConsentGivenCB;
 
@@ -129,22 +135,27 @@ public class MainUIController implements Initializable {
         ccSearchCitizenTextField.textProperty().addListener(listener -> refresh());
 
         clientList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            Map<String, String> citizenDetails = domainFacade.getCitizenDetails(newValue);
-            caseCitizenNameTextField.setText(citizenDetails.get("name"));
-            caseCPRTextField.setText(citizenDetails.get("cpr"));
-            caseAddressTextField.setText(citizenDetails.get("address"));
+            if (newValue != null) {
+                Map<String, String> citizenDetails = domainFacade.getCitizenDetails(newValue);
+                caseCitizenNameTextField.setText(citizenDetails.get("name"));
+                caseCPRTextField.setText(citizenDetails.get("cpr"));
+                caseAddressTextField.setText(citizenDetails.get("address"));
+                caseCasesCB.getItems().clear();
+                caseCasesCB.getItems().setAll(citizenDetails.get("cases").split("\n"));
+            }
         });
 
         refresh();
     }
 
     @FXML
-    private void onCreateCase() {
+    private void onCreateCase(ActionEvent event) {
+        Tooltip tooltip = new Tooltip();
         if (ccCitizenListView.getSelectionModel().getSelectedItem() != null
                 && !ccExecutingMuniTextField.getText().isEmpty()
                 && !ccRepresentationTextField.getText().isEmpty()
                 && !ccPayingMuniTextField.getText().isEmpty()
-                && !ccShortInfoTextArea.getText().isEmpty()) {
+                && !ccShortInfoTextField.getText().isEmpty()) {
             Map<String, String> caseDetails = new HashMap<>();
             caseDetails.put("citizen", ccCitizenListView.getSelectionModel().getSelectedItem());
             caseDetails.put("guardian", ccGuardianTextField.getText());
@@ -157,10 +168,17 @@ public class MainUIController implements Initializable {
             caseDetails.put("informedOnElectronicInfo", String.valueOf(ccInformedECardCB.isSelected()));
             caseDetails.put("agreementsAboutFurtherProcess", ccProcessAgreementsTextArea.getText());
             caseDetails.put("specialCircumstances", ccSpecialCircumstancesTextArea.getText());
-            caseDetails.put("shortInfo", ccShortInfoTextArea.getText());
+            caseDetails.put("shortInfo", ccShortInfoTextField.getText());
             domainFacade.createCase(caseDetails);
             refresh();
+            tooltip.setText("Sag oprettet!");
+        } else {
+            tooltip.setText("Mangler informationer!");
         }
+        tooltip.show(((JFXButton) event.getSource()).getScene().getWindow(), MouseInfo.getPointerInfo().getLocation().getX(), MouseInfo.getPointerInfo().getLocation().getY());
+        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        executor.schedule(() -> Platform.runLater(() -> tooltip.hide()), 2, TimeUnit.SECONDS);
+        executor.shutdown();
     }
 
     private void changePane(JFXButton clickedBtn) {
@@ -176,10 +194,13 @@ public class MainUIController implements Initializable {
 
     private void refresh() {
         if (!userDetails.get("role").equals("admin")) {
+            String selectedItem = clientList.getSelectionModel().getSelectedItem();
             clientList.getItems().setAll(domainFacade.getUserCitizens());
+            if (clientList.getItems().contains(selectedItem)) {
+                clientList.getSelectionModel().select(selectedItem);
+            }
         }
         homeCitizenCountLabel.setText(homeCitizenCountLabel.getText() + domainFacade.getUserCitizens().size());
         ccCitizenListView.getItems().setAll(domainFacade.matchCitizens(ccSearchCitizenTextField.getText()));
     }
-
 }

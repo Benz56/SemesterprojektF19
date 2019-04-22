@@ -17,7 +17,7 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
 
     @Override
     public void registerCitizen(String firstName, String lastName, String birthday, int controlNumber, String address, int phoneNumber) {
-        Persistence.INSTANCE.writeObjectToFile("citizens/" + birthday + "-" + controlNumber, new Citizen(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.CITIZEN), false);
+        Persistence.INSTANCE.writeObjectToFile("citizens/" + birthday + "-" + controlNumber + ".ser", new Citizen(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.CITIZEN), false);
     }
 
     @Override
