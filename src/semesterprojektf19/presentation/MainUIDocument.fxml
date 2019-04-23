@@ -185,6 +185,11 @@
                   </Label>
                   <JFXTextField fx:id="ccSearchCitizenTextField" focusColor="#43a047" labelFloat="true" layoutX="20.0" layoutY="60.0" prefHeight="25.0" prefWidth="200.0" promptText="Søg efter borger" unFocusColor="#bfbfbf" />
                   <JFXListView fx:id="ccCitizenListView" layoutX="20.0" layoutY="100.0" prefHeight="540.0" prefWidth="200.0" style="-fx-background-color: #E5E5E5;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" />
+                  <Label layoutX="249.0" layoutY="20.0" text="Sags detaljer:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
                   <JFXButton layoutX="780.0" layoutY="655.0" onAction="#onCreateCase" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Opret Sag" textFill="#43a047" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
                   <Label layoutX="250.0" layoutY="87.0" text="Værge">
                      <font>
@@ -192,45 +197,40 @@
                      </font>
                   </Label>
                   <JFXTextField fx:id="ccGuardianTextField" focusColor="#43a047" layoutX="250.0" layoutY="107.0" prefHeight="25.0" prefWidth="150.0" unFocusColor="#bfbfbf" />
-                  <Label layoutX="620.0" layoutY="87.0" text="Repræsentation">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <JFXTextField fx:id="ccRepresentationTextField" focusColor="#43a047" layoutX="620.0" layoutY="107.0" prefWidth="150.0" unFocusColor="#bfbfbf" />
-                  <Label layoutX="250.0" layoutY="222.0" text="Aftaler om processen">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <JFXTextArea fx:id="ccProcessAgreementsTextArea" focusColor="#43a047" layoutX="250.0" layoutY="242.0" prefHeight="100.0" prefWidth="335.0" style="-fx-background-color: white;" unFocusColor="#bfbfbf" />
                   <Label layoutX="435.0" layoutY="87.0" text="Administrerende bosted">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
                   <JFXTextField fx:id="ccExecutingMuniTextField" focusColor="#43a047" layoutX="435.0" layoutY="107.0" prefHeight="25.0" prefWidth="150.0" unFocusColor="#bfbfbf" />
+                  <Label layoutX="620.0" layoutY="87.0" text="Repræsentation">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="ccRepresentationTextField" focusColor="#43a047" layoutX="620.0" layoutY="107.0" prefWidth="150.0" unFocusColor="#bfbfbf" />
                   <Label layoutX="803.0" layoutY="85.0" text="Betalende bosted">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
                   <JFXTextField fx:id="ccPayingMuniTextField" focusColor="#43a047" layoutX="803.0" layoutY="105.0" prefWidth="150.0" unFocusColor="#bfbfbf" />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB" checkedColor="#43a047" layoutX="250.0" layoutY="170.0" text="Samtykke relevant" />
+                  <JFXCheckBox fx:id="ccConsentGivenCB" checkedColor="#43a047" layoutX="435.0" layoutY="170.0" text="Samtykke Givet" />
+                  <JFXCheckBox fx:id="ccRightToRepCB" checkedColor="#43a047" layoutX="620.0" layoutY="170.0" text="Ret til repræsentation" />
+                  <JFXCheckBox fx:id="ccInformedECardCB" checkedColor="#43a047" layoutX="803.0" layoutY="170.0" text="Informeret på elektronisk kort" />
+                  <Label layoutX="250.0" layoutY="222.0" text="Aftaler om processen">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <JFXTextArea fx:id="ccProcessAgreementsTextArea" focusColor="#43a047" layoutX="250.0" layoutY="242.0" prefHeight="100.0" prefWidth="335.0" style="-fx-background-color: white;" unFocusColor="#bfbfbf" />
                   <Label layoutX="620.0" layoutY="222.0" text="Specielle omstændigheder">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
                   <JFXTextArea fx:id="ccSpecialCircumstancesTextArea" focusColor="#43a047" layoutX="620.0" layoutY="242.0" prefHeight="100.0" prefWidth="335.0" style="-fx-background-color: white;" unFocusColor="#bfbfbf" />
-                  <JFXCheckBox fx:id="ccRightToRepCB" checkedColor="#43a047" layoutX="620.0" layoutY="170.0" text="Ret til repræsentation" />
-                  <JFXCheckBox fx:id="ccInformedECardCB" checkedColor="#43a047" layoutX="803.0" layoutY="170.0" text="Informeret på elektronisk kort" />
-                  <JFXCheckBox fx:id="ccConsentRelevantCB" checkedColor="#43a047" layoutX="250.0" layoutY="170.0" text="Samtykke relevant" />
-                  <JFXCheckBox fx:id="ccConsentGivenCB" checkedColor="#43a047" layoutX="435.0" layoutY="170.0" text="Samtykke Givet" />
-                  <Label layoutX="249.0" layoutY="20.0" text="Sags detaljer:">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
                   <Label layoutX="250.0" layoutY="370.0" text="Kort info">
                      <font>
                         <Font name="System Bold" size="12.0" />
