@@ -92,7 +92,12 @@ public class MainUIController implements Initializable {
         } else {
             ((HBox) adminBtn.getParent()).getChildren().remove(adminBtn);
         }
-        btnPaneMap.put(casesCreateBtn, createCasePane);
+        if(userDetails.get("role").equals("caseworker") || userDetails.get("role").equals("admin")){
+            btnPaneMap.put(casesCreateBtn, createCasePane);
+        } else {
+            ((HBox) casesCreateBtn.getParent()).getChildren().remove(casesCreateBtn);
+        }
+        
         btnPaneMap.keySet().forEach(btn -> btn.setOnAction(event -> changePane((JFXButton) event.getSource())));
         ccCreateCitizenBtn.setOnAction(event -> {
             Stage stage = new Stage();

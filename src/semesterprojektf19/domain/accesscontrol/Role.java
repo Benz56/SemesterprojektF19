@@ -4,7 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Role {
-    EMPLOYEE(), //TODO implementer permisions.
+    CASEWORKER(), //TODO implementer permisions.
+    SOCIALWORKER(),
     CITIZEN(),
     ADMIN(Permission.ALL);
 
