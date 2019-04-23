@@ -71,15 +71,18 @@ public class MainUIController implements Initializable {
     @FXML
     private JFXCheckBox ccRightToRepCB, ccInformedECardCB, ccConsentRelevantCB, ccConsentGivenCB;
 
-    //Admin nodes:
-    @FXML
-    private JFXButton adminCreateUserBtn, adminEditUserBtn, adminDeleteUserBtn;
+    //Diary nodes.
     @FXML
     private JFXComboBox<?> diaryCaseCb;
     @FXML
     private JFXListView<?> diarynotesListview;
     @FXML
     private JFXButton diaryCreateNoteBtn;
+    
+    //Admin nodes:
+    @FXML
+    private JFXButton adminCreateUserBtn, adminEditUserBtn, adminDeleteUserBtn;
+    
 
     public MainUIController(Map<String, String> userDetails) {
         this.userDetails = userDetails;
@@ -136,6 +139,25 @@ public class MainUIController implements Initializable {
             });
             try {
                 stage.setScene(new Scene(new FXMLLoader(getClass().getResource("RegisterEmployeeUIDocument.fxml")).load()));
+                stage.show();
+            } catch (IOException ex) {
+                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        
+        diaryCreateNoteBtn.setOnAction(event -> {
+            Stage stage = new Stage();
+            stage.setTitle("Opret Notat");
+            stage.setResizable(false);
+            stage.focusedProperty().addListener((observable, oldFocus, newFocus) -> {
+                if (!newFocus) {
+                    stage.close();
+                }
+            });
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateNoteUIDocument.fxml"));
+                fxmlLoader.setControllerFactory(controllerFactory -> new CreateNoteUIController(this));
+                stage.setScene(new Scene(fxmlLoader.load()));
                 stage.show();
             } catch (IOException ex) {
                 Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
@@ -212,5 +234,9 @@ public class MainUIController implements Initializable {
         }
         homeCitizenCountLabel.setText(homeCitizenCountLabel.getText() + domainFacade.getUserCitizens().size());
         ccCitizenListView.getItems().setAll(domainFacade.matchCitizens(ccSearchCitizenTextField.getText()));
+    }
+
+    public DomainFacade getDomainFacade() {
+        return domainFacade;
     }
 }

@@ -99,7 +99,7 @@
       </HBox>
       <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
-            <AnchorPane fx:id="homePane" prefHeight="700.0" prefWidth="1000.0" visible="false">
+            <AnchorPane fx:id="homePane" prefHeight="700.0" prefWidth="1000.0">
                <children>
                   <Label fx:id="homeHelloLabel" layoutX="50.0" layoutY="50.0" prefHeight="35.0" prefWidth="757.0" text="Hej " AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
                      <font>
@@ -220,11 +220,11 @@
                   <JFXTextField fx:id="ccShortInfoTextField" focusColor="#43a047" layoutX="250.0" layoutY="390.0" prefHeight="25.0" prefWidth="335.0" unFocusColor="#bfbfbf" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="diaryPane" disable="true" prefHeight="700.0" prefWidth="1000.0">
+            <AnchorPane fx:id="diaryPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
                <children>
-                  <JFXComboBox fx:id="diaryCaseCb" layoutX="22.0" layoutY="33.0" prefHeight="31.0" prefWidth="292.0" />
-                  <JFXListView fx:id="diarynotesListview" layoutX="25.0" layoutY="95.0" prefHeight="583.0" prefWidth="982.0" />
-                  <JFXButton fx:id="diaryCreateNoteBtn" layoutX="353.0" layoutY="33.0" prefHeight="31.0" prefWidth="171.0" text="Opret notat" />
+                  <JFXComboBox fx:id="diaryCaseCb" focusColor="#43a047" layoutX="25.0" layoutY="24.0" prefHeight="31.0" prefWidth="292.0" promptText="Vælg Sag" unFocusColor="#bfbfbf" />
+                  <JFXListView fx:id="diarynotesListview" layoutX="25.0" layoutY="95.0" prefHeight="585.0" prefWidth="980.0" style="-fx-background-color: #E5E5E5;" />
+                  <JFXButton fx:id="diaryCreateNoteBtn" layoutX="353.0" layoutY="24.0" prefHeight="31.0" prefWidth="186.0" style="-fx-background-color: #E5E5E5;" text="Opret notat" textFill="#43a047" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="adminPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
