@@ -41,7 +41,7 @@ public class RegisterEmployeeUIController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        roleComboBox.getItems().addAll("Employee", "Admin");
+        roleComboBox.getItems().addAll("Caseworker", "Socialworker", "Admin");
         firstnameTextField.textProperty().addListener(listener -> valid = validate());
         lastnameTextField.textProperty().addListener(listener -> valid = validate());
         birthdayDatePicker.valueProperty().addListener(listener -> valid = validate());

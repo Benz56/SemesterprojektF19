@@ -24,7 +24,10 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
     public boolean registerEmployee(String username, String password, String firstName, String lastName, String birthday, int controlNumber, String address, int phoneNumber, String role) {
         Person person;
         switch (Role.valueOf(role)) {
-            case EMPLOYEE:
+            case CASEWORKER:
+                person = new Worker(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.valueOf(role));
+                break;
+            case SOCIALWORKER:
                 person = new Worker(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.valueOf(role));
                 break;
             case ADMIN:
