@@ -23,4 +23,7 @@ public interface DomainFacade {
     public List<String> getUserCitizens();
 
     public Map<String, String> getCitizenDetails(String citizen);
+    
+    
+    
 }

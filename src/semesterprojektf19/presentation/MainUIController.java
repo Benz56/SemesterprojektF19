@@ -40,9 +40,9 @@ public class MainUIController implements Initializable {
 
     //Global nodes:
     @FXML
-    private JFXButton homeBtn, createCaseBtn, casesBtn, adminBtn, casesCreateBtn, diaryBtn;
+    private JFXButton homeBtn, casesBtn, adminBtn, casesCreateBtn, diaryBtn;
     @FXML
-    private AnchorPane homePane, createNotePane, casesPane, adminPane, createCasePane, diaryPane;
+    private AnchorPane homePane, casesPane, adminPane, createCasePane, diaryPane;
 
     @FXML
     private JFXListView<String> clientList;
@@ -74,6 +74,12 @@ public class MainUIController implements Initializable {
     //Admin nodes:
     @FXML
     private JFXButton adminCreateUserBtn, adminEditUserBtn, adminDeleteUserBtn;
+    @FXML
+    private JFXComboBox<?> diaryCaseCb;
+    @FXML
+    private JFXListView<?> diarynotesListview;
+    @FXML
+    private JFXButton diaryCreateNoteBtn;
 
     public MainUIController(Map<String, String> userDetails) {
         this.userDetails = userDetails;
@@ -84,7 +90,6 @@ public class MainUIController implements Initializable {
         homeHelloLabel.setText(homeHelloLabel.getText() + userDetails.get("firstname") + " " + userDetails.get("lastname"));
         selectedBtn = homeBtn;
         btnPaneMap.put(homeBtn, homePane);
-        btnPaneMap.put(createCaseBtn, createNotePane);
         btnPaneMap.put(casesBtn, casesPane);
         btnPaneMap.put(diaryBtn, diaryPane);
         if (userDetails.get("role").equals("admin")) {
