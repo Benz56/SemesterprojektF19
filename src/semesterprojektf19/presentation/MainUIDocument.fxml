@@ -39,20 +39,6 @@
                   </AnchorPane>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="createCaseBtn" focusTraversable="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #E5E5E5;" text=".">
-               <graphic>
-                  <AnchorPane prefHeight="100.0" prefWidth="100.0">
-                     <children>
-                        <FontAwesomeIconView glyphName="STICKY_NOTE" layoutX="20.0" layoutY="57.0" size="50" />
-                        <Label layoutX="7.0" layoutY="69.0" style="-fx-text-fill: #43A047;" text="Opret Notat">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-               </graphic>
-            </JFXButton>
             <JFXButton fx:id="casesBtn" focusTraversable="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #E5E5E5;" text=".">
                <graphic>
                   <AnchorPane prefHeight="100.0" prefWidth="100.0">
@@ -113,7 +99,7 @@
       </HBox>
       <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
-            <AnchorPane fx:id="homePane" prefHeight="700.0" prefWidth="1000.0">
+            <AnchorPane fx:id="homePane" prefHeight="700.0" prefWidth="1000.0" visible="false">
                <children>
                   <Label fx:id="homeHelloLabel" layoutX="50.0" layoutY="50.0" prefHeight="35.0" prefWidth="757.0" text="Hej " AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
                      <font>
@@ -134,11 +120,6 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="createNotePane" disable="true" prefHeight="700.0" prefWidth="1000.0" visible="false">
-               <children>
-                  <Label layoutX="50.0" layoutY="50.0" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="casesPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
@@ -239,9 +220,11 @@
                   <JFXTextField fx:id="ccShortInfoTextField" focusColor="#43a047" layoutX="250.0" layoutY="390.0" prefHeight="25.0" prefWidth="335.0" unFocusColor="#bfbfbf" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="diaryPane" disable="true" prefHeight="700.0" prefWidth="1000.0" visible="false">
+            <AnchorPane fx:id="diaryPane" disable="true" prefHeight="700.0" prefWidth="1000.0">
                <children>
-                  <Label layoutX="50.0" layoutY="50.0" />
+                  <JFXComboBox fx:id="diaryCaseCb" layoutX="22.0" layoutY="33.0" prefHeight="31.0" prefWidth="292.0" />
+                  <JFXListView fx:id="diarynotesListview" layoutX="25.0" layoutY="95.0" prefHeight="583.0" prefWidth="982.0" />
+                  <JFXButton fx:id="diaryCreateNoteBtn" layoutX="353.0" layoutY="33.0" prefHeight="31.0" prefWidth="171.0" text="Opret notat" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="adminPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
