@@ -1,38 +1,28 @@
 package semesterprojektf19.domain;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import semesterprojektf19.domain.accesscontrol.Role;
+import semesterprojektf19.persistence.Persistence;
 
-public class Citizen extends Person implements Comparable<Citizen>, Serializable {
+public class Citizen extends Person {
 
-    private final String birthday, controlNumber, cpr;
+    private final String cpr;
     private final List<Case> cases = new ArrayList<>();
-    private int phoneNumber;
 
-    public Citizen(String firstName, String lastName, String birthday, String controlNumber, int phoneNumber, String address) {
-        super(UUID.randomUUID(), firstName, lastName, phoneNumber, address, Role.CITIZEN);
-        this.birthday = birthday;
-        this.controlNumber = controlNumber;
-        this.cpr = this.birthday + controlNumber;
+    public Citizen(UUID uuid, String firstName, String lastName, String birthday, int controlNumber, String address, int phoneNumber, Role role) {
+        super(uuid, firstName, lastName, birthday, controlNumber, address, phoneNumber, role);
+        this.cpr = birthday + "-" + controlNumber;
     }
 
-    public void addCase(Case case1) {
-        cases.add(case1);
+    public void addCase(Case c) {
+        cases.add(c);
     }
 
     public List<Case> getCases() {
         return cases;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public String getControlNumber() {
-        return controlNumber;
     }
 
     public String getCpr() {
@@ -40,22 +30,28 @@ public class Citizen extends Person implements Comparable<Citizen>, Serializable
     }
 
     @Override
-    public int compareTo(Citizen o) {
-        int r = this.birthday.compareTo(o.birthday);
-        if (r == 0) {
-            r = getLastName().compareTo(o.getLastName());
-        }
-        if (r == 0) {
-            r = getFirstName().compareTo(o.getFirstName());
-        }
-        if (r == 0) {
-            r = Integer.compare(this.phoneNumber, o.phoneNumber);
-        }
-        return r;
+    public void saveToFile() {
+        Persistence.INSTANCE.writeObjectToFile("citizens/" + cpr + ".ser", this, false);
     }
 
     @Override
     public String toString() {
-        return getFirstName() + " " + getLastName() + "(Birthday: " + birthday + ")\n";
+        return getFirstName() + " " + getLastName() + " (Birthday: " + getBirthday() + ")\n";
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 67 * hash + Objects.hashCode(this.cpr);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        return this == obj || this.cpr.equals(((Citizen) obj).cpr);
+    }
+
 }

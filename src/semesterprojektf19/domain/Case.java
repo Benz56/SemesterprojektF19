@@ -4,15 +4,19 @@ import java.io.Serializable;
 
 public class Case implements Serializable {
 
+    private final Worker caseWorker;
+    private final Citizen citizen;
     private String guardianship, representation, agreementsAboutFurtherProcess, specialCircumstances, executingMunicipality, payingMunicipality;
     private boolean rightToRepresentation, informedOnElectronicInfo, consentRelevant, consentObtained;
     private Inquiry inquiry;
     private Elucidation elucidation;
     private Diary diary;
 
-    public Case(Inquiry inquiry) {
+    public Case(Worker caseWorker, Citizen citizen, Inquiry inquiry) {
+        this.citizen = citizen;
         this.inquiry = inquiry;
         this.diary = new Diary(); // Kan fjernes hvis dagbogen skal oprettes et andet sted, men det skal bare tilhøre sagen.
+        this.caseWorker = caseWorker;
     }
 
     public void startElucidation(String background) {
@@ -115,4 +119,11 @@ public class Case implements Serializable {
         this.elucidation = elucidation;
     }
 
+    public Worker getCaseWorker() {
+        return caseWorker;
+    }
+
+    public Citizen getCitizen() {
+        return citizen;
+    }
 }

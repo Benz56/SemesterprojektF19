@@ -38,17 +38,12 @@
                </StackPane.margin>
             </AnchorPane>
             <AnchorPane fx:id="registerPane" prefWidth="0.0" stylesheets="@css/LoginUICSS.css" visible="false">
-               <StackPane.margin>
-                  <Insets />
-               </StackPane.margin>
                <children>
-                  <JFXTextField fx:id="firstnameTextField" focusColor="#43a047" labelFloat="true" layoutX="50.0" layoutY="30.0" prefHeight="25.0" prefWidth="140.0" promptText="Fornavn" unFocusColor="#bfbfbf" />
-                  <JFXTextField fx:id="lastnameTextField" focusColor="#43a047" labelFloat="true" layoutX="210.0" layoutY="30.0" prefHeight="25.0" prefWidth="140.0" promptText="Efternavn" unFocusColor="#bfbfbf" />
-                  <JFXTextField fx:id="registerUsernameTextField" focusColor="#43a047" labelFloat="true" layoutX="50.0" layoutY="85.0" prefHeight="25.0" prefWidth="140.0" promptText="Username" unFocusColor="#bfbfbf" />
-                  <JFXPasswordField fx:id="registerPasswordField" focusColor="#43a047" labelFloat="true" layoutX="210.0" layoutY="85.0" prefHeight="25.0" prefWidth="140.0" promptText="Adgangskode" unFocusColor="#bfbfbf" />
-                  <JFXPasswordField fx:id="confirmPasswordField" focusColor="#43a047" labelFloat="true" layoutX="50.0" layoutY="130.0" prefHeight="25.0" prefWidth="140.0" promptText="Bekræft adgangskode" unFocusColor="#bfbfbf" />
-                  <Label fx:id="registerLabel" focusTraversable="false" layoutX="210.0" layoutY="134.0" prefHeight="17.0" prefWidth="140.0" />
-                  <JFXButton fx:id="registerBtn" layoutX="50.0" layoutY="170.0" prefWidth="300.0" style="-fx-background-color: E5E5E5;" text="Register" />
+                  <Label layoutX="87.0" layoutY="68.0" prefHeight="90.0" prefWidth="226.0" style="-fx-text-fill: red;" text="Kontakt en administrator for at oprette en bruger eller gendanne dit kodeord" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children>

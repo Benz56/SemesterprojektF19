@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -11,14 +15,14 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" stylesheets="@css/MainUICSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="semesterprojektf19.presentation.MainUIController">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" stylesheets="@css/MainUICSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="semesterprojektf19.presentation.MainUIController">
    <children>
       <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@resources/images/Logo.png" />
          </image>
       </ImageView>
-      <JFXListView fx:id="clientList" prefHeight="700.0" prefWidth="200.0" style="-fx-background-color: #E5E5E5;" styleClass="client-list-view" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="100.0" />
+      <JFXListView fx:id="clientList" maxWidth="-Infinity" prefHeight="700.0" prefWidth="200.0" style="-fx-background-color: #E5E5E5;" styleClass="client-list-view" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="100.0" />
       <HBox layoutX="200.0" prefHeight="100.0" prefWidth="1000.0" style="-fx-background-color: #E5E5E5;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0">
          <children>
             <JFXButton fx:id="homeBtn" focusTraversable="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #FFFFFF;" text=".">
@@ -26,7 +30,7 @@
                   <AnchorPane prefHeight="100.0" prefWidth="100.0">
                      <children>
                         <FontAwesomeIconView glyphName="USER" layoutX="24.0" layoutY="57.0" size="50" />
-                        <Label layoutX="27.0" layoutY="69.0" text="Hjem">
+                        <Label layoutX="27.0" layoutY="69.0" style="-fx-text-fill: #43A047;" text="Hjem">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -40,7 +44,7 @@
                   <AnchorPane prefHeight="100.0" prefWidth="100.0">
                      <children>
                         <FontAwesomeIconView glyphName="STICKY_NOTE" layoutX="20.0" layoutY="57.0" size="50" />
-                        <Label layoutX="7.0" layoutY="69.0" text="Opret Notat">
+                        <Label layoutX="7.0" layoutY="69.0" style="-fx-text-fill: #43A047;" text="Opret Notat">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -54,7 +58,35 @@
                   <AnchorPane prefHeight="100.0" prefWidth="100.0">
                      <children>
                         <FontAwesomeIconView glyphName="ARCHIVE" layoutX="17.0" layoutY="57.0" size="50" />
-                        <Label layoutX="26.0" layoutY="69.0" text="Sager">
+                        <Label layoutX="27.0" layoutY="69.0" style="-fx-text-fill: #43A047;" text="Sager">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="casesCreateBtn" focusTraversable="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #E5E5E5;" text=".">
+               <graphic>
+                  <AnchorPane prefHeight="100.0" prefWidth="100.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="FOLDER_OPEN" layoutX="18.0" layoutY="57.0" size="50" />
+                        <Label layoutX="14.0" layoutY="69.0" style="-fx-text-fill: #43A047;" text="Opret Sag">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="diaryBtn" focusTraversable="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #E5E5E5;" text=".">
+               <graphic>
+                  <AnchorPane prefHeight="100.0" prefWidth="100.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="BOOK" layoutX="21.0" layoutY="57.0" size="50" />
+                        <Label layoutX="20.0" layoutY="69.0" style="-fx-text-fill: #43A047;" text="Dagbog">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -68,7 +100,7 @@
                   <AnchorPane prefHeight="100.0" prefWidth="100.0">
                      <children>
                         <FontAwesomeIconView glyphName="USER_SECRET" layoutX="21.0" layoutY="57.0" size="50" />
-                        <Label layoutX="22.0" layoutY="69.0" text="Admin">
+                        <Label layoutX="22.0" layoutY="69.0" style="-fx-text-fill: #43A047;" text="Admin">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -83,24 +115,141 @@
          <children>
             <AnchorPane fx:id="homePane" prefHeight="700.0" prefWidth="1000.0">
                <children>
-                  <Label layoutX="50.0" layoutY="50.0" text="1" />
+                  <Label fx:id="homeHelloLabel" layoutX="50.0" layoutY="50.0" prefHeight="35.0" prefWidth="757.0" text="Hej " AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Label>
+                  <Label fx:id="homePlaceLabel" layoutX="50.0" layoutY="100.0" prefHeight="35.0" prefWidth="757.0" text="Bosted: " AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="100.0">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="homeCitizenCountLabel" layoutX="50.0" layoutY="150.0" prefHeight="35.0" prefWidth="757.0" text="Antal borgere: " AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="150.0">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="homeTargetAreasLabel" layoutX="50.0" layoutY="200.0" prefHeight="35.0" prefWidth="757.0" text="Fagområder: " AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="200.0">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="createNotePane" prefHeight="700.0" prefWidth="1000.0" visible="false">
+            <AnchorPane fx:id="createNotePane" disable="true" prefHeight="700.0" prefWidth="1000.0" visible="false">
                <children>
-                  <Label layoutX="50.0" layoutY="50.0" text="2" />
+                  <Label layoutX="50.0" layoutY="50.0" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="casesPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
                <children>
-                  <Label layoutX="50.0" layoutY="50.0" text="3" />
+                  <Label layoutX="50.0" layoutY="50.0" text="Borger:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="caseCitizenNameTextField" editable="false" layoutX="110.0" layoutY="46.0" prefHeight="25.0" prefWidth="300.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="46.0" />
+                  <Label layoutX="50.0" layoutY="100.0" text="CPR:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="100.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="caseCPRTextField" editable="false" layoutX="110.0" layoutY="96.0" prefHeight="25.0" prefWidth="300.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="96.0" />
+                  <Label layoutX="50.0" layoutY="150.0" text="Adresse:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="150.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="caseAddressTextField" editable="false" layoutX="110.0" layoutY="146.0" prefHeight="25.0" prefWidth="300.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="146.0" />
+                  <Label layoutX="50.0" layoutY="300.0" text="Seneste Notater:" AnchorPane.leftAnchor="50.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <JFXListView fx:id="caseLatestNotesListView" layoutX="50.0" layoutY="330.0" prefHeight="320.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="330.0" />
+                  <JFXComboBox fx:id="caseCasesCB" layoutX="50.0" layoutY="260.0" prefHeight="25.0" prefWidth="359.0" AnchorPane.leftAnchor="50.0" />
+                  <Label layoutX="50.0" layoutY="243.0" text="Sager:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="createCasePane" prefHeight="700.0" prefWidth="1000.0" visible="false">
+               <children>
+                  <JFXButton fx:id="ccCreateCitizenBtn" layoutX="20.0" layoutY="655.0" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Opret Ny Borger" textFill="#43a047" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
+                  <Label layoutX="20.0" layoutY="20.0" text="Vælg borger:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="ccSearchCitizenTextField" focusColor="#43a047" labelFloat="true" layoutX="20.0" layoutY="60.0" prefHeight="25.0" prefWidth="200.0" promptText="Søg efter borger" unFocusColor="#bfbfbf" />
+                  <JFXListView fx:id="ccCitizenListView" layoutX="20.0" layoutY="100.0" prefHeight="540.0" prefWidth="200.0" style="-fx-background-color: #E5E5E5;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" />
+                  <JFXButton layoutX="780.0" layoutY="655.0" onAction="#onCreateCase" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Opret Sag" textFill="#43a047" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+                  <Label layoutX="250.0" layoutY="87.0" text="Værge">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="ccGuardianTextField" focusColor="#43a047" layoutX="250.0" layoutY="107.0" prefHeight="25.0" prefWidth="150.0" unFocusColor="#bfbfbf" />
+                  <Label layoutX="620.0" layoutY="87.0" text="Repræsentation">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="ccRepresentationTextField" focusColor="#43a047" layoutX="620.0" layoutY="107.0" prefWidth="150.0" unFocusColor="#bfbfbf" />
+                  <Label layoutX="250.0" layoutY="222.0" text="Aftaler om processen">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <JFXTextArea fx:id="ccProcessAgreementsTextArea" focusColor="#43a047" layoutX="250.0" layoutY="242.0" prefHeight="100.0" prefWidth="335.0" style="-fx-background-color: white;" unFocusColor="#bfbfbf" />
+                  <Label layoutX="435.0" layoutY="87.0" text="Administrerende bosted">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="ccExecutingMuniTextField" focusColor="#43a047" layoutX="435.0" layoutY="107.0" prefHeight="25.0" prefWidth="150.0" unFocusColor="#bfbfbf" />
+                  <Label layoutX="803.0" layoutY="85.0" text="Betalende bosted">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="ccPayingMuniTextField" focusColor="#43a047" layoutX="803.0" layoutY="105.0" prefWidth="150.0" unFocusColor="#bfbfbf" />
+                  <Label layoutX="620.0" layoutY="222.0" text="Specielle omstændigheder">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <JFXTextArea fx:id="ccSpecialCircumstancesTextArea" focusColor="#43a047" layoutX="620.0" layoutY="242.0" prefHeight="100.0" prefWidth="335.0" style="-fx-background-color: white;" unFocusColor="#bfbfbf" />
+                  <JFXCheckBox fx:id="ccRightToRepCB" checkedColor="#43a047" layoutX="620.0" layoutY="170.0" text="Ret til repræsentation" />
+                  <JFXCheckBox fx:id="ccInformedECardCB" checkedColor="#43a047" layoutX="803.0" layoutY="170.0" text="Informeret på elektronisk kort" />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB" checkedColor="#43a047" layoutX="250.0" layoutY="170.0" text="Samtykke relevant" />
+                  <JFXCheckBox fx:id="ccConsentGivenCB" checkedColor="#43a047" layoutX="435.0" layoutY="170.0" text="Samtykke Givet" />
+                  <Label layoutX="249.0" layoutY="20.0" text="Sags detaljer:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="250.0" layoutY="370.0" text="Kort info">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="ccShortInfoTextField" focusColor="#43a047" layoutX="250.0" layoutY="390.0" prefHeight="25.0" prefWidth="335.0" unFocusColor="#bfbfbf" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="diaryPane" disable="true" prefHeight="700.0" prefWidth="1000.0" visible="false">
+               <children>
+                  <Label layoutX="50.0" layoutY="50.0" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="adminPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
                <children>
-                  <Label layoutX="50.0" layoutY="50.0" text="4" />
-               </children>
-            </AnchorPane>
+                  <JFXButton fx:id="adminCreateUserBtn" layoutX="29.0" layoutY="30.0" prefWidth="100.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Opret Bruger" textFill="#43a047" />
+                  <JFXButton fx:id="adminEditUserBtn" layoutX="143.0" layoutY="30.0" prefWidth="100.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Rediger Bruger" textFill="#43a047" />
+                  <JFXButton fx:id="adminDeleteUserBtn" layoutX="254.0" layoutY="30.0" prefWidth="100.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Slet Bruger" textFill="#43a047" />
+               </children></AnchorPane>
          </children>
       </StackPane>
    </children>

@@ -10,9 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -25,26 +23,23 @@ import java.util.logging.Logger;
 public enum Persistence {
     INSTANCE;
 
-    private final Map<FileType, File> files = new HashMap<>();
+    private final File accounts;
 
     private Persistence() {
         new File("persons").mkdirs();
-        for (FileType fileType : FileType.values()) {
-            File file = new File("./", fileType.getFileName());
-            if (!file.exists()) {
-                try {
-                    file.createNewFile();
-                } catch (IOException ex) {
-                    Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        new File("citizens").mkdirs();
+        accounts = new File("./accounts.csv");
+        if (!accounts.exists()) {
+            try {
+                accounts.createNewFile();
+            } catch (IOException ex) {
+                Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
             }
-            files.put(fileType, file);
         }
     }
 
     public Object authenticate(String username, String password) {
-        File file = files.get(FileType.ACCOUNTS);
-        try (Scanner scanner = new Scanner(file)) {
+        try (Scanner scanner = new Scanner(accounts)) {
             while (scanner.hasNextLine()) {
                 String[] tokens = scanner.nextLine().split(",");
                 if (username.equals(tokens[1]) && password.equalsIgnoreCase(tokens[2])) {
@@ -58,14 +53,13 @@ public enum Persistence {
     }
 
     public boolean register(String username, String password, UUID uuid, Object person) {
-        File file = files.get(FileType.ACCOUNTS);
-        try (Scanner scanner = new Scanner(file); BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+        try (Scanner scanner = new Scanner(accounts); BufferedWriter writer = new BufferedWriter(new FileWriter(accounts, true))) {
             while (scanner.hasNextLine()) {
-                if (username.equalsIgnoreCase(scanner.nextLine().split(",")[0])) {
+                if (username.equalsIgnoreCase(scanner.nextLine().split(",")[1])) {
                     return false;
                 }
             }
-            writer.write((file.length() == 0 ? "" : "\n") + uuid.toString() + "," + username + "," + password);
+            writer.write((accounts.length() == 0 ? "" : "\n") + uuid.toString() + "," + username + "," + password);
             SerializableUtil.writeObject("persons/" + uuid.toString() + ".ser", person, false);
         } catch (IOException ex) {
             Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
