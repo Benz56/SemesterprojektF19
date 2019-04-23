@@ -24,6 +24,6 @@ public interface DomainFacade {
 
     public Map<String, String> getCitizenDetails(String citizen);
     
-    
+
     
 }
