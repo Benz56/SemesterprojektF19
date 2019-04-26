@@ -6,8 +6,8 @@ import java.util.List;
 
 public class DiaryNote {
 
-    private String note;
-    private Date date;
+    private String titel, note;
+    private Date date, dateOfObservation;
     private Person creator;
     private List<Topic> topics; // til at tilføje emne til note.
     private List<DiaryNote> noteVersions; // til at holde de forskellige versioner af noten. 
@@ -63,13 +63,31 @@ public class DiaryNote {
     public List<Topic> getTopicList(){
         return topics;
     }
+
+    public void setTitel(String titel) {
+        this.titel = titel;
+    }
+
+    public void setDateOfObservation(Date dateOfObservation) {
+        this.dateOfObservation = dateOfObservation;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
+    }
+
+    public void setNoteVersions(List<DiaryNote> noteVersions) {
+        this.noteVersions = noteVersions;
+    }
+    
     
     
 
     @Override
     public String toString() {
-        return this.note + "\n" + " Note last edited on: " + this.date + " "
-                + "by: " + creator.getFirstName() + " " + creator.getLastName() + "\n";
+        return this.titel + "\n\n" + "Observations dato: " + this.dateOfObservation +  
+                "\n\n" + this.note + "\n" + " Sidst redigeret: " + this.date +
+                " af: " + creator.getFirstName() + " " + creator.getLastName() + "\n";
     }
 
 }
