@@ -5,6 +5,7 @@
  */
 package semesterprojektf19.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +61,9 @@ public class DomainFacadeImpl implements DomainFacade {
     public void refresh() {
         citizenManager.refresh();
     }
-
+    
+    
+    
     @Override
     public Map<String, String> getCitizenDetails(String citizenString) {
         Map<String, String> details = new HashMap<>();
@@ -69,6 +72,14 @@ public class DomainFacadeImpl implements DomainFacade {
         details.put("cpr", citizen.getCpr());
         details.put("address", citizen.getAddress());
         details.put("cases", citizen.getCases().stream().map(c -> c.getInquiry().getShortInfo()).collect(Collectors.joining("\n")));
+        return details;
+    }
+
+    @Override
+    public Map<String,String> getDiaryDetails(String citizenString, int caseIndex) {
+        Map<String,String> details = new HashMap<>();
+        Citizen citizen = citizenManager.getCitizen(citizenString);
+        details.put("diaryNotes", citizen.getCase(caseIndex).getDiary().getNotes().stream().map(d -> d.getTitel()).collect(Collectors.joining("\n")));
         return details;
     }
     

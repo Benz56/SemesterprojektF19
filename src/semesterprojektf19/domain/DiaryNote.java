@@ -15,8 +15,9 @@ public class DiaryNote {
     // TODO Implementer date picker i javaFX. skal holde dato for observation som ikke nødvendigvis er den samme som oprettelses dato 
     // TODO implementere 
     
-    public DiaryNote(Person creator, String note) {
+    public DiaryNote(Person creator, String note, String titel) {
         this.note = note;
+        this.titel = titel;
         this.date = new Date();
         this.creator = creator;
         this.topics = new ArrayList<>();
@@ -67,6 +68,11 @@ public class DiaryNote {
     public void setTitel(String titel) {
         this.titel = titel;
     }
+
+    public String getTitel() {
+        return titel;
+    }
+    
 
     public void setDateOfObservation(Date dateOfObservation) {
         this.dateOfObservation = dateOfObservation;
