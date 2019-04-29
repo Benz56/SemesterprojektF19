@@ -18,10 +18,12 @@ public class DiaryNoteFacadeImpl implements DiaryNoteFacade {
     
     
 
-    private final DomainFacadeImpl domainFacade = 
-    private final CitizenManager citizenManager = domainFacade.getCitizenManager();
+    private final DomainFacadeImpl domainFacadeImpl; 
+    private final CitizenManager citizenManager;
     
-    public DiaryNoteFacadeImpl(){
+    public DiaryNoteFacadeImpl(DomainFacadeImpl domainFacadeImpl){
+        this.domainFacadeImpl = domainFacadeImpl;
+        this.citizenManager = domainFacadeImpl.getCitizenManager();
     }
     
     @Override
@@ -31,6 +33,7 @@ public class DiaryNoteFacadeImpl implements DiaryNoteFacade {
         int index = Integer.parseInt(noteDetails.get("index"));
         Case casefile = citizen.getCase(index);
         casefile.getDiary().createNote((Worker)UserContainer.getUser(), noteDetails.get("note"), noteDetails.get("titel"));
+        citizen.saveToFile();
         //For debugging
         System.out.println("Note created for: "+ citizen.getFirstName() + "on case index: " +index);
         System.out.println(citizen.getCase(index).getDiary().getNotes());

@@ -1,10 +1,11 @@
 package semesterprojektf19.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DiaryNote {
+public class DiaryNote implements Serializable{
 
     private String titel, note;
     private Date date, dateOfObservation;
@@ -91,8 +92,10 @@ public class DiaryNote {
 
     @Override
     public String toString() {
-        return this.titel + "\n\n" + "Observations dato: " + this.dateOfObservation +  
-                "\n\n" + this.note + "\n" + " Sidst redigeret: " + this.date +
+        return "Titel: " + this.titel + "\n\n" + 
+                "Observation foretaget: " + this.dateOfObservation + "\n\n" +  
+                this.note + "\n\n\n\n" + 
+                " Sidst redigeret: " + this.date +
                 " af: " + creator.getFirstName() + " " + creator.getLastName() + "\n";
     }
 

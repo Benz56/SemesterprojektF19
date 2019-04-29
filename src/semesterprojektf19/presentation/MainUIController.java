@@ -34,7 +34,7 @@ import semesterprojektf19.domain.DomainFacadeImpl;
 
 public class MainUIController implements Initializable {
 
-    private final DomainFacade domainFacade = new DomainFacadeImpl();
+    private final DomainFacadeImpl domainFacade = new DomainFacadeImpl();
     private final Map<String, String> userDetails;
     private final Map<JFXButton, AnchorPane> btnPaneMap = new HashMap<>();
     private JFXButton selectedBtn;
@@ -247,7 +247,7 @@ public class MainUIController implements Initializable {
         ccCitizenListView.getItems().setAll(domainFacade.matchCitizens(ccSearchCitizenTextField.getText()));
     }
 
-    public DomainFacade getDomainFacade() {
+    public DomainFacadeImpl getDomainFacade() {
         return domainFacade;
     }
 }

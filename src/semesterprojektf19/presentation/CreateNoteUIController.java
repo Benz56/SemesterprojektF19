@@ -33,7 +33,7 @@ import semesterprojektf19.domain.DomainFacadeImpl;
 public class CreateNoteUIController implements Initializable {
 
     private final MainUIController mainController;
-    private final DiaryNoteFacade diaryNoteFacade = new DiaryNoteFacadeImpl();
+    private final DiaryNoteFacadeImpl diaryNoteFacade;
     
     private String index;
     private String citizenInfo;
@@ -55,6 +55,7 @@ public class CreateNoteUIController implements Initializable {
         this.mainController = mainUIController;
         this.index = index;
         this.citizenInfo = citizenInfo;
+        this.diaryNoteFacade = new DiaryNoteFacadeImpl(mainController.getDomainFacade());
         
     }
 
