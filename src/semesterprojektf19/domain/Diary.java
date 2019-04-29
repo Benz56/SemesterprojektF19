@@ -17,8 +17,8 @@ public class Diary implements Serializable {
         list = new ArrayList<>();
     }
 
-    public void createNote(Person person, String note, String titel) {
-        list.add(new DiaryNote(person, note, titel));
+    public void createNote(Person person, String note, String titel, String dateOfObservation) {
+        list.add(new DiaryNote(person, note, titel, dateOfObservation));
     }
 
     public void editNote(int index, Person person, String note) {

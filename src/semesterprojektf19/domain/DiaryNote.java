@@ -6,9 +6,11 @@ import java.util.Date;
 import java.util.List;
 
 public class DiaryNote implements Serializable{
-
-    private String titel, note;
-    private Date date, dateOfObservation;
+    
+    private static final long serialVersionUID = 2266792567973358800L;
+    
+    private String titel, note, dateOfObservation;
+    private Date date;
     private Person creator;
     private List<Topic> topics; // til at tilføje emne til note.
     private List<DiaryNote> noteVersions; // til at holde de forskellige versioner af noten. 
@@ -16,11 +18,13 @@ public class DiaryNote implements Serializable{
     // TODO Implementer date picker i javaFX. skal holde dato for observation som ikke nødvendigvis er den samme som oprettelses dato 
     // TODO implementere 
     
-    public DiaryNote(Person creator, String note, String titel) {
+    public DiaryNote(Person creator, String note, String titel, String dateOfObservation) {
+        this.creator = creator;
         this.note = note;
         this.titel = titel;
+        this.dateOfObservation = dateOfObservation;
+        
         this.date = new Date();
-        this.creator = creator;
         this.topics = new ArrayList<>();
         this.noteVersions = new ArrayList<>();
     }
@@ -75,7 +79,7 @@ public class DiaryNote implements Serializable{
     }
     
 
-    public void setDateOfObservation(Date dateOfObservation) {
+    public void setDateOfObservation(String dateOfObservation) {
         this.dateOfObservation = dateOfObservation;
     }
 
@@ -92,11 +96,11 @@ public class DiaryNote implements Serializable{
 
     @Override
     public String toString() {
-        return "Titel: " + this.titel + "\n\n" + 
+        return "Titel: " + this.titel + "\n" + 
                 "Observation foretaget: " + this.dateOfObservation + "\n\n" +  
-                this.note + "\n\n\n\n" + 
+                this.note + "\n\n\n" + 
                 " Sidst redigeret: " + this.date +
-                " af: " + creator.getFirstName() + " " + creator.getLastName() + "\n";
+                " af: " + creator.getFirstName() + " " + creator.getLastName() + "\n\n\n\n";
     }
 
 }

@@ -78,7 +78,7 @@ public class CreateNoteUIController implements Initializable {
             noteDetails.put("citizenInfo", citizenInfo);    
             noteDetails.put("titel", titleTextField.getText());
             noteDetails.put("note", noteTextArea.getText());
-            noteDetails.put("dateOfObservation", String.valueOf(datePicker.getValue()));
+            noteDetails.put("dateOfObservation", datePicker.getValue().toString());
             diaryNoteFacade.createNote(noteDetails);
             
             //For debugging
