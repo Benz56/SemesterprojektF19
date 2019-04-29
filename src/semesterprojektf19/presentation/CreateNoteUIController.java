@@ -20,6 +20,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 import semesterprojektf19.domain.DiaryNoteFacade;
 import semesterprojektf19.domain.DiaryNoteFacadeImpl;
 import semesterprojektf19.domain.DomainFacade;
@@ -81,17 +82,26 @@ public class CreateNoteUIController implements Initializable {
             noteDetails.put("dateOfObservation", datePicker.getValue().toString());
             diaryNoteFacade.createNote(noteDetails);
             
-            //For debugging
-            System.out.println("Note created");
-            
+            // For closing the stage
+            ((Stage) noteTextArea.getScene().getWindow()).close();
         }
-        
-        
     }
-
+    
+    
+    @FXML
+    private void onCancelNote(ActionEvent event) {
+        // For closing the stage
+        ((Stage) noteTextArea.getScene().getWindow()).close();
+    }
+    
+    
+    
+    
     public MainUIController getMainController() {
         return mainController;
     }
+
+
     
     
 
