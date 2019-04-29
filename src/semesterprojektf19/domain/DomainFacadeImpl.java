@@ -62,8 +62,7 @@ public class DomainFacadeImpl implements DomainFacade {
         citizenManager.refresh();
     }
     
-    
-    
+
     @Override
     public Map<String, String> getCitizenDetails(String citizenString) {
         Map<String, String> details = new HashMap<>();
@@ -81,6 +80,10 @@ public class DomainFacadeImpl implements DomainFacade {
         Citizen citizen = citizenManager.getCitizen(citizenString);
         details.put("diaryNotes", citizen.getCase(caseIndex).getDiary().getNotes().stream().map(d -> d.getTitel()).collect(Collectors.joining("\n")));
         return details;
+    }
+
+    public CitizenManager getCitizenManager() {
+        return citizenManager;
     }
     
     

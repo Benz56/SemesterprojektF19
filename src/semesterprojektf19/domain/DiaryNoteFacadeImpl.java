@@ -6,6 +6,8 @@
 package semesterprojektf19.domain;
 
 import java.util.Map;
+import semesterprojektf19.presentation.CreateNoteUIController;
+import semesterprojektf19.presentation.MainUIController;
 
 /**
  *
@@ -13,14 +15,18 @@ import java.util.Map;
  */
 public class DiaryNoteFacadeImpl implements DiaryNoteFacade {
     
-    private final CitizenManager citizenManager = new CitizenManager();
-    private final DomainFacade domainFacade = new DomainFacadeImpl();
+    
+    
+
+    private final DomainFacadeImpl domainFacade = 
+    private final CitizenManager citizenManager = domainFacade.getCitizenManager();
     
     public DiaryNoteFacadeImpl(){
     }
     
     @Override
     public void createNote(Map<String, String> noteDetails) {
+
         Citizen citizen = citizenManager.getCitizen(noteDetails.get("citizenInfo"));
         int index = Integer.parseInt(noteDetails.get("index"));
         Case casefile = citizen.getCase(index);

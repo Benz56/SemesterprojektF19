@@ -84,6 +84,12 @@ public class CreateNoteUIController implements Initializable {
             System.out.println("Note created");
             
         }
+        
+        
+    }
+
+    public MainUIController getMainController() {
+        return mainController;
     }
     
     
