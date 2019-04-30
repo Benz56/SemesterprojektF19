@@ -9,12 +9,15 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import semesterprojektf19.domain.LoginFacadeImpl;
 import semesterprojektf19.domain.LoginFacade;
 
@@ -29,6 +32,9 @@ public class LoginUIController implements Initializable {
     /**
      * Determines whether the logon menu is selected or the register menu.
      */
+    private int idleDuration = 5;
+    private IdleMonitor mainIdleMonitor;
+    
     private boolean isLoginMenu = true;
     @FXML
     private JFXButton loginMenuBtn, registerMenuBtn, loginBtn, forgotPasswordBtn;
@@ -58,6 +64,26 @@ public class LoginUIController implements Initializable {
                     loader.setControllerFactory(controllerFactory -> new MainUIController(userDetails));
                     Stage stage = new Stage();
                     stage.setScene(new Scene(loader.load()));
+                    mainIdleMonitor = new IdleMonitor(Duration.seconds(idleDuration),
+                            () -> {
+                                try {
+                                    stage.close();
+                                    Parent root = FXMLLoader.load(getClass().getResource("LoginUIDocument.fxml"));
+
+                                    Scene scene = new Scene(root);
+                                    stage.setResizable(false);
+
+                                    stage.setScene(scene);
+                                    stage.show();
+                                    
+                                } catch (IOException ex) {
+                                    Logger.getLogger(LoginUIController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                mainIdleMonitor.stopMonitoring();
+                            }, true
+                    );
+                    mainIdleMonitor.register(loginBtn.getScene(), Event.ANY);
+
                     stage.show();
                 } catch (IOException ex) {
                     Logger.getLogger(LoginUIController.class.getName()).log(Level.SEVERE, null, ex);
