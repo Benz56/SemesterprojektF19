@@ -14,6 +14,7 @@ public class Case implements Serializable {
     private Institution institution;
     private UUID uuid;
     private Diary diary;
+    private static final long serialVersionUID = 5173068602800697696L;
 
     public Case(Worker caseWorker, Citizen citizen, Inquiry inquiry) {
         this.citizen = citizen;
@@ -143,4 +144,9 @@ public class Case implements Serializable {
         return institution;
     }
     
+
+    public Diary getDiary() {
+        return diary;
+    }
+   
 }

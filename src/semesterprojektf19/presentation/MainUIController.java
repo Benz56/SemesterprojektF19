@@ -73,9 +73,9 @@ public class MainUIController implements Initializable {
 
     //Diary nodes.
     @FXML
-    private JFXComboBox<?> diaryCaseCb;
+    private JFXComboBox<String> diaryCaseCb;
     @FXML
-    private JFXListView<?> diarynotesListview;
+    private JFXListView<String> diarynotesListview;
     @FXML
     private JFXButton diaryCreateNoteBtn;
     
@@ -163,6 +163,7 @@ public class MainUIController implements Initializable {
         });
         
         diaryCreateNoteBtn.setOnAction(event -> {
+            
             Stage stage = new Stage();
             stage.setTitle("Opret Notat");
             stage.setResizable(false);
@@ -172,8 +173,9 @@ public class MainUIController implements Initializable {
                 }
             });
             try {
+
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateNoteUIDocument.fxml"));
-                fxmlLoader.setControllerFactory(controllerFactory -> new CreateNoteUIController(this));
+                fxmlLoader.setControllerFactory(controllerFactory -> new CreateNoteUIController(String.valueOf(diaryCaseCb.getSelectionModel().getSelectedIndex()), clientList.getSelectionModel().getSelectedItem()));
                 stage.setScene(new Scene(fxmlLoader.load()));
                 stage.show();
             } catch (IOException ex) {
@@ -191,7 +193,14 @@ public class MainUIController implements Initializable {
                 caseAddressTextField.setText(citizenDetails.get("address"));
                 caseCasesCB.getItems().clear();
                 caseCasesCB.getItems().setAll(citizenDetails.get("cases").split("\n"));
-            }
+                diaryCaseCb.getItems().clear();
+                diaryCaseCb.getItems().setAll(citizenDetails.get("cases").split("\n"));
+                }
+        });
+        diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            Map<String,String> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
+                diarynotesListview.getItems().clear();
+                diarynotesListview.getItems().setAll(diaryNoteDetails.get("diaryNotes").split("\n"));  
         });
 
         refresh();
@@ -253,7 +262,5 @@ public class MainUIController implements Initializable {
         ccCitizenListView.getItems().setAll(domainFacade.matchCitizens(ccSearchCitizenTextField.getText()));
     }
 
-    public DomainFacade getDomainFacade() {
-        return domainFacade;
-    }
+
 }

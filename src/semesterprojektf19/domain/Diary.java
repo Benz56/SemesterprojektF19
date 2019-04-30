@@ -12,14 +12,16 @@ public class Diary implements Serializable {
     private List<DiaryNote> list;
     private Person editor;
     private UUID caseID;
+    private static final long serialVersionUID =  5184679964539683569L;
+   
 
     public Diary(UUID caseID) {
         list = new ArrayList<>();
         this.caseID = caseID;
     }
 
-    public void createNote(Person person, String note) {
-        list.add(new DiaryNote(person, note));
+    public void createNote(Person person, String note, String titel, String dateOfObservation) {
+        list.add(new DiaryNote(person, note, titel, dateOfObservation));
     }
 
     public void editNote(int index, Person person, String note) {
@@ -47,5 +49,8 @@ public class Diary implements Serializable {
         }
         return searchResult;
     }
-
+    
+    public List<DiaryNote> getNotes(){
+        return list;
+    }
 }

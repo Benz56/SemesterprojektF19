@@ -1,7 +1,6 @@
 package semesterprojektf19.domain;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,11 +8,12 @@ import java.util.Map;
 import java.util.TreeMap;
 import semesterprojektf19.persistence.Persistence;
 
-public class CitizenManager implements Serializable {
+public enum CitizenManager {
+    INSTANCE;
 
     private final Map<String, Citizen> citizensMap;
 
-    public CitizenManager() {
+    private CitizenManager() {
         citizensMap = new TreeMap<>();
         Arrays.asList(new File("citizens").listFiles()).forEach(file -> addCitizen((Citizen) Persistence.INSTANCE.readObjectFromFile("citizens/" + file.getName())));
     }
@@ -86,22 +86,7 @@ public class CitizenManager implements Serializable {
         return false;
     }
 
-    public static void main(String[] args) {
-        /*Citizen c1 = new Citizen("Hala", "Al-Janabi", "280195", "1111", 00000000, "HC Ørstedskollegiet");
-        Citizen c2 = new Citizen("Soffi", "Madsen", "290698", "2222", 00000000, "Cortex Park");
-        Citizen c3 = new Citizen("Soffi", "Madsen", "280195", "3333", 00000000, "HC Ørstedskollegiet");*/
 
-        CitizenManager cm = new CitizenManager();
-        //cm.createCitizen(c1);
-        //cm.createCitizen(c2);
-        // cm.createCitizen(c3);
-
-        System.out.println(cm.getCitizens());
-        System.out.println("--------------------------------------");
-        System.out.println(cm.searchCitizens("280195", "Hala"));
-        System.out.println(cm.searchCitizens("", "Soffi"));
-        System.out.println(cm.searchCitizens("280195", ""));
-    }
 
     public void refresh() {
         citizensMap.clear();
