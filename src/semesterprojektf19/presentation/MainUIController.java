@@ -210,7 +210,7 @@ public class MainUIController implements Initializable {
         tooltip.show(((JFXButton) event.getSource()).getScene().getWindow(), MouseInfo.getPointerInfo().getLocation().getX(), MouseInfo.getPointerInfo().getLocation().getY());
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executor.schedule(() -> Platform.runLater(() -> tooltip.hide()), 2, TimeUnit.SECONDS);
-        executor.shutdown();
+        executor.shutdown(); 
     }
 
     private void changePane(JFXButton clickedBtn) {
