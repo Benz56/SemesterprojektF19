@@ -27,6 +27,7 @@ public interface DomainFacade {
     public Map<String,String> getDiaryDetails(String citizen,int index);
     
     
+    
 
     
 }
