@@ -32,7 +32,7 @@ public class LoginUIController implements Initializable {
     /**
      * Determines whether the logon menu is selected or the register menu.
      */
-    private int idleDuration = 5;
+    private int idleDuration = 30;
     private IdleMonitor mainIdleMonitor;
     
     private boolean isLoginMenu = true;
@@ -64,7 +64,7 @@ public class LoginUIController implements Initializable {
                     loader.setControllerFactory(controllerFactory -> new MainUIController(userDetails));
                     Stage stage = new Stage();
                     stage.setScene(new Scene(loader.load()));
-                    mainIdleMonitor = new IdleMonitor(Duration.seconds(idleDuration),
+                    mainIdleMonitor = new IdleMonitor(Duration.minutes(idleDuration),
                             () -> {
                                 try {
                                     stage.close();
