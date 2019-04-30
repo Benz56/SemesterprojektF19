@@ -11,6 +11,7 @@ public class Citizen extends Person {
 
     private final String cpr;
     private final List<Case> cases = new ArrayList<>();
+    private static final long serialVersionUID = 4813878493760830975L;
 
     public Citizen(UUID uuid, String firstName, String lastName, String birthday, int controlNumber, String address, int phoneNumber, Role role) {
         super(uuid, firstName, lastName, birthday, controlNumber, address, phoneNumber, role);
@@ -23,6 +24,10 @@ public class Citizen extends Person {
 
     public List<Case> getCases() {
         return cases;
+    }
+    
+    public Case getCase(int index){
+        return cases.get(index);
     }
 
     public String getCpr() {

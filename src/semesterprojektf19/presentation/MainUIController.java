@@ -28,12 +28,13 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import semesterprojektf19.domain.DiaryNote;
 import semesterprojektf19.domain.DomainFacade;
 import semesterprojektf19.domain.DomainFacadeImpl;
 
 public class MainUIController implements Initializable {
 
-    private final DomainFacade domainFacade = new DomainFacadeImpl();
+    private final DomainFacadeImpl domainFacade = new DomainFacadeImpl();
     private final Map<String, String> userDetails;
     private final Map<JFXButton, AnchorPane> btnPaneMap = new HashMap<>();
     private JFXButton selectedBtn;
@@ -73,9 +74,9 @@ public class MainUIController implements Initializable {
 
     //Diary nodes.
     @FXML
-    private JFXComboBox<?> diaryCaseCb;
+    private JFXComboBox<String> diaryCaseCb;
     @FXML
-    private JFXListView<?> diarynotesListview;
+    private JFXListView<String> diarynotesListview;
     @FXML
     private JFXButton diaryCreateNoteBtn;
     
@@ -146,6 +147,7 @@ public class MainUIController implements Initializable {
         });
         
         diaryCreateNoteBtn.setOnAction(event -> {
+            
             Stage stage = new Stage();
             stage.setTitle("Opret Notat");
             stage.setResizable(false);
@@ -155,8 +157,9 @@ public class MainUIController implements Initializable {
                 }
             });
             try {
+
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateNoteUIDocument.fxml"));
-                fxmlLoader.setControllerFactory(controllerFactory -> new CreateNoteUIController(this));
+                fxmlLoader.setControllerFactory(controllerFactory -> new CreateNoteUIController(this,String.valueOf(diaryCaseCb.getSelectionModel().getSelectedIndex()), clientList.getSelectionModel().getSelectedItem()));
                 stage.setScene(new Scene(fxmlLoader.load()));
                 stage.show();
             } catch (IOException ex) {
@@ -174,6 +177,14 @@ public class MainUIController implements Initializable {
                 caseAddressTextField.setText(citizenDetails.get("address"));
                 caseCasesCB.getItems().clear();
                 caseCasesCB.getItems().setAll(citizenDetails.get("cases").split("\n"));
+                diaryCaseCb.getItems().clear();
+                diaryCaseCb.getItems().setAll(citizenDetails.get("cases").split("\n"));
+                
+                if(!diaryCaseCb.getSelectionModel().isEmpty()){
+                Map<String,String> diaryNoteDetails = domainFacade.getDiaryDetails(newValue, diaryCaseCb.getSelectionModel().getSelectedIndex());
+                diarynotesListview.getItems().clear();
+                diarynotesListview.getItems().setAll(diaryNoteDetails.get("diaryNotes").split("\n"));               
+                }
             }
         });
 
@@ -236,7 +247,7 @@ public class MainUIController implements Initializable {
         ccCitizenListView.getItems().setAll(domainFacade.matchCitizens(ccSearchCitizenTextField.getText()));
     }
 
-    public DomainFacade getDomainFacade() {
+    public DomainFacadeImpl getDomainFacade() {
         return domainFacade;
     }
 }

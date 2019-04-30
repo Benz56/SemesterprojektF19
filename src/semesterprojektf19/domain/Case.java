@@ -11,6 +11,7 @@ public class Case implements Serializable {
     private Inquiry inquiry;
     private Elucidation elucidation;
     private Diary diary;
+    private static final long serialVersionUID = 5173068602800697696L;
 
     public Case(Worker caseWorker, Citizen citizen, Inquiry inquiry) {
         this.citizen = citizen;
@@ -126,4 +127,11 @@ public class Case implements Serializable {
     public Citizen getCitizen() {
         return citizen;
     }
+    
+
+    public Diary getDiary() {
+        return diary;
+    }
+    
+    
 }

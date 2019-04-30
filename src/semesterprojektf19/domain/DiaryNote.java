@@ -1,12 +1,15 @@
 package semesterprojektf19.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DiaryNote {
-
-    private String note;
+public class DiaryNote implements Serializable{
+    
+    private static final long serialVersionUID = 2266792567973358800L;
+    
+    private String titel, note, dateOfObservation;
     private Date date;
     private Person creator;
     private List<Topic> topics; // til at tilføje emne til note.
@@ -15,10 +18,13 @@ public class DiaryNote {
     // TODO Implementer date picker i javaFX. skal holde dato for observation som ikke nødvendigvis er den samme som oprettelses dato 
     // TODO implementere 
     
-    public DiaryNote(Person creator, String note) {
-        this.note = note;
-        this.date = new Date();
+    public DiaryNote(Person creator, String note, String titel, String dateOfObservation) {
         this.creator = creator;
+        this.note = note;
+        this.titel = titel;
+        this.dateOfObservation = dateOfObservation;
+        
+        this.date = new Date();
         this.topics = new ArrayList<>();
         this.noteVersions = new ArrayList<>();
     }
@@ -63,13 +69,38 @@ public class DiaryNote {
     public List<Topic> getTopicList(){
         return topics;
     }
+
+    public void setTitel(String titel) {
+        this.titel = titel;
+    }
+
+    public String getTitel() {
+        return titel;
+    }
+    
+
+    public void setDateOfObservation(String dateOfObservation) {
+        this.dateOfObservation = dateOfObservation;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
+    }
+
+    public void setNoteVersions(List<DiaryNote> noteVersions) {
+        this.noteVersions = noteVersions;
+    }
+    
     
     
 
     @Override
     public String toString() {
-        return this.note + "\n" + " Note last edited on: " + this.date + " "
-                + "by: " + creator.getFirstName() + " " + creator.getLastName() + "\n";
+        return "Titel: " + this.titel + "\n" + 
+                "Observation foretaget: " + this.dateOfObservation + "\n\n" +  
+                this.note + "\n\n\n" + 
+                " Sidst redigeret: " + this.date +
+                " af: " + creator.getFirstName() + " " + creator.getLastName() + "\n\n\n\n";
     }
 
 }
