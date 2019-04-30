@@ -4,15 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class Diary implements Serializable {
 
     private Case caseFile;
     private List<DiaryNote> list;
     private Person editor;
+    private UUID caseID;
 
-    public Diary() {
+    public Diary(UUID caseID) {
         list = new ArrayList<>();
+        this.caseID = caseID;
     }
 
     public void createNote(Person person, String note) {

@@ -37,11 +37,13 @@ public class RegisterEmployeeUIController implements Initializable {
     @FXML
     private TextField statusTextField;
     @FXML
-    private JFXComboBox<String> roleComboBox;
+    private JFXComboBox<String> roleComboBox, institutionComboBox;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         roleComboBox.getItems().addAll("Caseworker", "Socialworker", "Admin");
+        institutionComboBox.getItems().addAll(registrationFacade.getInstitutionNames());
+        
         firstnameTextField.textProperty().addListener(listener -> valid = validate());
         lastnameTextField.textProperty().addListener(listener -> valid = validate());
         birthdayDatePicker.valueProperty().addListener(listener -> valid = validate());
@@ -52,6 +54,7 @@ public class RegisterEmployeeUIController implements Initializable {
         passwordPasswordField.textProperty().addListener(listener -> valid = validate());
         confirmPasswordField.textProperty().addListener(listener -> valid = validate());
         roleComboBox.valueProperty().addListener(listener -> valid = validate());
+        institutionComboBox.valueProperty().addListener(listener -> valid = validate());
     }
 
     @FXML
@@ -66,7 +69,8 @@ public class RegisterEmployeeUIController implements Initializable {
                     Integer.parseInt(controlNumberTextField.getText()),
                     addressTextField.getText(),
                     Integer.parseInt(phoneNumberTextField.getText()),
-                    roleComboBox.getSelectionModel().getSelectedItem().toUpperCase()
+                    roleComboBox.getSelectionModel().getSelectedItem().toUpperCase(),
+                    institutionComboBox.getSelectionModel().getSelectedItem()
             )) {
                 onCancel();
             } else {
@@ -137,6 +141,10 @@ public class RegisterEmployeeUIController implements Initializable {
         } else if (roleComboBox.getSelectionModel().getSelectedItem() == null) {
             statusTextField.setText("Rolle ikke valgt!");
             return false;
+        } else if(roleComboBox.getSelectionModel().getSelectedItem().toUpperCase().equals("SOCIALWORKER")){
+            institutionComboBox.setDisable(false);
+        } else {
+            institutionComboBox.setDisable(true);
         }
         statusTextField.setStyle("-fx-text-fill: green;");
         statusTextField.setText("Bruger data godkendt!");
