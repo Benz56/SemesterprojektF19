@@ -81,7 +81,7 @@ public class MainUIController implements Initializable {
     
     //Admin nodes:
     @FXML
-    private JFXButton adminCreateUserBtn, adminEditUserBtn, adminDeleteUserBtn;
+    private JFXButton adminCreateUserBtn, adminEditUserBtn, adminDeleteUserBtn, adminCreateInstitutionBtn;
     
 
     public MainUIController(Map<String, String> userDetails) {
@@ -139,6 +139,23 @@ public class MainUIController implements Initializable {
             });
             try {
                 stage.setScene(new Scene(new FXMLLoader(getClass().getResource("RegisterEmployeeUIDocument.fxml")).load()));
+                stage.show();
+            } catch (IOException ex) {
+                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        
+        adminCreateInstitutionBtn.setOnAction(event -> {
+            Stage stage = new Stage();
+            stage.setTitle("Opret Bosted");
+            stage.setResizable(false);
+            stage.focusedProperty().addListener((observable, oldFocus, newFocus) -> {
+                if (!newFocus) {
+                    stage.close();
+                }
+            });
+            try {
+                stage.setScene(new Scene(new FXMLLoader(getClass().getResource("RegisterInstitutionUIDocument.fxml")).load()));
                 stage.show();
             } catch (IOException ex) {
                 Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);

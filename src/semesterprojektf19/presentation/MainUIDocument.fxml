@@ -85,7 +85,7 @@
                <graphic>
                   <AnchorPane prefHeight="100.0" prefWidth="100.0">
                      <children>
-                        <FontAwesomeIconView glyphName="USER_SECRET" layoutX="21.0" layoutY="57.0" size="50" />
+                        <FontAwesomeIconView glyphName="USER_SECRET" layoutX="21.0" layoutY="57.0" size="50" text="" />
                         <Label layoutX="22.0" layoutY="69.0" style="-fx-text-fill: #43A047;" text="Admin">
                            <font>
                               <Font name="System Bold" size="12.0" />
@@ -120,6 +120,13 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="diaryPane" prefHeight="700.0" prefWidth="1000.0">
+               <children>
+                  <JFXComboBox fx:id="diaryCaseCb" focusColor="#43a047" layoutX="25.0" layoutY="24.0" prefHeight="31.0" prefWidth="292.0" promptText="Vælg Sag" unFocusColor="#bfbfbf" />
+                  <JFXListView fx:id="diarynotesListview" layoutX="25.0" layoutY="95.0" prefHeight="585.0" prefWidth="980.0" style="-fx-background-color: #E5E5E5;" />
+                  <JFXButton fx:id="diaryCreateNoteBtn" layoutX="353.0" layoutY="24.0" prefHeight="31.0" prefWidth="186.0" style="-fx-background-color: #E5E5E5;" text="Opret notat" textFill="#43a047" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="casesPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
@@ -220,18 +227,16 @@
                   <JFXTextField fx:id="ccShortInfoTextField" focusColor="#43a047" layoutX="250.0" layoutY="390.0" prefHeight="25.0" prefWidth="335.0" unFocusColor="#bfbfbf" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="diaryPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
-               <children>
-                  <JFXComboBox fx:id="diaryCaseCb" focusColor="#43a047" layoutX="25.0" layoutY="24.0" prefHeight="31.0" prefWidth="292.0" promptText="Vælg Sag" unFocusColor="#bfbfbf" />
-                  <JFXListView fx:id="diarynotesListview" layoutX="25.0" layoutY="95.0" prefHeight="585.0" prefWidth="980.0" style="-fx-background-color: #E5E5E5;" />
-                  <JFXButton fx:id="diaryCreateNoteBtn" layoutX="353.0" layoutY="24.0" prefHeight="31.0" prefWidth="186.0" style="-fx-background-color: #E5E5E5;" text="Opret notat" textFill="#43a047" />
-               </children>
-            </AnchorPane>
             <AnchorPane fx:id="adminPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
                <children>
-                  <JFXButton fx:id="adminCreateUserBtn" layoutX="29.0" layoutY="30.0" prefWidth="100.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Opret Bruger" textFill="#43a047" />
-                  <JFXButton fx:id="adminEditUserBtn" layoutX="143.0" layoutY="30.0" prefWidth="100.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Rediger Bruger" textFill="#43a047" />
-                  <JFXButton fx:id="adminDeleteUserBtn" layoutX="254.0" layoutY="30.0" prefWidth="100.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Slet Bruger" textFill="#43a047" />
+                  <HBox layoutX="27.0" layoutY="35.0" prefHeight="80.0" prefWidth="868.0" spacing="10.0">
+                     <children>
+                        <JFXButton fx:id="adminCreateInstitutionBtn" prefHeight="32.0" prefWidth="129.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Opret Bosted" textFill="#43a047" />
+                        <JFXButton fx:id="adminCreateUserBtn" prefHeight="32.0" prefWidth="100.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Opret Bruger" textFill="#43a047" />
+                        <JFXButton fx:id="adminEditUserBtn" prefHeight="32.0" prefWidth="137.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Rediger Bruger" textFill="#43a047" />
+                        <JFXButton fx:id="adminDeleteUserBtn" prefHeight="32.0" prefWidth="100.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Slet Bruger" textFill="#43a047" />
+                     </children>
+                  </HBox>
                </children></AnchorPane>
          </children>
       </StackPane>

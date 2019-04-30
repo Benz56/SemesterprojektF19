@@ -5,6 +5,8 @@
  */
 package semesterprojektf19.domain;
 
+import java.util.List;
+
 /**
  *
  * @author Benjamin Staugaard | Benz56
@@ -13,6 +15,9 @@ public interface RegistrationFacade {
 
     void registerCitizen(String firstName, String lastName, String birthday, int controlNumber, String address, int phoneNumber);
 
-    boolean registerEmployee(String username, String password, String firstName, String lastName, String birthday, int controlNumber, String address, int phoneNumber, String role);
+    boolean registerEmployee(String username, String password, String firstName, String lastName, String birthday, int controlNumber, String address, int phoneNumber, String role, String institution);
 
+    void registerInstitution(String name, String adress);
+    
+    List<String> getInstitutionNames();
 }

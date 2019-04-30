@@ -1,6 +1,7 @@
 package semesterprojektf19.domain;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Case implements Serializable {
 
@@ -10,13 +11,16 @@ public class Case implements Serializable {
     private boolean rightToRepresentation, informedOnElectronicInfo, consentRelevant, consentObtained;
     private Inquiry inquiry;
     private Elucidation elucidation;
+    private Institution institution;
+    private UUID uuid;
     private Diary diary;
     private static final long serialVersionUID = 5173068602800697696L;
 
     public Case(Worker caseWorker, Citizen citizen, Inquiry inquiry) {
         this.citizen = citizen;
         this.inquiry = inquiry;
-        this.diary = new Diary(); // Kan fjernes hvis dagbogen skal oprettes et andet sted, men det skal bare tilhøre sagen.
+        this.uuid = UUID.randomUUID();
+        this.diary = new Diary(uuid); // Kan fjernes hvis dagbogen skal oprettes et andet sted, men det skal bare tilhøre sagen.
         this.caseWorker = caseWorker;
     }
 
@@ -128,10 +132,21 @@ public class Case implements Serializable {
         return citizen;
     }
     
+    public UUID getUUID() {
+        return uuid;
+    }
+
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
+    }
+
+    public Institution getInstitution() {
+        return institution;
+    }
+    
 
     public Diary getDiary() {
         return diary;
     }
-    
-    
+   
 }
