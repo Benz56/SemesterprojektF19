@@ -10,21 +10,16 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-import com.sun.jndi.dns.DnsContextFactory;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 import semesterprojektf19.domain.DiaryNoteFacade;
 import semesterprojektf19.domain.DiaryNoteFacadeImpl;
-import semesterprojektf19.domain.DomainFacade;
-import semesterprojektf19.domain.DomainFacadeImpl;
 
 /**
  * FXML Controller class
@@ -33,8 +28,8 @@ import semesterprojektf19.domain.DomainFacadeImpl;
  */
 public class CreateNoteUIController implements Initializable {
 
-    private final MainUIController mainController;
-    private final DiaryNoteFacadeImpl diaryNoteFacade;
+   
+    private final DiaryNoteFacade diaryNoteFacade;
     
     private String index;
     private String citizenInfo;
@@ -52,11 +47,11 @@ public class CreateNoteUIController implements Initializable {
     @FXML
     private JFXButton cancelBtn;
 
-    public CreateNoteUIController(MainUIController mainUIController, String index, String citizenInfo) {
-        this.mainController = mainUIController;
+    public CreateNoteUIController(String index, String citizenInfo) {
+
         this.index = index;
         this.citizenInfo = citizenInfo;
-        this.diaryNoteFacade = new DiaryNoteFacadeImpl(mainController.getDomainFacade());
+        this.diaryNoteFacade = new DiaryNoteFacadeImpl();
         
     }
 
@@ -95,12 +90,7 @@ public class CreateNoteUIController implements Initializable {
     }
     
     
-    
-    
-    public MainUIController getMainController() {
-        return mainController;
-    }
-
+   
 
     
     
