@@ -64,25 +64,7 @@ public class LoginUIController implements Initializable {
                     loader.setControllerFactory(controllerFactory -> new MainUIController(userDetails));
                     Stage stage = new Stage();
                     stage.setScene(new Scene(loader.load()));
-                    mainIdleMonitor = new IdleMonitor(Duration.minutes(idleDuration),
-                            () -> {
-                                try {
-                                    stage.close();
-                                    Parent root = FXMLLoader.load(getClass().getResource("LoginUIDocument.fxml"));
-
-                                    Scene scene = new Scene(root);
-                                    stage.setResizable(false);
-
-                                    stage.setScene(scene);
-                                    stage.show();
-                                    
-                                } catch (IOException ex) {
-                                    Logger.getLogger(LoginUIController.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                                mainIdleMonitor.stopMonitoring();
-                            }, true
-                    );
-                    mainIdleMonitor.register(loginBtn.getScene(), Event.ANY);
+                    startIdleMonitor(stage);
 
                     stage.show();
                 } catch (IOException ex) {
@@ -94,6 +76,28 @@ public class LoginUIController implements Initializable {
                 loginPasswordField.setText("");
             }
         });
+    }
+
+    public void startIdleMonitor(Stage stage) {
+        mainIdleMonitor = new IdleMonitor(Duration.minutes(idleDuration),
+                () -> {
+                    try {
+                        stage.close();
+                        Parent root = FXMLLoader.load(getClass().getResource("LoginUIDocument.fxml"));
+                        
+                        Scene scene = new Scene(root);
+                        stage.setResizable(false);
+                        
+                        stage.setScene(scene);
+                        stage.show();
+                        
+                    } catch (IOException ex) {
+                        Logger.getLogger(LoginUIController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    mainIdleMonitor.stopMonitoring();
+                }, true
+        );
+        mainIdleMonitor.register(loginBtn.getScene(), Event.ANY);
     }
 
     public void togglePane(boolean isLoginMenu) {
