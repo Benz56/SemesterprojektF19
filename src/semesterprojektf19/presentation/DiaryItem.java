@@ -5,10 +5,7 @@
  */
 package semesterprojektf19.presentation;
 
-import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.AnchorPane;
+import java.util.Map;
 
 /**
  *
@@ -16,34 +13,29 @@ import javafx.scene.layout.AnchorPane;
  */
 public class DiaryItem {
 
-    private final AnchorPane anchorPane = new AnchorPane();
-    private final String diaryDetails;
-    private boolean expanded;
-    private Node expansion;
+    private final String title, obsDate, noteDate, content;
 
-    public DiaryItem(String diaryDetails) {
-        this.diaryDetails = diaryDetails;
-        expansion = new TextArea();
+    public DiaryItem(Map<String, String> note) {
+        title = note.get("title");
+        obsDate = note.get("obsDate");
+        noteDate = note.get("noteDate");
+        content = note.get("content");
     }
 
-    public AnchorPane getItem(boolean expand) {
-        Label title = new Label("Titel: " + diaryDetails);
-        title.setStyle("-fx-font-weight: bold");
-        anchorPane.getChildren().add(title);
-        return anchorPane;
+    public String getTitle() {
+        return title;
     }
 
-    public void expand() {
-        if (!expanded) {
-            anchorPane.getChildren().add(expansion);
-            expanded = true;
-        }
+    public String getObsDate() {
+        return obsDate;
     }
 
-    public void collapse() {
-        if (expanded) {
-            anchorPane.getChildren().remove(expansion);
-            expanded = false;
-        }
+    public String getNoteDate() {
+        return noteDate;
     }
+
+    public String getContent() {
+        return content;
+    }
+
 }

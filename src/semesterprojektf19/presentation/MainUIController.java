@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
@@ -198,15 +199,17 @@ public class MainUIController implements Initializable {
                 diaryCaseCb.getItems().setAll(citizenDetails.get("cases").split("\n"));
             }
         });
-        diarynotesListview.setCellFactory(listview -> new DiaryCell());
-        diarynotesListview.selectionModelProperty().addListener(((observable, oldValue, newValue) -> {
-            diarynotesListview.getItems().forEach(DiaryItem::collapse);
-            newValue.getSelectedItem().expand();
-        }));
+
+        //diarynotesListview.setSelectionModel(null);
+        diarynotesListview.setCellFactory(new DiaryListViewCellFactory());
+
         diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            Map<String, String> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
+            List<Map<String, String>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
             diarynotesListview.getItems().clear();
-            diarynotesListview.getItems().setAll(Arrays.asList(diaryNoteDetails.get("diaryNotes").split("\n")).stream().map(title -> new DiaryItem(title)).collect(Collectors.toList()));
+            diaryNoteDetails.forEach(note -> {
+                diarynotesListview.getItems().add(new DiaryItem(note));
+            });
+            //diarynotesListview.getItems().setAll(Arrays.asList(diaryNoteDetails.get("diaryNotes").split("\n")).stream().map(title -> new DiaryItem(title)).collect(Collectors.toList()));
             //diarynotesListview.getItems().setAll(diaryNoteDetails.get("diaryNotes").split("\n"));  
         });
 
