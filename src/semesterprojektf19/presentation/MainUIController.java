@@ -200,17 +200,13 @@ public class MainUIController implements Initializable {
             }
         });
 
-        //diarynotesListview.setSelectionModel(null);
         diarynotesListview.setCellFactory(new DiaryListViewCellFactory());
-
         diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             List<Map<String, String>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
             diarynotesListview.getItems().clear();
             diaryNoteDetails.forEach(note -> {
                 diarynotesListview.getItems().add(new DiaryItem(note));
             });
-            //diarynotesListview.getItems().setAll(Arrays.asList(diaryNoteDetails.get("diaryNotes").split("\n")).stream().map(title -> new DiaryItem(title)).collect(Collectors.toList()));
-            //diarynotesListview.getItems().setAll(diaryNoteDetails.get("diaryNotes").split("\n"));  
         });
 
         refresh();
