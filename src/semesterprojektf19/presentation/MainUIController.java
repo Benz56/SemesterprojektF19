@@ -202,11 +202,9 @@ public class MainUIController implements Initializable {
 
         diarynotesListview.setCellFactory(new DiaryListViewCellFactory());
         diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            List<Map<String, String>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
             diarynotesListview.getItems().clear();
-            diaryNoteDetails.forEach(note -> {
-                diarynotesListview.getItems().add(new DiaryItem(note));
-            });
+            List<Map<String, String>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
+            diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
         });
 
         refresh();
