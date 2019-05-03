@@ -52,7 +52,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 
     @Override
     public Map<String, String> getWorkerDetails(String uuid) {
-        String query = "SELECT * FROM worker WHERE uuid = '" + uuid.toString() + "';";
+        String query = "SELECT * FROM worker WHERE uuid = '" + uuid + "';";
         Map<String, String> workerDetails = new HashMap<>();
         try {
             Statement st = conn.getDb().createStatement();
