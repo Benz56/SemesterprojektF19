@@ -3,18 +3,12 @@ package semesterprojektf19.presentation;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -32,9 +26,10 @@ public class LoginUIController implements Initializable {
     /**
      * Determines whether the logon menu is selected or the register menu.
      */
-    private int idleDuration = 30;
-    private IdleMonitor mainIdleMonitor;
+    private static final int IDLE_DURATION = 30;
     
+    private IdleMonitor mainIdleMonitor;
+
     private boolean isLoginMenu = true;
     @FXML
     private JFXButton loginMenuBtn, registerMenuBtn, loginBtn, forgotPasswordBtn;
@@ -58,18 +53,7 @@ public class LoginUIController implements Initializable {
         loginBtn.setOnAction(event -> {
             Map<String, String> userDetails = loginFacade.login(usernameTextField.getText(), loginPasswordField.getText());
             if (userDetails != null) {
-                ((Stage) loginBtn.getScene().getWindow()).close();
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("MainUIDocument.fxml"));
-                    loader.setControllerFactory(controllerFactory -> new MainUIController(userDetails));
-                    Stage stage = new Stage();
-                    stage.setScene(new Scene(loader.load()));
-                    startIdleMonitor(stage);
-
-                    stage.show();
-                } catch (IOException ex) {
-                    Logger.getLogger(LoginUIController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                SimpleStageBuilder.create("EGBoosted", "MainUIDocument.fxml").closeOpenWindow(loginBtn).setControllerFactory(new MainUIController(userDetails)).open();
             } else {
                 usernameTextField.requestFocus();
                 usernameTextField.setText("");
@@ -79,24 +63,10 @@ public class LoginUIController implements Initializable {
     }
 
     public void startIdleMonitor(Stage stage) {
-        mainIdleMonitor = new IdleMonitor(Duration.minutes(idleDuration),
-                () -> {
-                    try {
-                        stage.close();
-                        Parent root = FXMLLoader.load(getClass().getResource("LoginUIDocument.fxml"));
-                        
-                        Scene scene = new Scene(root);
-                        stage.setResizable(false);
-                        
-                        stage.setScene(scene);
-                        stage.show();
-                        
-                    } catch (IOException ex) {
-                        Logger.getLogger(LoginUIController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    mainIdleMonitor.stopMonitoring();
-                }, true
-        );
+        mainIdleMonitor = new IdleMonitor(Duration.minutes(IDLE_DURATION), () -> {
+            SimpleStageBuilder.create("EGBoosted", "LoginUIDocument.fxml").setResizable(false).open();
+            mainIdleMonitor.stopMonitoring();
+        }, true);
         mainIdleMonitor.register(loginBtn.getScene(), Event.ANY);
     }
 
