@@ -241,7 +241,7 @@ public class MainUIController implements Initializable {
         tooltip.show(((JFXButton) event.getSource()).getScene().getWindow(), MouseInfo.getPointerInfo().getLocation().getX(), MouseInfo.getPointerInfo().getLocation().getY());
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executor.schedule(() -> Platform.runLater(() -> tooltip.hide()), 2, TimeUnit.SECONDS);
-        executor.shutdown(); 
+        executor.shutdown();
     }
 
     private void changePane(JFXButton clickedBtn) {
@@ -267,4 +267,18 @@ public class MainUIController implements Initializable {
         ccCitizenListView.getItems().setAll(domainFacade.matchCitizens(ccSearchCitizenTextField.getText()));
     }
 
+    @FXML
+    private void onLogout() {
+        ((Stage) homeBtn.getScene().getWindow()).close();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginUIDocument.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(loader.load());
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+
+        }
+    }
 }
