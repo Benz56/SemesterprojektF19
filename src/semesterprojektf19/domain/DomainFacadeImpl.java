@@ -75,7 +75,6 @@ public class DomainFacadeImpl implements DomainFacade {
     public List<Map<String, String>> getDiaryDetails(String citizenString, int caseIndex) {
         List<Map<String, String>> notes = new ArrayList<>();
         Citizen citizen = CitizenManager.INSTANCE.getCitizen(citizenString);
-        //Skal sorteres efter dato!
         //details.put("title", citizen.getCase(caseIndex).getDiary().getNotes().stream().map(d -> d.getTitel()).collect(Collectors.joining("\n")));
         citizen.getCase(caseIndex).getDiary().getNotes().forEach(note -> {
             Map<String, String> content = new HashMap<>();
@@ -85,7 +84,7 @@ public class DomainFacadeImpl implements DomainFacade {
             content.put("content", note.getNote());
             notes.add(content);
         });
-
+        Collections.reverse(notes);
         return notes;
     }
 
