@@ -9,7 +9,6 @@ import com.jfoenix.controls.JFXTextField;
 import java.awt.MouseInfo;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +18,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -165,7 +163,6 @@ public class MainUIController implements Initializable {
         });
 
         diaryCreateNoteBtn.setOnAction(event -> {
-
             Stage stage = new Stage();
             stage.setTitle("Opret Notat");
             stage.setResizable(false);
@@ -187,6 +184,19 @@ public class MainUIController implements Initializable {
 
         ccSearchCitizenTextField.textProperty().addListener(listener -> refresh());
 
+        setClientListener();
+
+        diarynotesListview.setCellFactory(new DiaryListViewCellFactory());
+        diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            diarynotesListview.getItems().clear();
+            List<Map<String, String>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
+            diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
+        });
+
+        refresh();
+    }
+
+    private void setClientListener() {
         clientList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 Map<String, String> citizenDetails = domainFacade.getCitizenDetails(newValue);
@@ -199,15 +209,6 @@ public class MainUIController implements Initializable {
                 diaryCaseCb.getItems().setAll(citizenDetails.get("cases").split("\n"));
             }
         });
-
-        diarynotesListview.setCellFactory(new DiaryListViewCellFactory());
-        diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            diarynotesListview.getItems().clear();
-            List<Map<String, String>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
-            diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
-        });
-
-        refresh();
     }
 
     @FXML
