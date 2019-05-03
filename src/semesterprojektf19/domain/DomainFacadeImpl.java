@@ -5,6 +5,7 @@
  */
 package semesterprojektf19.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -14,11 +15,9 @@ import semesterprojektf19.persistence.Persistence;
 
 public class DomainFacadeImpl implements DomainFacade {
 
-
-
     public DomainFacadeImpl() {
         Persistence.INSTANCE.toString(); //Initialize persistence i.e. create required files.
-       
+
     }
 
     @Override
@@ -60,7 +59,6 @@ public class DomainFacadeImpl implements DomainFacade {
     public void refresh() {
         CitizenManager.INSTANCE.refresh();
     }
-    
 
     @Override
     public Map<String, String> getCitizenDetails(String citizenString) {
@@ -74,18 +72,20 @@ public class DomainFacadeImpl implements DomainFacade {
     }
 
     @Override
-    public Map<String,String> getDiaryDetails(String citizenString, int caseIndex) {
-        Map<String,String> details = new HashMap<>();
+    public List<Map<String, String>> getDiaryDetails(String citizenString, int caseIndex) {
+        List<Map<String, String>> notes = new ArrayList<>();
         Citizen citizen = CitizenManager.INSTANCE.getCitizen(citizenString);
-        System.out.println(citizenString);
-        details.put("diaryNotes", citizen.getCase(caseIndex).getDiary().getNotes().stream().map(d -> d.getTitel()).collect(Collectors.joining("\n")));
-        return details;
+        //details.put("title", citizen.getCase(caseIndex).getDiary().getNotes().stream().map(d -> d.getTitel()).collect(Collectors.joining("\n")));
+        citizen.getCase(caseIndex).getDiary().getNotes().forEach(note -> {
+            Map<String, String> content = new HashMap<>();
+            content.put("title", note.getTitel());
+            content.put("obsDate", note.getDateOfObservation());
+            content.put("noteDate", note.getDate().toString());
+            content.put("content", note.getNote());
+            notes.add(content);
+        });
+        Collections.reverse(notes);
+        return notes;
     }
-    
-    
-    
-    
-    
-    
-    
+
 }

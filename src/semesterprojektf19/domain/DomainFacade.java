@@ -23,11 +23,7 @@ public interface DomainFacade {
     public List<String> getUserCitizens();
 
     public Map<String, String> getCitizenDetails(String citizen);
-    
-    public Map<String,String> getDiaryDetails(String citizen,int index);
-    
-    
-    
 
-    
+    public List<Map<String, String>> getDiaryDetails(String citizen, int index);
+
 }

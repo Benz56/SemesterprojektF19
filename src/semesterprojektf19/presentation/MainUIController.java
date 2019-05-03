@@ -10,6 +10,7 @@ import java.awt.MouseInfo;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
@@ -75,14 +76,13 @@ public class MainUIController implements Initializable {
     @FXML
     private JFXComboBox<String> diaryCaseCb;
     @FXML
-    private JFXListView<String> diarynotesListview;
+    private JFXListView<DiaryItem> diarynotesListview;
     @FXML
     private JFXButton diaryCreateNoteBtn;
-    
+
     //Admin nodes:
     @FXML
     private JFXButton adminCreateUserBtn, adminEditUserBtn, adminDeleteUserBtn, adminCreateInstitutionBtn;
-    
 
     public MainUIController(Map<String, String> userDetails) {
         this.userDetails = userDetails;
@@ -100,12 +100,12 @@ public class MainUIController implements Initializable {
         } else {
             ((HBox) adminBtn.getParent()).getChildren().remove(adminBtn);
         }
-        if(userDetails.get("role").equals("caseworker") || userDetails.get("role").equals("admin")){
+        if (userDetails.get("role").equals("caseworker") || userDetails.get("role").equals("admin")) {
             btnPaneMap.put(casesCreateBtn, createCasePane);
         } else {
             ((HBox) casesCreateBtn.getParent()).getChildren().remove(casesCreateBtn);
         }
-        
+
         btnPaneMap.keySet().forEach(btn -> btn.setOnAction(event -> changePane((JFXButton) event.getSource())));
         ccCreateCitizenBtn.setOnAction(event -> {
             Stage stage = new Stage();
@@ -144,7 +144,7 @@ public class MainUIController implements Initializable {
                 Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        
+
         adminCreateInstitutionBtn.setOnAction(event -> {
             Stage stage = new Stage();
             stage.setTitle("Opret Bosted");
@@ -161,9 +161,8 @@ public class MainUIController implements Initializable {
                 Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        
+
         diaryCreateNoteBtn.setOnAction(event -> {
-            
             Stage stage = new Stage();
             stage.setTitle("Opret Notat");
             stage.setResizable(false);
@@ -185,6 +184,19 @@ public class MainUIController implements Initializable {
 
         ccSearchCitizenTextField.textProperty().addListener(listener -> refresh());
 
+        setClientListener();
+
+        diarynotesListview.setCellFactory(new DiaryListViewCellFactory());
+        diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            diarynotesListview.getItems().clear();
+            List<Map<String, String>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
+            diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
+        });
+
+        refresh();
+    }
+
+    private void setClientListener() {
         clientList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 Map<String, String> citizenDetails = domainFacade.getCitizenDetails(newValue);
@@ -195,15 +207,8 @@ public class MainUIController implements Initializable {
                 caseCasesCB.getItems().setAll(citizenDetails.get("cases").split("\n"));
                 diaryCaseCb.getItems().clear();
                 diaryCaseCb.getItems().setAll(citizenDetails.get("cases").split("\n"));
-                }
+            }
         });
-        diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            Map<String,String> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
-                diarynotesListview.getItems().clear();
-                diarynotesListview.getItems().setAll(diaryNoteDetails.get("diaryNotes").split("\n"));  
-        });
-
-        refresh();
     }
 
     @FXML
@@ -261,6 +266,5 @@ public class MainUIController implements Initializable {
         homeCitizenCountLabel.setText(homeCitizenCountLabel.getText() + domainFacade.getUserCitizens().size());
         ccCitizenListView.getItems().setAll(domainFacade.matchCitizens(ccSearchCitizenTextField.getText()));
     }
-
 
 }

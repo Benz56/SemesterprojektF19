@@ -21,11 +21,12 @@ and open the template in the editor.
     -fx-padding: 0;
 }
 
-.list-cell:filled:selected:focused, .list-cell:filled:selected, .list-cell:filled:hover {
+.list-view .list-cell:filled:selected:focused, .list-view .list-cell:filled:selected, .list-view .list-cell:filled:hover,
+.combo-box .list-cell:filled:selected:focused, .combo-box .list-cell:filled:selected, .combo-box .list-cell:filled:hover {
     -fx-background-color: #FFFFFF;
 }
 
-.list-cell {
+.list-view .list-cell, .combo-box .list-cell {
     -fx-background-color: #E5E5E5;
     -fx-font-weight: bold;
     -fx-text-fill: #43A047;
