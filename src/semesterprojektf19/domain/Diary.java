@@ -22,15 +22,15 @@ public class Diary implements Serializable {
 
     public void createNote(Person person, String note, String titel, String dateOfObservation) {
         list.add(new DiaryNote(person, note, titel, dateOfObservation));
+        DiaryNote diaryNote = list.get(list.size()-1);
+        diaryNote.addNoteVersion(diaryNote);
     }
 
     public void editNote(int index, Person person, String note) {
         DiaryNote diaryNote = list.get(index);
         diaryNote.setNote(note);
-        Date tempDate = diaryNote.getDate();
-        diaryNote.setDate(tempDate = new Date());
-        Person tempPerson = diaryNote.getCreator();
-        diaryNote.setCreator(tempPerson = editor);
+        diaryNote.setDate(new Date());
+        diaryNote.setCreator(editor);
         diaryNote.addNoteVersion(diaryNote);
     }
     

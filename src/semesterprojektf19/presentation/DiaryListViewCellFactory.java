@@ -6,8 +6,13 @@
 package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXButton;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.fxml.FXMLLoader;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -18,6 +23,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.HTMLEditor;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
@@ -77,6 +83,25 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
         AnchorPane.setRightAnchor(dates, 10D);
 
         AnchorPane anchorPane = new AnchorPane(diaryNoteEditor, buttons, dates);
+        anchorPane.getChildren().addAll(diaryNoteEditor, buttons, dates);
+        
+        //opens Version Windows
+        versionsButton.setOnAction(event -> {
+            Stage stage = new Stage();
+            stage.setTitle("Note versioner");
+            stage.setResizable(false);
+            stage.focusedProperty().addListener((observable, oldFocus, newFocus) -> {
+                if (!newFocus) {
+                    stage.close();
+                }
+            });
+            try {
+                stage.setScene(new Scene(new FXMLLoader(getClass().getResource("DiaryNoteVersionsUIDocument.fxml")).load()));
+                stage.show();
+            } catch (IOException ex) {
+                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
         anchorPane.setPrefHeight(370);
 
         return new ListCell<DiaryItem>() {
