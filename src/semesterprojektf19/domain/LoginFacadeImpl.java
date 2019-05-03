@@ -13,7 +13,12 @@ public class LoginFacadeImpl implements LoginFacade {
             details.put("role", "admin");
             details.put("firstname", "admin");
             details.put("lastname", "admin");
-        } else {
+        } else if(Persistence.INSTANCE.authenticateDB(username, password)) {
+            details.put("role", "admin");
+            details.put("firstname", "admin");
+            details.put("lastname", "admin");
+        } 
+        else {
             Object person = Persistence.INSTANCE.authenticate(username, password);
             if (person != null) {
                 Worker worker = (Worker) person;
