@@ -20,16 +20,16 @@ import java.util.logging.Logger;
  */
 public class PersistenceFacadeImpl implements PersistenceFacade {
 
-    private final Postgres conn;
+    private final Postgres connection;
 
     public PersistenceFacadeImpl() {
-        conn = new Postgres();
+        connection = new Postgres();
     }
 
     @Override
     public Map<String, String> authenticate(String username, String password) {
         try {
-            Statement st = conn.getDb().createStatement();
+            Statement st = connection.getDb().createStatement();
             ResultSet rs = st.executeQuery("Select * FROM account");
             while (rs.next()) {
                 if (username.equals(rs.getString("username")) && password.equalsIgnoreCase(rs.getString("password"))) {
@@ -40,7 +40,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
         } catch (SQLException ex) {
             Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
         }
-        conn.closeDb();
+        connection.closeDb();
         return null;
     }
 
@@ -54,7 +54,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
         String query = "SELECT * FROM worker WHERE uuid = '" + uuid + "';";
         Map<String, String> workerDetails = new HashMap<>();
         try {
-            Statement st = conn.getDb().createStatement();
+            Statement st = connection.getDb().createStatement();
             ResultSet rs = st.executeQuery(query);
             rs.next();
             workerDetails.put("uuid", rs.getString("uuid"));
@@ -79,7 +79,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
         String query = "SELECT institutionaddr FROM worker WHERE name = '" + name + "';";
         String institutionAddress = "";
         try {
-            Statement st = conn.getDb().createStatement();
+            Statement st = connection.getDb().createStatement();
             ResultSet rs = st.executeQuery(query);
             rs.next();
             institutionAddress = rs.getString(1);
@@ -92,7 +92,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     private void cleanUpDB(ResultSet rs, Statement st) throws SQLException {
         rs.close();
         st.close();
-        conn.closeDb();
+        connection.closeDb();
     }
 
     public static void main(String[] args) {
