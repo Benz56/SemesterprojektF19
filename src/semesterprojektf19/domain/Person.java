@@ -8,13 +8,17 @@ import semesterprojektf19.persistence.Persistence;
 public class Person implements Comparable<Person>, Serializable {
 
     private final UUID uuid;
-    private final int controlNumber;
+    private final String id;
+    private final String controlNumber;
     private final String birthday;
     private String firstName, lastName, address;
-    private int phoneNumber;
+    private String phoneNumber;
     private Role role;
+    private Institution institution;
 
-    public Person(UUID uuid, String firstName, String lastName, String birthday, int controlNumber, String address, int phoneNumber, Role role) {
+    //UUID - institution
+    public Person(UUID uuid, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber, Role role) {
+        this.id = null;
         this.uuid = uuid;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,6 +27,33 @@ public class Person implements Comparable<Person>, Serializable {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.role = role;
+    }
+
+    //String ID - institution
+    public Person(String id, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber, Role role) {
+        this.id = id;
+        this.uuid = null;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.controlNumber = controlNumber;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.role = role;
+    }
+    
+    //String ID + institution
+    public Person(String id, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber, Role role, Institution institution) {
+        this.id = id;
+        this.uuid = null;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.controlNumber = controlNumber;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.role = role;
+        this.institution = institution;
     }
 
     public UUID getUuid() {
@@ -45,11 +76,11 @@ public class Person implements Comparable<Person>, Serializable {
         this.lastName = lastName;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -73,7 +104,7 @@ public class Person implements Comparable<Person>, Serializable {
         return birthday;
     }
 
-    public int getControlNumber() {
+    public String getControlNumber() {
         return controlNumber;
     }
 
@@ -87,7 +118,7 @@ public class Person implements Comparable<Person>, Serializable {
             r = firstName.compareTo(o.firstName);
         }
         if (r == 0) {
-            r = Integer.compare(phoneNumber, o.phoneNumber);
+            r = phoneNumber.compareTo(o.phoneNumber);
         }
         return r;
     }

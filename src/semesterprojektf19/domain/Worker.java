@@ -10,10 +10,24 @@ public class Worker extends Person {
 
     private final List<Case> cases = new ArrayList<>();
 
-    public Worker(UUID uuid, String firstName, String lastName, String birthday, int controlNumber, String address, int phoneNumber, Role role) {
-        super(uuid, firstName, lastName, birthday, controlNumber, address, phoneNumber, role);
+    //String ID + institution
+    public Worker(String id, String firstName, String lastName, String birthday,
+            String controlNumber, String address, String phoneNumber, Role role, Institution institution) {
+        super(id, firstName, lastName, birthday, controlNumber, address, phoneNumber, role, institution);
     }
-
+    
+    //String ID - Institution
+    public Worker(String id, String firstName, String lastName, String birthday,
+            String controlNumber, String address, String phoneNumber, Role role) {
+        super(id, firstName, lastName, birthday, controlNumber, address, phoneNumber, role);
+    }
+    
+    //UUID - institution
+    public Worker(UUID id, String firstName, String lastName, String birthday,
+            String controlNumber, String address, String phoneNumber, Role role) {
+        super(id, firstName, lastName, birthday, controlNumber, address, phoneNumber, role);
+    }
+    
     public Case addCase(Case c) {
         cases.add(c);
         return c;

@@ -13,9 +13,11 @@ import java.util.UUID;
  * @author sofielouise
  */
 public interface PersistenceFacade {
-    public UUID authenticate(String username, String password);
+    public Map<String, String> authenticate(String username, String password);
     
     public Map<String, String> getWorkerDetails(String uuid);
     
     public boolean register(String username, String password, UUID uuid, Object person);
+    
+    public String getInstitutionAddress(String name);
 }

@@ -17,12 +17,12 @@ import semesterprojektf19.persistence.Persistence;
 public class RegistrationFacadeImpl implements RegistrationFacade {
 
     @Override
-    public void registerCitizen(String firstName, String lastName, String birthday, int controlNumber, String address, int phoneNumber) {
-        Persistence.INSTANCE.writeObjectToFile("citizens/" + birthday + "-" + controlNumber + ".ser", new Citizen(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.CITIZEN), false);
+    public void registerCitizen(String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber) {
+//        Persistence.INSTANCE.writeObjectToFile("citizens/" + birthday + "-" + controlNumber + ".ser", new Citizen(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.CITIZEN), false);
     }
 
     @Override
-    public boolean registerEmployee(String username, String password, String firstName, String lastName, String birthday, int controlNumber, String address, int phoneNumber, String role, String institution) {
+    public boolean registerEmployee(String username, String password, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber, String role, String institution) {
         Person person;
         Role r = Role.valueOf(role);
         switch (r) {

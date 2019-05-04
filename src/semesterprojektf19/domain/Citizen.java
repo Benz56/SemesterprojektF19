@@ -13,7 +13,7 @@ public class Citizen extends Person {
     private final List<Case> cases = new ArrayList<>();
     private static final long serialVersionUID = 4813878493760830975L;
 
-    public Citizen(UUID uuid, String firstName, String lastName, String birthday, int controlNumber, String address, int phoneNumber, Role role) {
+    public Citizen(UUID uuid, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber, Role role) {
         super(uuid, firstName, lastName, birthday, controlNumber, address, phoneNumber, role);
         this.cpr = birthday + "-" + controlNumber;
     }

@@ -54,9 +54,9 @@ public class RegisterCitizenUIController implements Initializable {
                     firstnameTextField.getText(),
                     lastnameTextField.getText(),
                     birthdayDatePicker.getValue().toString(),
-                    Integer.parseInt(controlNumberTextField.getText()),
+                    controlNumberTextField.getText(),
                     addressTextField.getText(),
-                    Integer.parseInt(phoneNumberTextField.getText()));
+                    phoneNumberTextField.getText());
             onCancel();
         }
     }

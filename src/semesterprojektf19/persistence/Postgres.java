@@ -34,6 +34,13 @@ public class Postgres {
         return db;
     }
 
+    public void closeDb(){
+        try {
+            db.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Postgres.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
 
 //    public static void main(String[] args) {

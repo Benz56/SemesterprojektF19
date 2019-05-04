@@ -74,19 +74,17 @@ public enum CitizenManager {
     }
 
     public Map<String, Citizen> getCitizens() {
-        return citizensMap;
+        return citizensMap; 
     }
 
-    public boolean isCitizenCreated(String birthday, int controlNumber) {
+    public boolean isCitizenCreated(String birthday, String controlNumber) {
         for (Citizen citizen : citizensMap.values()) {
-            if (citizen.getBirthday().equals(birthday) && citizen.getControlNumber() == controlNumber) {
+            if (citizen.getBirthday().equals(birthday) && citizen.getControlNumber().equals(controlNumber)) {
                 return true;
             }
         }
         return false;
     }
-
-
 
     public void refresh() {
         citizensMap.clear();
