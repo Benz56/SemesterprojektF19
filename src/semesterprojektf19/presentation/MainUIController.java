@@ -51,7 +51,7 @@ public class MainUIController implements Initializable {
 
     //Home nodes:
     @FXML
-    private Label homeHelloLabel, homePlaceLabel, homeCitizenCountLabel, homeTargetAreasLabel;
+    private Label homeHelloLabel, homePlaceLabel, homeCitizenCountLabel;
 
     // Case nodes:
     @FXML
@@ -84,7 +84,9 @@ public class MainUIController implements Initializable {
     //Admin nodes:
     @FXML
     private JFXButton adminCreateUserBtn, adminEditUserBtn, adminDeleteUserBtn, adminCreateInstitutionBtn;
-
+    @FXML
+    private JFXButton logoutBtn;
+    
     public MainUIController(Map<String, String> userDetails) {
         this.userDetails = userDetails;
     }
@@ -92,6 +94,7 @@ public class MainUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         homeHelloLabel.setText(homeHelloLabel.getText() + userDetails.get(Column.FNAME.getColumnName()) + " " + userDetails.get(Column.LNAME.getColumnName()));
+        homePlaceLabel.setText(homePlaceLabel.getText() + userDetails.get(Column.INSTITUTION.getColumnName()));
         selectedBtn = homeBtn;
         btnPaneMap.put(homeBtn, homePane);
         btnPaneMap.put(casesBtn, casesPane);
@@ -101,8 +104,8 @@ public class MainUIController implements Initializable {
         } else {
             ((HBox) adminBtn.getParent()).getChildren().remove(adminBtn);
         }
-        if (userDetails.get(Column.ROLE.getColumnName()).equals("caseworker") 
-                || userDetails.get(Column.ROLE.getColumnName()).equals("admin")) {
+        if (userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("caseworker") 
+                || userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("admin")) {
             btnPaneMap.put(casesCreateBtn, createCasePane);
         } else {
             ((HBox) casesCreateBtn.getParent()).getChildren().remove(casesCreateBtn);

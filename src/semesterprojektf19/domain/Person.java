@@ -44,20 +44,6 @@ public class Person implements Comparable<Person>, Serializable {
         this.institution = institution;
     }
 
-    //String ID + institution
-    public Person(String id, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber, Role role, Institution institution) {
-        this.id = id;
-        this.uuid = null;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthday = birthday;
-        this.controlNumber = controlNumber;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.role = role;
-        this.institution = institution;
-    }
-
     public Map<String, String> getMap() {
         Map<String, String> personMap = new HashMap<>();
         personMap.put(Column.UUID.getColumnName(), uuid.toString());
@@ -144,9 +130,4 @@ public class Person implements Comparable<Person>, Serializable {
     public void saveToFile() {
         Persistence.INSTANCE.writeObjectToFile("persons/" + uuid.toString() + ".ser", this, false);
     }
-
-//    public static void main(String[] args) {
-//        Person p = new Person(UUID.randomUUID(), "Sof", "Mad", "2906982202", "1111", "vej", "99999999", Role.ADMIN);
-//        System.out.println(p.getMap().toString());
-//    }
 }

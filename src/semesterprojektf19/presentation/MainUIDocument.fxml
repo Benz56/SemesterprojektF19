@@ -151,11 +151,6 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="homeTargetAreasLabel" layoutX="50.0" layoutY="200.0" prefHeight="35.0" prefWidth="757.0" text="Fagområder: " AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="200.0">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="diaryPane" prefHeight="700.0" prefWidth="1000.0" visible="false">

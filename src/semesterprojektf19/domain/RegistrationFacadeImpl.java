@@ -50,7 +50,7 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
 
     private Institution getInstitution(String institution) {
         Institution inst = null;
-        if (!institution.equals("")) {
+        if (institution != null){
             inst = new Institution(institution, persistenceFacade.getInstitutions().get(institution));
         }
         return inst;
