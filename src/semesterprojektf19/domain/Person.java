@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import semesterprojektf19.aquaintance.Column;
 import semesterprojektf19.persistence.Persistence;
 
 public class Person implements Comparable<Person>, Serializable {
@@ -59,16 +60,16 @@ public class Person implements Comparable<Person>, Serializable {
 
     public Map<String, String> getMap() {
         Map<String, String> personMap = new HashMap<>();
-        personMap.put("uuid", uuid.toString());
-        personMap.put("fname", firstName);
-        personMap.put("lname", lastName);
-        personMap.put("bday", birthday);
-        personMap.put("cnumber", controlNumber);
-        personMap.put("phone", phoneNumber);
-        personMap.put("addr", address);
-        personMap.put("role", role.toString());
+        personMap.put(Column.UUID.getColumnName(), uuid.toString());
+        personMap.put(Column.FNAME.getColumnName(), firstName);
+        personMap.put(Column.LNAME.getColumnName(), lastName);
+        personMap.put(Column.BDAY.getColumnName(), birthday);
+        personMap.put(Column.CNUMBER.getColumnName(), controlNumber);
+        personMap.put(Column.PHONE.getColumnName(), phoneNumber);
+        personMap.put(Column.ADDR.getColumnName(), address);
+        personMap.put(Column.ROLE.getColumnName(), role.toString());
         if (institution != null) {
-            personMap.put("institution", institution.getName());
+            personMap.put(Column.INSTITUTION.getColumnName(), institution.getName());
         }
         return personMap;
     }

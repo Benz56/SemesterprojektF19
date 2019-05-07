@@ -5,12 +5,12 @@
  */
 package semesterprojektf19.persistence;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -50,28 +50,32 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     }
 
     @Override
-    public boolean register(String username, String password, UUID uuid, Map<String, String> personInfo) {
+    public boolean registerEmployee(String username, String password, UUID uuid, Map<String, String> personInfo) {
         System.out.println("Registering...");
         try {
             System.out.println("Trying to register...");
-            Statement st = connection.getDb().createStatement();
-            String queryWorker = "INSERT INTO worker VALUES ('"
-                    + uuid.toString() + "', '"
-                    + personInfo.get(Column.FNAME.toString()) + "', '"
-                    + personInfo.get(Column.LNAME.toString()) + "', '"
-                    + personInfo.get(Column.BDAY.toString()) + "', '"
-                    + personInfo.get(Column.CNUMBER.toString()) + "', '"
-                    + personInfo.get(Column.ADDR.toString()) + "', '"
-                    + personInfo.get(Column.PHONE.toString()) + "', '"
-                    + personInfo.get(Column.ROLE.toString()) + "', '"
-                    + personInfo.get(Column.INSTITUTION.toString()) + "', '"
-                    + personInfo.get(Column.INSTITUTIONADDR.toString()) +"';'";
-            int i = st.executeUpdate(queryWorker);
-            System.out.println("Row/s affected in table worker: " + i);
-            String queryAccount = "INSERT INTO account VALUES ('" + uuid + "', '" + username + "', '" + password + "');";
-            int j = st.executeUpdate(queryAccount);
-            System.out.println("Row/s affected in table account: " + j);
-            st.close();
+            PreparedStatement pst = connection.getDb().prepareStatement("INSERT INTO worker VALUES (?,?,?,?,?,?,?,?,?,?)");
+            int i = 1;
+            pst.setString(i++, uuid.toString());
+            pst.setString(i++, personInfo.get(Column.FNAME.getColumnName()));
+            pst.setString(i++, personInfo.get(Column.LNAME.getColumnName()));
+            pst.setDate(i++, Date.valueOf(personInfo.get(Column.BDAY.getColumnName())));
+            pst.setString(i++, personInfo.get(Column.CNUMBER.getColumnName()));
+            pst.setString(i++, personInfo.get(Column.ADDR.getColumnName()));
+            pst.setString(i++, personInfo.get(Column.PHONE.getColumnName()));
+            pst.setString(i++, personInfo.get(Column.ROLE.getColumnName()));
+            pst.setString(i++, personInfo.get(Column.INSTITUTION.getColumnName()));
+            pst.setString(i, personInfo.get(Column.INSTITUTIONADDR.getColumnName()));
+            pst.executeUpdate();
+            pst.close();
+            
+            PreparedStatement pstAccount = connection.getDb().prepareStatement("INSERT INTO account VALUES (?,?,?)");
+            pstAccount.setString(1, uuid.toString());
+            pstAccount.setString(2, username);
+            pstAccount.setString(3, password);
+            pstAccount.executeUpdate();
+            
+            pstAccount.close();
             connection.closeDb();
             return true;
         } catch (SQLException e) {
@@ -86,13 +90,13 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
         try {
             Statement st = connection.getDb().createStatement();
             String query = "INSERT INTO citizen VALUES ('"
-                    + personInfo.get(Column.UUID.toString()) + "', '"
-                    + personInfo.get(Column.FNAME.toString()) + "', '"
-                    + personInfo.get(Column.LNAME.toString()) + "', '"
-                    + personInfo.get(Column.BDAY.toString()) + "', '"
-                    + personInfo.get(Column.CNUMBER.toString()) + "', '"
-                    + personInfo.get(Column.ADDR.toString()) + "', '"
-                    + personInfo.get(Column.PHONE.toString()) + "');";
+                    + personInfo.get(Column.UUID.getColumnName()) + "', '"
+                    + personInfo.get(Column.FNAME.getColumnName()) + "', '"
+                    + personInfo.get(Column.LNAME.getColumnName()) + "', '"
+                    + personInfo.get(Column.BDAY.getColumnName()) + "', '"
+                    + personInfo.get(Column.CNUMBER.getColumnName()) + "', '"
+                    + personInfo.get(Column.ADDR.getColumnName()) + "', '"
+                    + personInfo.get(Column.PHONE.getColumnName()) + "');";
             int i = st.executeUpdate(query);
             System.out.println("Row/s affected in table citizen: " + i);
             st.close();
@@ -130,16 +134,13 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     }
 
     @Override
-    public List<Map<String, String>> getInstitutionNames() {
-         List<Map<String, String>> institutions = new ArrayList<>();
+    public Map<String, String> getInstitutions() {
+         Map<String, String> institutions = new HashMap<>();
         try {
             Statement st = connection.getDb().createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM institution;");
             while(rs.next()){
-                Map<String, String> institutionDetails = new HashMap<>();
-                institutionDetails.put(Column.INSTITUTION.toString(), rs.getString(1));
-                institutionDetails.put(Column.INSTITUTIONADDR.toString(), rs.getString(2));
-                institutions.add(institutionDetails);
+                institutions.put(rs.getString(1), rs.getString(2));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);

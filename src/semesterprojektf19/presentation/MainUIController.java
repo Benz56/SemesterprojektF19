@@ -29,6 +29,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import semesterprojektf19.aquaintance.Column;
 import semesterprojektf19.domain.DomainFacade;
 import semesterprojektf19.domain.DomainFacadeImpl;
 
@@ -90,17 +91,18 @@ public class MainUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        homeHelloLabel.setText(homeHelloLabel.getText() + userDetails.get("fname") + " " + userDetails.get("lname"));
+        homeHelloLabel.setText(homeHelloLabel.getText() + userDetails.get(Column.FNAME.getColumnName()) + " " + userDetails.get(Column.LNAME.getColumnName()));
         selectedBtn = homeBtn;
         btnPaneMap.put(homeBtn, homePane);
         btnPaneMap.put(casesBtn, casesPane);
         btnPaneMap.put(diaryBtn, diaryPane);
-        if (userDetails.get("role").equals("admin")) {
+        if (userDetails.get(Column.ROLE.getColumnName()).equals("admin")) {
             btnPaneMap.put(adminBtn, adminPane);
         } else {
             ((HBox) adminBtn.getParent()).getChildren().remove(adminBtn);
         }
-        if (userDetails.get("role").equals("caseworker") || userDetails.get("role").equals("admin")) {
+        if (userDetails.get(Column.ROLE.getColumnName()).equals("caseworker") 
+                || userDetails.get(Column.ROLE.getColumnName()).equals("admin")) {
             btnPaneMap.put(casesCreateBtn, createCasePane);
         } else {
             ((HBox) casesCreateBtn.getParent()).getChildren().remove(casesCreateBtn);
@@ -256,7 +258,7 @@ public class MainUIController implements Initializable {
     }
 
     private void refresh() {
-        if (!userDetails.get("role").equals("admin")) {
+        if (!userDetails.get(Column.ROLE.getColumnName()).equals("admin")) {
             String selectedItem = clientList.getSelectionModel().getSelectedItem();
             clientList.getItems().setAll(domainFacade.getUserCitizens());
             if (clientList.getItems().contains(selectedItem)) {

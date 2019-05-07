@@ -56,7 +56,7 @@ public class RegisterCitizenUIController implements Initializable {
                     birthdayDatePicker.getValue().toString(),
                     controlNumberTextField.getText(),
                     addressTextField.getText(),
-                    phoneNumberTextField.getText());
+                    phoneNumberTextField.getText());                    ;
             onCancel();
         }
     }
