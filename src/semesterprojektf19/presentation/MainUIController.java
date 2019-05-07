@@ -7,7 +7,6 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.awt.MouseInfo;
-import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -16,19 +15,14 @@ import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 import semesterprojektf19.domain.DomainFacade;
 import semesterprojektf19.domain.DomainFacadeImpl;
 
@@ -108,79 +102,18 @@ public class MainUIController implements Initializable {
 
         btnPaneMap.keySet().forEach(btn -> btn.setOnAction(event -> changePane((JFXButton) event.getSource())));
         ccCreateCitizenBtn.setOnAction(event -> {
-            Stage stage = new Stage();
-            stage.setTitle("Opret Borger");
-            stage.setResizable(false);
-            stage.focusedProperty().addListener((observable, oldFocus, newFocus) -> {
-                if (!newFocus) {
-                    stage.close();
-                }
-            });
-            try {
-                stage.setScene(new Scene(new FXMLLoader(getClass().getResource("RegisterCitizenUIDocument.fxml")).load()));
-                stage.show();
-                stage.setOnHiding(listener -> {
-                    domainFacade.refresh();
-                    refresh();
-                });
-            } catch (IOException ex) {
-                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            SimpleStageBuilder.create("Opret Borger", "RegisterCitizenUIDocument.fxml").setResizable(false).setCloseOnUnfocused(true).setOnHiding(() -> {
+                domainFacade.refresh();
+                refresh();
+            }).open();
         });
 
-        adminCreateUserBtn.setOnAction(event -> {
-            Stage stage = new Stage();
-            stage.setTitle("Opret Bruger");
-            stage.setResizable(false);
-            stage.focusedProperty().addListener((observable, oldFocus, newFocus) -> {
-                if (!newFocus) {
-                    stage.close();
-                }
-            });
-            try {
-                stage.setScene(new Scene(new FXMLLoader(getClass().getResource("RegisterEmployeeUIDocument.fxml")).load()));
-                stage.show();
-            } catch (IOException ex) {
-                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
+        adminCreateUserBtn.setOnAction(event -> SimpleStageBuilder.create("Opret Bruger", "RegisterEmployeeUIDocument.fxml").setResizable(false).setCloseOnUnfocused(true).open());
 
-        adminCreateInstitutionBtn.setOnAction(event -> {
-            Stage stage = new Stage();
-            stage.setTitle("Opret Bosted");
-            stage.setResizable(false);
-            stage.focusedProperty().addListener((observable, oldFocus, newFocus) -> {
-                if (!newFocus) {
-                    stage.close();
-                }
-            });
-            try {
-                stage.setScene(new Scene(new FXMLLoader(getClass().getResource("RegisterInstitutionUIDocument.fxml")).load()));
-                stage.show();
-            } catch (IOException ex) {
-                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
+        adminCreateInstitutionBtn.setOnAction(event -> SimpleStageBuilder.create("Opret Bosted", "RegisterInstitutionUIDocument.fxml").setResizable(false).setCloseOnUnfocused(true).open());
 
-        diaryCreateNoteBtn.setOnAction(event -> {
-            Stage stage = new Stage();
-            stage.setTitle("Opret Notat");
-            stage.setResizable(false);
-            stage.focusedProperty().addListener((observable, oldFocus, newFocus) -> {
-                if (!newFocus) {
-                    stage.close();
-                }
-            });
-            try {
-
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateNoteUIDocument.fxml"));
-                fxmlLoader.setControllerFactory(controllerFactory -> new CreateNoteUIController(String.valueOf(diaryCaseCb.getSelectionModel().getSelectedIndex()), clientList.getSelectionModel().getSelectedItem()));
-                stage.setScene(new Scene(fxmlLoader.load()));
-                stage.show();
-            } catch (IOException ex) {
-                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
+        diaryCreateNoteBtn.setOnAction(event -> SimpleStageBuilder.create("Opret Notat", "CreateNoteUIDocument.fxml").setResizable(false)
+                .setCloseOnUnfocused(true).setControllerFactory(new CreateNoteUIController(String.valueOf(diaryCaseCb.getSelectionModel().getSelectedIndex()), clientList.getSelectionModel().getSelectedItem())).open());
 
         ccSearchCitizenTextField.textProperty().addListener(listener -> refresh());
 
@@ -268,17 +201,8 @@ public class MainUIController implements Initializable {
     }
 
     @FXML
-    private void onLogout() {
-        ((Stage) homeBtn.getScene().getWindow()).close();
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginUIDocument.fxml"));
-            Stage stage = new Stage();
-            Scene scene = new Scene(loader.load());
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-
-        }
+    private void onLogout(ActionEvent event) {
+        SimpleStageBuilder.create("EGBoosted", "LoginUIDocument.fxml").closeOpenWindow(homeBtn).setResizable(false).open();
     }
+
 }
