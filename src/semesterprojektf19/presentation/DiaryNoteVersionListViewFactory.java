@@ -8,7 +8,6 @@ package semesterprojektf19.presentation;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -30,29 +29,27 @@ public class DiaryNoteVersionListViewFactory implements Callback<ListView<DiaryI
 
         WebView webView = new WebView();
 
+        webView.setPrefHeight(200);
         AnchorPane.setTopAnchor(webView, 1D);
         AnchorPane.setLeftAnchor(webView, 1D);
         AnchorPane.setRightAnchor(webView, 1D);
 
-        TextField observationDate = new TextField(), originDate = new TextField();
-        observationDate.setPrefWidth(200);
-        observationDate.setEditable(false);
-        originDate.setPrefWidth(200);
-        originDate.setEditable(false);
+        Label observationDate = new Label(), originDate = new Label(), creatorLabel = new Label();
 
-        GridPane dates = new GridPane();
-        dates.setHgap(10);
-        dates.setVgap(10);
-        dates.add(new Label("Observations dato: "), 0, 0);
-        dates.add(observationDate, 1, 0);
-        dates.add(new Label("Seneste version: "), 0, 1);
-        dates.add(originDate, 1, 1);
-        AnchorPane.setBottomAnchor(dates, 10D);
-        AnchorPane.setRightAnchor(dates, 10D);
+        GridPane labels = new GridPane();
+        labels.setHgap(10);
+        labels.add(new Label("Observations dato: "), 0, 0);
+        labels.add(observationDate, 1, 0);
+        labels.add(new Label("Seneste version: "), 0, 1);
+        labels.add(originDate, 1, 1);
+        labels.add(new Label("Redigeret af: "), 0, 2);
+        labels.add(creatorLabel, 1, 2);
+        AnchorPane.setBottomAnchor(labels, 10D);
+        AnchorPane.setLeftAnchor(labels, 10D);
 
-        AnchorPane anchorPane = new AnchorPane(webView);
+        AnchorPane anchorPane = new AnchorPane(webView, labels);
 
-        anchorPane.setPrefHeight(370);
+        anchorPane.setPrefHeight(350);
 
         return new ListCell<DiaryItem.NoteVersion>() {
 
@@ -69,9 +66,9 @@ public class DiaryNoteVersionListViewFactory implements Callback<ListView<DiaryI
                 webView.getEngine().loadContent(noteVersion.getContent());
                 observationDate.setText(noteVersion.getObsDate());
                 originDate.setText(noteVersion.getNoteDate());
+                creatorLabel.setText(noteVersion.getCreator());
                 setGraphic(titledPane);
             }
-
         };
     }
 

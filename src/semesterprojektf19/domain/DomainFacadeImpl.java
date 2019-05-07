@@ -76,7 +76,7 @@ public class DomainFacadeImpl implements DomainFacade {
         List<List<Map<String, String>>> notes = new ArrayList<>();
         Citizen citizen = CitizenManager.INSTANCE.getCitizen(citizenString);
         citizen.getCase(caseIndex).getDiary().getNotes().forEach(note -> {
-            System.out.println(note.getNote());
+
             List<Map<String, String>> versions = new ArrayList<>();
             note.getVersions().forEach(version -> {
                 Map<String, String> content = new HashMap<>();
@@ -85,15 +85,10 @@ public class DomainFacadeImpl implements DomainFacade {
                 content.put("obsDate", version.getDateOfObservation());
                 content.put("noteDate", version.getDate().toString());
                 content.put("content", version.getNote());
+                content.put("creator", version.getCreator().getFirstName() + " " + version.getCreator().getLastName());
                 versions.add(content);
             });
-//            Map<String, String> content = new HashMap<>();
-//            content.put("uuid", note.getUuid().toString());
-//            content.put("title", note.getTitel());
-//            content.put("obsDate", note.getDateOfObservation());
-//            content.put("noteDate", note.getDate().toString());
-//            content.put("content", note.getNote());
-//            versions.add(content);
+
             Collections.reverse(versions);
             notes.add(versions);
         });

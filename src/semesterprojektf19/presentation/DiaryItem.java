@@ -31,7 +31,8 @@ public class DiaryItem {
     public class NoteVersion {
 
         private final UUID uuid;
-        private final String title, obsDate, noteDate, content;
+        private final String title, obsDate, noteDate, content, creator;
+
 
         public NoteVersion(Map<String, String> note) {
             uuid = UUID.fromString(note.get("uuid"));
@@ -39,7 +40,7 @@ public class DiaryItem {
             obsDate = note.get("obsDate");
             noteDate = note.get("noteDate");
             content = note.get("content");
-
+            creator = note.get("creator");
         }
 
         public UUID getUuid() {
@@ -61,6 +62,12 @@ public class DiaryItem {
         public String getContent() {
             return content;
         }
+
+        public String getCreator() {
+            return creator;
+        }
+        
+        
 
     }
 }
