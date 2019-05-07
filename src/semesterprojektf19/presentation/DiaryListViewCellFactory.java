@@ -7,6 +7,9 @@ package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -25,6 +28,12 @@ import javafx.util.Callback;
  * @author Benjamin Staugaard | Benz56
  */
 public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, ListCell<DiaryItem>> {
+
+    private final MainUIController mainUIController;
+
+    public DiaryListViewCellFactory(MainUIController mainUIController) {
+        this.mainUIController = mainUIController;
+    }
 
     @Override
     public ListCell<DiaryItem> call(ListView<DiaryItem> listView) {
@@ -96,6 +105,17 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
                 diaryNoteEditor.setHtmlText(diaryItem.getDiaryVersions().get(0).getContent());
                 observationDate.setText(diaryItem.getDiaryVersions().get(0).getObsDate());
                 originDate.setText(diaryItem.getDiaryVersions().get(0).getNoteDate());
+                editButton.setOnAction(event -> {
+                    Map<String, String> content = new HashMap<>();
+                    content.put("uuid", diaryItem.getDiaryVersions().get(0).getUuid().toString());
+                    content.put("title", diaryItem.getDiaryVersions().get(0).getTitle());
+                    content.put("obsDate", diaryItem.getDiaryVersions().get(0).getObsDate());
+                    content.put("content", diaryNoteEditor.getHtmlText());
+                    mainUIController.getDomainFacade().addDiaryNoteVersion(mainUIController.getClientList().getSelectionModel().getSelectedItem(), mainUIController.getDiaryCaseCb().getSelectionModel().getSelectedIndex(), content);
+                    listView.getItems().clear();
+                    List<List<Map<String, String>>> diaryNoteDetails = mainUIController.getDomainFacade().getDiaryDetails(mainUIController.getClientList().getSelectionModel().getSelectedItem(), mainUIController.getDiaryCaseCb().getSelectionModel().getSelectedIndex());
+                    diaryNoteDetails.forEach(note -> listView.getItems().add(new DiaryItem(note)));
+                });
                 versionsButton.setOnAction(event -> SimpleStageBuilder.create("Note versioner", "DiaryNoteVersionsUIDocument.fxml").setControllerFactory(new DiaryNoteVersionsUIController(diaryItem)).setResizable(false).setCloseOnUnfocused(true).open());
                 setGraphic(titledPane);
             }

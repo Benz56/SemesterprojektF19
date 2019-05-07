@@ -26,4 +26,6 @@ public interface DomainFacade {
 
     public List<List<Map<String, String>>> getDiaryDetails(String citizen, int index);
 
+    public void addDiaryNoteVersion(String citizenString, int caseIndex, Map<String, String> details);
+
 }

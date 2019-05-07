@@ -8,6 +8,7 @@ package semesterprojektf19.presentation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  *
@@ -19,7 +20,7 @@ public class DiaryItem {
 
     public DiaryItem(List<Map<String, String>> note) {
         note.forEach(entry -> {
-            diaryVersions.add(new NoteVersion(entry)); 
+            diaryVersions.add(new NoteVersion(entry));
         });
     }
 
@@ -29,14 +30,20 @@ public class DiaryItem {
 
     public class NoteVersion {
 
+        private final UUID uuid;
         private final String title, obsDate, noteDate, content;
 
         public NoteVersion(Map<String, String> note) {
+            uuid = UUID.fromString(note.get("uuid"));
             title = note.get("title");
             obsDate = note.get("obsDate");
             noteDate = note.get("noteDate");
             content = note.get("content");
 
+        }
+
+        public UUID getUuid() {
+            return uuid;
         }
 
         public String getTitle() {

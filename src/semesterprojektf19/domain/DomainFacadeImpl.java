@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import semesterprojektf19.persistence.Persistence;
 
@@ -17,7 +18,6 @@ public class DomainFacadeImpl implements DomainFacade {
 
     public DomainFacadeImpl() {
         Persistence.INSTANCE.toString(); //Initialize persistence i.e. create required files.
-
     }
 
     @Override
@@ -75,23 +75,25 @@ public class DomainFacadeImpl implements DomainFacade {
     public List<List<Map<String, String>>> getDiaryDetails(String citizenString, int caseIndex) {
         List<List<Map<String, String>>> notes = new ArrayList<>();
         Citizen citizen = CitizenManager.INSTANCE.getCitizen(citizenString);
-        //details.put("title", citizen.getCase(caseIndex).getDiary().getNotes().stream().map(d -> d.getTitel()).collect(Collectors.joining("\n")));
         citizen.getCase(caseIndex).getDiary().getNotes().forEach(note -> {
+            System.out.println(note.getNote());
             List<Map<String, String>> versions = new ArrayList<>();
             note.getVersions().forEach(version -> {
                 Map<String, String> content = new HashMap<>();
-                content.put("title", note.getTitel());
-                content.put("obsDate", note.getDateOfObservation());
-                content.put("noteDate", note.getDate().toString());
-                content.put("content", note.getNote());
+                content.put("uuid", version.getUuid().toString());
+                content.put("title", version.getTitel());
+                content.put("obsDate", version.getDateOfObservation());
+                content.put("noteDate", version.getDate().toString());
+                content.put("content", version.getNote());
                 versions.add(content);
             });
-            Map<String, String> content = new HashMap<>();
-            content.put("title", note.getTitel());
-            content.put("obsDate", note.getDateOfObservation());
-            content.put("noteDate", note.getDate().toString());
-            content.put("content", note.getNote());
-            versions.add(content);
+//            Map<String, String> content = new HashMap<>();
+//            content.put("uuid", note.getUuid().toString());
+//            content.put("title", note.getTitel());
+//            content.put("obsDate", note.getDateOfObservation());
+//            content.put("noteDate", note.getDate().toString());
+//            content.put("content", note.getNote());
+//            versions.add(content);
             Collections.reverse(versions);
             notes.add(versions);
         });
@@ -99,4 +101,11 @@ public class DomainFacadeImpl implements DomainFacade {
         return notes;
     }
 
+    @Override
+    public void addDiaryNoteVersion(String citizenString, int caseIndex, Map<String, String> details) {
+        Citizen citizen = CitizenManager.INSTANCE.getCitizen(citizenString);
+        UUID uuid = UUID.fromString(details.get("uuid"));
+        citizen.getCase(caseIndex).getDiary().getNotes().stream().filter(note -> note.getUuid().equals(uuid)).findFirst().ifPresent(note -> note.addNoteVersion(new DiaryNote(UUID.fromString(details.get("uuid")), UserContainer.getUser(), details.get("content"), details.get("title"), details.get("obsDate"))));
+        //Husk at gemme i persistens herefter.
+    }
 }
