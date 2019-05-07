@@ -119,10 +119,10 @@ public class MainUIController implements Initializable {
 
         setClientListener();
 
-        diarynotesListview.setCellFactory(new DiaryListViewCellFactory());
+        diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
         diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             diarynotesListview.getItems().clear();
-            List<Map<String, String>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
+            List<List<Map<String, String>>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
             diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
         });
 
@@ -205,4 +205,12 @@ public class MainUIController implements Initializable {
         SimpleStageBuilder.create("EGBoosted", "LoginUIDocument.fxml").closeOpenWindow(homeBtn).setResizable(false).open();
     }
 
+    public JFXComboBox<String> getDiaryCaseCb() {
+        return diaryCaseCb;
+    }
+
+    public JFXListView<String> getClientList() {
+        return clientList;
+    }   
+    
 }

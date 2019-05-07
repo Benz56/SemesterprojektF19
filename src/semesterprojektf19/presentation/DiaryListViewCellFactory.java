@@ -77,7 +77,6 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
         AnchorPane.setRightAnchor(dates, 10D);
 
         AnchorPane anchorPane = new AnchorPane(diaryNoteEditor, buttons, dates);
-        anchorPane.getChildren().addAll(diaryNoteEditor, buttons, dates);
 
         //opens Version Windows
         versionsButton.setOnAction(event -> SimpleStageBuilder.create("Note versioner", "DiaryNoteVersionsUIDocument.fxml").setResizable(false).setCloseOnUnfocused(true).open());
