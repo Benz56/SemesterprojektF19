@@ -2,22 +2,14 @@
 package semesterprojektf19;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
+import semesterprojektf19.presentation.SimpleStageBuilder;
 
 public class EGBoosted extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("presentation/LoginUIDocument.fxml"));
-
-        Scene scene = new Scene(root);
-        stage.setResizable(false);
-
-        stage.setScene(scene);
-        stage.show();
+        SimpleStageBuilder.create("EGBoosted", "LoginUIDocument.fxml").setResizable(false).open();
     }
 
     public static void main(String[] args) {

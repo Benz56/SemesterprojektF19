@@ -73,17 +73,28 @@ public class DomainFacadeImpl implements DomainFacade {
     }
 
     @Override
-    public List<Map<String, String>> getDiaryDetails(String citizenString, int caseIndex) {
-        List<Map<String, String>> notes = new ArrayList<>();
+    public List<List<Map<String, String>>> getDiaryDetails(String citizenString, int caseIndex) {
+        List<List<Map<String, String>>> notes = new ArrayList<>();
         Citizen citizen = CitizenManager.INSTANCE.getCitizen(citizenString);
         //details.put("title", citizen.getCase(caseIndex).getDiary().getNotes().stream().map(d -> d.getTitel()).collect(Collectors.joining("\n")));
         citizen.getCase(caseIndex).getDiary().getNotes().forEach(note -> {
+            List<Map<String, String>> versions = new ArrayList<>();
+            note.getVersions().forEach(version -> {
+                Map<String, String> content = new HashMap<>();
+                content.put("title", note.getTitel());
+                content.put("obsDate", note.getDateOfObservation());
+                content.put("noteDate", note.getDate().toString());
+                content.put("content", note.getNote());
+                versions.add(content);
+            });
             Map<String, String> content = new HashMap<>();
             content.put("title", note.getTitel());
             content.put("obsDate", note.getDateOfObservation());
             content.put("noteDate", note.getDate().toString());
             content.put("content", note.getNote());
-            notes.add(content);
+            versions.add(content);
+            Collections.reverse(versions);
+            notes.add(versions);
         });
         Collections.reverse(notes);
         return notes;

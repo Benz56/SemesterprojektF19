@@ -5,6 +5,8 @@
  */
 package semesterprojektf19.presentation;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,29 +15,45 @@ import java.util.Map;
  */
 public class DiaryItem {
 
-    private final String title, obsDate, noteDate, content;
+    private final List<NoteVersion> diaryVersions = new ArrayList<>();
 
-    public DiaryItem(Map<String, String> note) {
-        title = note.get("title");
-        obsDate = note.get("obsDate");
-        noteDate = note.get("noteDate");
-        content = note.get("content");
+    public DiaryItem(List<Map<String, String>> note) {
+        note.forEach(entry -> {
+            diaryVersions.add(new NoteVersion(entry)); 
+        });
     }
 
-    public String getTitle() {
-        return title;
+    public List<NoteVersion> getDiaryVersions() {
+        return diaryVersions;
     }
 
-    public String getObsDate() {
-        return obsDate;
-    }
+    public class NoteVersion {
 
-    public String getNoteDate() {
-        return noteDate;
-    }
+        private final String title, obsDate, noteDate, content;
 
-    public String getContent() {
-        return content;
-    }
+        public NoteVersion(Map<String, String> note) {
+            title = note.get("title");
+            obsDate = note.get("obsDate");
+            noteDate = note.get("noteDate");
+            content = note.get("content");
 
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getObsDate() {
+            return obsDate;
+        }
+
+        public String getNoteDate() {
+            return noteDate;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+    }
 }

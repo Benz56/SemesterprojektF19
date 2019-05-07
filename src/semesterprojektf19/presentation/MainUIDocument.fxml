@@ -112,7 +112,7 @@
             </HBox>
             <HBox alignment="TOP_RIGHT" style="-fx-background-color: #E5E5E5;" GridPane.columnIndex="1">
                <children>
-                  <JFXButton fx:id="logoutBtn" focusTraversable="false" onAction="#onLogout" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #E5E5E5;" text=".">
+                  <JFXButton focusTraversable="false" onAction="#onLogout" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #E5E5E5;" text=".">
                      <graphic>
                         <AnchorPane prefHeight="100.0" prefWidth="100.0">
                            <children>
