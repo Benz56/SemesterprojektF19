@@ -119,7 +119,7 @@ public class MainUIController implements Initializable {
 
         setClientListener();
 
-        diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
+        diarynotesListview.setCellFactory(new DiaryListViewCellFactory());
         diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             diarynotesListview.getItems().clear();
             List<List<Map<String, String>>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());

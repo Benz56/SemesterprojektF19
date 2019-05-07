@@ -93,10 +93,10 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
                 }
                 titledPane.setUserData(diaryItem);
                 titledPane.setContent(anchorPane);
-                titledPane.setText(diaryItem.getTitle());
-                diaryNoteEditor.setHtmlText(diaryItem.getContent());
-                observationDate.setText(diaryItem.getObsDate());
-                originDate.setText(diaryItem.getNoteDate());
+                titledPane.setText(diaryItem.getDiaryVersions().get(0).getTitle());
+                diaryNoteEditor.setHtmlText(diaryItem.getDiaryVersions().get(0).getContent());
+                observationDate.setText(diaryItem.getDiaryVersions().get(0).getObsDate());
+                originDate.setText(diaryItem.getDiaryVersions().get(0).getNoteDate());
                 setGraphic(titledPane);
             }
         };
