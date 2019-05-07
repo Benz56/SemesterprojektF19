@@ -110,11 +110,11 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     }
 
     @Override
-    public boolean registerCase(Map<String, String> caseDetails, UUID citizenUUID, UUID workerUUID) {
+    public boolean registerCase(Map<String, String> caseDetails, UUID caseUUID,UUID citizenUUID, UUID workerUUID) {
         try {
             PreparedStatement pst = connection.getDb().prepareStatement("INSERT INTO casefile VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             int i = 1;
-            pst.setString(i++, caseDetails.get(Column.UUID.getColumnName()));
+            pst.setString(i++, caseUUID.toString());
             pst.setString(i++, citizenUUID.toString());
             pst.setString(i++, workerUUID.toString());
             pst.setString(i++, caseDetails.get(Column.INSTITUTION.getColumnName()));
@@ -131,6 +131,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             pst.executeUpdate();
             pst.close();
             connection.closeDb();
+            System.out.println("CaseID: " + caseUUID.toString());
             return true;
         } catch (SQLException e) {
         }

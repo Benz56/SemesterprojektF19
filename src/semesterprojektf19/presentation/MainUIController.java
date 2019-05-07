@@ -98,7 +98,7 @@ public class MainUIController implements Initializable {
         } else {
             ((HBox) adminBtn.getParent()).getChildren().remove(adminBtn);
         }
-        if (userDetails.get(Column.ROLE.getColumnName()).equals("caseworker") || userDetails.get(Column.ROLE.getColumnName()).equals("admin")) {
+        if (userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("caseworker") || userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("admin")) {
             btnPaneMap.put(casesCreateBtn, createCasePane);
         } else {
             ((HBox) casesCreateBtn.getParent()).getChildren().remove(casesCreateBtn);

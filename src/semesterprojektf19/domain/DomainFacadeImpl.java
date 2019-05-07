@@ -34,7 +34,8 @@ public class DomainFacadeImpl implements DomainFacade {
         Citizen citizen = CitizenManager.INSTANCE.getCitizen(caseDetails.get(Column.CITIZEN.getColumnName()));
         citizen.addCase(c);
         UUID citizenUUID = citizen.getUuid();
-        persistenceFacade.registerCase(caseDetails, citizenUUID, UserContainer.getUser().getUuid());
+        UUID caseUUID = c.getUUID();
+        persistenceFacade.registerCase(caseDetails, caseUUID, citizenUUID, UserContainer.getUser().getUuid());
     }
 
     @Override
