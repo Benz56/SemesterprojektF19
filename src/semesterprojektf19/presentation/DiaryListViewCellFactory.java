@@ -6,13 +6,8 @@
 package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXButton;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.fxml.FXMLLoader;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -23,7 +18,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.HTMLEditor;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
@@ -31,12 +25,6 @@ import javafx.util.Callback;
  * @author Benjamin Staugaard | Benz56
  */
 public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, ListCell<DiaryItem>> {
-
-    private MainUIController mainUIController;
-
-    public DiaryListViewCellFactory(MainUIController mainUIController) {
-        this.mainUIController = mainUIController;
-    }
 
     @Override
     public ListCell<DiaryItem> call(ListView<DiaryItem> listView) {
@@ -90,11 +78,11 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
 
         AnchorPane anchorPane = new AnchorPane(diaryNoteEditor, buttons, dates);
 
-
+        //opens Version Windows
+        versionsButton.setOnAction(event -> SimpleStageBuilder.create("Note versioner", "DiaryNoteVersionsUIDocument.fxml").setResizable(false).setCloseOnUnfocused(true).open());
         anchorPane.setPrefHeight(370);
 
         return new ListCell<DiaryItem>() {
-
             @Override
             protected void updateItem(final DiaryItem diaryItem, final boolean empty) {
                 super.updateItem(diaryItem, empty);
@@ -105,29 +93,10 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
                 }
                 titledPane.setUserData(diaryItem);
                 titledPane.setContent(anchorPane);
-                DiaryItem.NoteVersion latestVersion = diaryItem.getDiaryVersions().get(0);
-                titledPane.setText(latestVersion.getTitle());
-                diaryNoteEditor.setHtmlText(latestVersion.getContent());
-                observationDate.setText(latestVersion.getObsDate());
-                originDate.setText(latestVersion.getNoteDate());
-                versionsButton.setOnAction(event -> {
-                    Stage stage = new Stage();
-                    stage.setTitle("Note versioner");
-                    stage.setResizable(false);
-                    stage.focusedProperty().addListener((observable, oldFocus, newFocus) -> {
-                        if (!newFocus) {
-                            stage.close();
-                        }
-                    });
-                    try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DiaryNoteVersionsUIDocument.fxml"));
-                        fxmlLoader.setControllerFactory(controllerFactory -> new DiaryNoteVersionsUIDocumentController(diaryItem));
-                        stage.setScene(new Scene(fxmlLoader.load()));
-                        stage.show();
-                    } catch (IOException ex) {
-                        Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                });
+                titledPane.setText(diaryItem.getTitle());
+                diaryNoteEditor.setHtmlText(diaryItem.getContent());
+                observationDate.setText(diaryItem.getObsDate());
+                originDate.setText(diaryItem.getNoteDate());
                 setGraphic(titledPane);
             }
         };
