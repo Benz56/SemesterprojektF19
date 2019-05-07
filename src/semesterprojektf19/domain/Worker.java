@@ -9,11 +9,13 @@ import java.util.stream.Collectors;
 public class Worker extends Person {
 
     private final List<Case> cases = new ArrayList<>();
-
-    public Worker(UUID uuid, String firstName, String lastName, String birthday, int controlNumber, String address, int phoneNumber, Role role) {
-        super(uuid, firstName, lastName, birthday, controlNumber, address, phoneNumber, role);
+    
+    //UUID + institution
+    public Worker(UUID uuid, String firstName, String lastName, String birthday,
+            String controlNumber, String address, String phoneNumber, Role role, Institution institution) {
+        super(uuid, firstName, lastName, birthday, controlNumber, address, phoneNumber, role, institution);
     }
-
+    
     public Case addCase(Case c) {
         cases.add(c);
         return c;

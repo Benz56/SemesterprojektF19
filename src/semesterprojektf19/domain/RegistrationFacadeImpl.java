@@ -5,10 +5,12 @@
  */
 package semesterprojektf19.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import semesterprojektf19.domain.accesscontrol.Role;
-import semesterprojektf19.persistence.Persistence;
+import semesterprojektf19.persistence.PersistenceFacade;
+import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
 /**
  *
@@ -16,22 +18,26 @@ import semesterprojektf19.persistence.Persistence;
  */
 public class RegistrationFacadeImpl implements RegistrationFacade {
 
+    PersistenceFacade persistenceFacade = new PersistenceFacadeImpl();
+
     @Override
-    public void registerCitizen(String firstName, String lastName, String birthday, int controlNumber, String address, int phoneNumber) {
-        Persistence.INSTANCE.writeObjectToFile("citizens/" + birthday + "-" + controlNumber + ".ser", new Citizen(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.CITIZEN), false);
+    public void registerCitizen(String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber) {
+        Citizen citizen = new Citizen(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.CITIZEN);
+        persistenceFacade.registerCitizen(citizen.getMap());
     }
 
     @Override
-    public boolean registerEmployee(String username, String password, String firstName, String lastName, String birthday, int controlNumber, String address, int phoneNumber, String role, String institution) {
+    public boolean registerEmployee(String username, String password, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber, String role, String institution) {
         Person person;
         Role r = Role.valueOf(role);
+        Institution inst = getInstitution(institution);
+        
         switch (r) {
             case CASEWORKER:
-                person = new Worker(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.valueOf(role));
-                
+                person = new Worker(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.valueOf(role), inst);
                 break;
             case SOCIALWORKER:
-                person = new Worker(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.valueOf(role));
+                person = new Worker(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.valueOf(role), inst);
                 break;
             case ADMIN:
                 person = new Person(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.valueOf(role));
@@ -39,29 +45,25 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
             default:
                 throw new AssertionError(Role.valueOf(role).name());
         }
-        if(Persistence.INSTANCE.register(username, password, person.getUuid(), person)){
-            if(r == Role.SOCIALWORKER){
-                addWorkerToInstitution(institution, (Worker) person);
-            }
-            return true;
+        return persistenceFacade.registerEmployee(username, password, person.getUuid(), person.getMap());
+    }
+
+    private Institution getInstitution(String institution) {
+        Institution inst = null;
+        if (institution != null){
+            inst = new Institution(institution, persistenceFacade.getInstitutions().get(institution));
         }
-        return false;
+        return inst;
     }
 
     @Override
     public void registerInstitution(String name, String adress) {
         Institution institution = new Institution(name, adress);
-        Persistence.INSTANCE.writeObjectToFile("institutions/" + institution.getName() + ".ser", institution, false);
-    }
-    
-    @Override
-    public List<String> getInstitutionNames(){
-        return Persistence.INSTANCE.readFileNamesInDir("institutions");
+//        Persistence.INSTANCE.writeObjectToFile("institutions/" + institution.getName() + ".ser", institution, false);
     }
 
-    private void addWorkerToInstitution(String name, Worker worker) {
-        Institution institution = (Institution) Persistence.INSTANCE.readObjectFromFile("institutions/" + name + ".ser");
-        institution.getWorkers().put(worker.getUuid(), worker);
-        Persistence.INSTANCE.writeObjectToFile("institutions/" + institution.getName() + ".ser", institution, false);
+    @Override
+    public List<String> getInstitutionNames() {
+        return new ArrayList<>(persistenceFacade.getInstitutions().keySet());
     }
 }

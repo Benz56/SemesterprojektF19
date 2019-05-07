@@ -35,7 +35,7 @@ public final class SerializableUtil {
         }
         return object;
     }
-
+   
     public static List<Object> readObjects(String file) {
         List<Object> objects = new ArrayList<>();
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));) {

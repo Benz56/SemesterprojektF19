@@ -5,6 +5,7 @@
  */
 package semesterprojektf19.domain;
 
+import semesterprojektf19.aquaintance.UserContainer;
 import java.util.Map;
 
 /**
