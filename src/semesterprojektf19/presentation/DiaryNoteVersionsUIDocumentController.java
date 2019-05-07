@@ -5,6 +5,7 @@
  */
 package semesterprojektf19.presentation;
 
+import com.jfoenix.controls.JFXButton;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -19,14 +20,27 @@ import javafx.scene.control.ListView;
 public class DiaryNoteVersionsUIDocumentController implements Initializable {
 
     @FXML
-    private ListView<?> diaryNotesLV;
+    private JFXButton closeBtn;
+    private final DiaryItem diaryItem;
+
+    public DiaryNoteVersionsUIDocumentController(DiaryItem diaryItem) {
+        this.diaryItem = diaryItem;
+        
+    }
+
+    
+    @FXML
+    private ListView<DiaryItem.NoteVersion> diaryNotesLV;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        diaryNotesLV.setCellFactory(new DiaryNoteVersionListViewFactory());
+        
+        diaryNotesLV.getItems().setAll(diaryItem.getDiaryVersions());
+
     }    
     
 }

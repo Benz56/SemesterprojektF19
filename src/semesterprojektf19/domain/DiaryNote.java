@@ -13,7 +13,7 @@ public class DiaryNote implements Serializable {
     private Date date;
     private Person creator;
     private List<Topic> topics; // til at tilføje emne til note.
-    private List<DiaryNote> noteVersions; // til at holde de forskellige versioner af noten. 
+    private List<DiaryNote> noteVersions; // til at holde de forskellige versioner af noten.
 
     // TODO Implementer date picker i javaFX. skal holde dato for observation som ikke nødvendigvis er den samme som oprettelses dato 
     // TODO implementere 
@@ -25,6 +25,7 @@ public class DiaryNote implements Serializable {
         this.date = new Date();
         this.topics = new ArrayList<>();
         this.noteVersions = new ArrayList<>();
+        
     }
 
     public String getNote() {
@@ -102,5 +103,11 @@ public class DiaryNote implements Serializable {
                 + this.note + "\n\n\n"
                 + " Sidst redigeret: " + this.date
                 + " af: " + creator.getFirstName() + " " + creator.getLastName() + "\n\n\n\n";
+    }
+
+
+
+    public List<DiaryNote> getVersions() {
+        return noteVersions;
     }
 }

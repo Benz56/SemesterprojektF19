@@ -181,15 +181,15 @@ public class MainUIController implements Initializable {
                 Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-
+        
         ccSearchCitizenTextField.textProperty().addListener(listener -> refresh());
 
         setClientListener();
 
-        diarynotesListview.setCellFactory(new DiaryListViewCellFactory());
+        diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
         diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             diarynotesListview.getItems().clear();
-            List<Map<String, String>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
+            List<List<Map<String, String>>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
             diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
         });
 
@@ -281,4 +281,14 @@ public class MainUIController implements Initializable {
 
         }
     }
+
+    public JFXComboBox<String> getDiaryCaseCb() {
+        return diaryCaseCb;
+    }
+
+    public JFXListView<String> getClientList() {
+        return clientList;
+    }
+    
+    
 }

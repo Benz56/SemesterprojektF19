@@ -32,6 +32,12 @@ import javafx.util.Callback;
  */
 public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, ListCell<DiaryItem>> {
 
+    private MainUIController mainUIController;
+
+    public DiaryListViewCellFactory(MainUIController mainUIController) {
+        this.mainUIController = mainUIController;
+    }
+
     @Override
     public ListCell<DiaryItem> call(ListView<DiaryItem> listView) {
         TitledPane titledPane = new TitledPane();
@@ -83,28 +89,12 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
         AnchorPane.setRightAnchor(dates, 10D);
 
         AnchorPane anchorPane = new AnchorPane(diaryNoteEditor, buttons, dates);
-        anchorPane.getChildren().addAll(diaryNoteEditor, buttons, dates);
-        
-        //opens Version Windows
-        versionsButton.setOnAction(event -> {
-            Stage stage = new Stage();
-            stage.setTitle("Note versioner");
-            stage.setResizable(false);
-            stage.focusedProperty().addListener((observable, oldFocus, newFocus) -> {
-                if (!newFocus) {
-                    stage.close();
-                }
-            });
-            try {
-                stage.setScene(new Scene(new FXMLLoader(getClass().getResource("DiaryNoteVersionsUIDocument.fxml")).load()));
-                stage.show();
-            } catch (IOException ex) {
-                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
+
+
         anchorPane.setPrefHeight(370);
 
         return new ListCell<DiaryItem>() {
+
             @Override
             protected void updateItem(final DiaryItem diaryItem, final boolean empty) {
                 super.updateItem(diaryItem, empty);
@@ -115,10 +105,29 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
                 }
                 titledPane.setUserData(diaryItem);
                 titledPane.setContent(anchorPane);
-                titledPane.setText(diaryItem.getTitle());
-                diaryNoteEditor.setHtmlText(diaryItem.getContent());
-                observationDate.setText(diaryItem.getObsDate());
-                originDate.setText(diaryItem.getNoteDate());
+                DiaryItem.NoteVersion latestVersion = diaryItem.getDiaryVersions().get(0);
+                titledPane.setText(latestVersion.getTitle());
+                diaryNoteEditor.setHtmlText(latestVersion.getContent());
+                observationDate.setText(latestVersion.getObsDate());
+                originDate.setText(latestVersion.getNoteDate());
+                versionsButton.setOnAction(event -> {
+                    Stage stage = new Stage();
+                    stage.setTitle("Note versioner");
+                    stage.setResizable(false);
+                    stage.focusedProperty().addListener((observable, oldFocus, newFocus) -> {
+                        if (!newFocus) {
+                            stage.close();
+                        }
+                    });
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DiaryNoteVersionsUIDocument.fxml"));
+                        fxmlLoader.setControllerFactory(controllerFactory -> new DiaryNoteVersionsUIDocumentController(diaryItem));
+                        stage.setScene(new Scene(fxmlLoader.load()));
+                        stage.show();
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                });
                 setGraphic(titledPane);
             }
         };
