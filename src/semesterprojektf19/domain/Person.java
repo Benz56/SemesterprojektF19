@@ -5,13 +5,11 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import org.postgresql.PGProperty;
 import semesterprojektf19.persistence.Persistence;
 
 public class Person implements Comparable<Person>, Serializable {
 
     private final UUID uuid;
-    private final String id;
     private final String controlNumber;
     private final String birthday;
     private String firstName, lastName, address;
@@ -21,7 +19,6 @@ public class Person implements Comparable<Person>, Serializable {
 
     //UUID - institution
     public Person(UUID uuid, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber, Role role) {
-        this.id = null;
         this.uuid = uuid;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,10 +29,9 @@ public class Person implements Comparable<Person>, Serializable {
         this.role = role;
     }
 
-    //String ID - institution
-    public Person(String id, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber, Role role) {
-        this.id = id;
-        this.uuid = null;
+    //UUID + institution
+    public Person(UUID uuid, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber, Role role, Institution institution) {
+        this.uuid = uuid;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;
@@ -43,12 +39,12 @@ public class Person implements Comparable<Person>, Serializable {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.role = role;
+        this.institution = institution;
     }
 
     //String ID + institution
     public Person(String id, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber, Role role, Institution institution) {
-        this.id = id;
-        this.uuid = null;
+        this.uuid = UUID.fromString(id);
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;
