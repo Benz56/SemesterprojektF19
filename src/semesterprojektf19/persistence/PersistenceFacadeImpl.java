@@ -51,28 +51,32 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 
     @Override
     public boolean register(String username, String password, UUID uuid, Map<String, String> personInfo) {
+        System.out.println("Registering...");
         try {
+            System.out.println("Trying to register...");
             Statement st = connection.getDb().createStatement();
             String queryWorker = "INSERT INTO worker VALUES ('"
-                    + uuid.toString() + "', ‘"
-                    + personInfo.get(Column.fname.toString()) + "’, '"
-                    + personInfo.get(Column.lname.toString()) + "', ‘"
-                    + personInfo.get(Column.bday.toString()) + "’, ‘"
-                    + personInfo.get(Column.cnumber.toString()) + "’, ‘"
-                    + personInfo.get(Column.addr.toString()) + "’, ’"
-                    + personInfo.get(Column.phone.toString()) + "’, ‘"
-                    + personInfo.get(Column.role.toString()) + "’, ‘"
-                    + personInfo.get(Column.institution.toString())
-                    + personInfo.get(Column.institutionaddr.toString()) + "’;";
+                    + uuid.toString() + "', '"
+                    + personInfo.get(Column.fname.toString()) + "', '"
+                    + personInfo.get(Column.lname.toString()) + "', '"
+                    + personInfo.get(Column.bday.toString()) + "', '"
+                    + personInfo.get(Column.cnumber.toString()) + "', '"
+                    + personInfo.get(Column.addr.toString()) + "', '"
+                    + personInfo.get(Column.phone.toString()) + "', '"
+                    + personInfo.get(Column.role.toString()) + "', '"
+                    + personInfo.get(Column.institution.toString()) + "', '"
+                    + personInfo.get(Column.institutionaddr.toString()) +"';'";
             int i = st.executeUpdate(queryWorker);
             System.out.println("Row/s affected in table worker: " + i);
-            String queryAccount = "INSERT INTO account VALUES (‘" + uuid + "’, ‘" + username + "’, '" + password + "');";
+            String queryAccount = "INSERT INTO account VALUES ('" + uuid + "', '" + username + "', '" + password + "');";
             int j = st.executeUpdate(queryAccount);
             System.out.println("Row/s affected in table account: " + j);
             st.close();
             connection.closeDb();
             return true;
         } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("SQL Exception caught while executing register employee.");
         }
         return false;
     }
@@ -82,13 +86,13 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
         try {
             Statement st = connection.getDb().createStatement();
             String query = "INSERT INTO citizen VALUES ('"
-                    + personInfo.get(Column.uuid.toString()) + "', ‘"
-                    + personInfo.get(Column.fname.toString()) + "’, '"
-                    + personInfo.get(Column.lname.toString()) + "', ‘"
-                    + personInfo.get(Column.bday.toString()) + "’, ‘"
-                    + personInfo.get(Column.cnumber.toString()) + "’, ‘"
-                    + personInfo.get(Column.addr.toString()) + "’, ’"
-                    + personInfo.get(Column.phone.toString());
+                    + personInfo.get(Column.uuid.toString()) + "', '"
+                    + personInfo.get(Column.fname.toString()) + "', '"
+                    + personInfo.get(Column.lname.toString()) + "', '"
+                    + personInfo.get(Column.bday.toString()) + "', '"
+                    + personInfo.get(Column.cnumber.toString()) + "', '"
+                    + personInfo.get(Column.addr.toString()) + "', '"
+                    + personInfo.get(Column.phone.toString()) + "');";
             int i = st.executeUpdate(query);
             System.out.println("Row/s affected in table citizen: " + i);
             st.close();
