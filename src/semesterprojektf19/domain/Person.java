@@ -9,6 +9,7 @@ import semesterprojektf19.persistence.Persistence;
 
 public class Person implements Comparable<Person>, Serializable {
 
+    private String id;
     private final UUID uuid;
     private final String controlNumber;
     private final String birthday;
@@ -44,7 +45,8 @@ public class Person implements Comparable<Person>, Serializable {
 
     //String ID + institution
     public Person(String id, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber, Role role, Institution institution) {
-        this.uuid = UUID.fromString(id);
+        this.id = id;
+        this.uuid = null;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;

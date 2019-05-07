@@ -21,6 +21,7 @@ public class LoginFacadeImpl implements LoginFacade {
             details.put("lname", "admin");
         } else {
             details = persistenceFacade.authenticate(username, password);
+            System.out.println(details);
             UserContainer.setUser(new Worker(
                     details.get("uuid"),
                     details.get("fname"), 

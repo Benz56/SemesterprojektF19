@@ -10,6 +10,15 @@ package semesterprojektf19.aquaintance;
  * @author sofielouise
  */
 public enum Column {
-    username, password, uuid, fname, lname, bday, cnumber,
-    addr, phone, role, institution, institutionaddr
-};
+    USERNAME("username"), PASSWORD("password"), UUID("uuid"), FNAME("fName"), LNAME("lName"), BDAY("bDay"), CNUMBER("cNumber"),
+    ADDR("addr"), PHONE("phone"), ROLE("role"), INSTITUTION("institution"), INSTITUTIONADDR("institutionAddr");
+    private final String name;
+    
+    private Column(String name){
+        this.name = name;
+    }
+    
+    public String getColumnName() {
+        return name;
+    }
+}
