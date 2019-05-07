@@ -110,6 +110,34 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     }
 
     @Override
+    public boolean registerCase(Map<String, String> caseDetails, UUID citizenUUID, UUID workerUUID) {
+        try {
+            PreparedStatement pst = connection.getDb().prepareStatement("INSERT INTO casefile VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            int i = 1;
+            pst.setString(i++, caseDetails.get(Column.UUID.getColumnName()));
+            pst.setString(i++, citizenUUID.toString());
+            pst.setString(i++, workerUUID.toString());
+            pst.setString(i++, caseDetails.get(Column.INSTITUTION.getColumnName()));
+            pst.setString(i++, caseDetails.get(Column.GUARDIAN.getColumnName()));
+            pst.setString(i++, caseDetails.get(Column.REPRESENTATION.getColumnName()));
+            pst.setString(i++, caseDetails.get(Column.AGREEMENTSONFURTHERPROCESS.getColumnName()));
+            pst.setString(i++, caseDetails.get(Column.SPECIALCURCUMSTANCES.getColumnName()));
+            pst.setString(i++, caseDetails.get(Column.EXECUTINGMUNICIPALITY.getColumnName()));
+            pst.setString(i++, caseDetails.get(Column.PAYINGMUNICIPALITY.getColumnName()));
+            pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.RIGHTTOREPRESENTATION.getColumnName())));
+            pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.INFORMEDONELECTRONICINFO.getColumnName())));
+            pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.CONSENTRELEVANT.getColumnName())));
+            pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.CONSENTGIVEN.getColumnName())));
+            pst.executeUpdate();
+            pst.close();
+            connection.closeDb();
+            return true;
+        } catch (SQLException e) {
+        }
+        return false;
+    }
+
+    @Override
     public Map<String, String> getWorkerDetails(String uuid) {
         Map<String, String> workerDetails = new HashMap<>();
         try {

@@ -25,4 +25,6 @@ public interface PersistenceFacade {
     public Map<String, String> getInstitutions();
     
     public List<Map<String, String>> getCitizens();
+
+    public boolean registerCase(Map<String, String> caseDetails, UUID citizenUUID, UUID workerUUID);
 }
