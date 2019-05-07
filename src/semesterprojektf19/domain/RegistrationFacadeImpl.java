@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.UUID;
 import semesterprojektf19.domain.accesscontrol.Role;
 import semesterprojektf19.persistence.Persistence;
+import semesterprojektf19.persistence.PersistenceFacade;
+import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
 /**
  *
@@ -16,8 +18,12 @@ import semesterprojektf19.persistence.Persistence;
  */
 public class RegistrationFacadeImpl implements RegistrationFacade {
 
+    PersistenceFacade persistenceFacade = new PersistenceFacadeImpl();
+
     @Override
     public void registerCitizen(String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber) {
+        Citizen citizen = new Citizen(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.CITIZEN);
+        persistenceFacade.registerCitizen(citizen.getMap());
 //        Persistence.INSTANCE.writeObjectToFile("citizens/" + birthday + "-" + controlNumber + ".ser", new Citizen(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.CITIZEN), false);
     }
 
@@ -28,7 +34,6 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
         switch (r) {
             case CASEWORKER:
                 person = new Worker(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.valueOf(role));
-                
                 break;
             case SOCIALWORKER:
                 person = new Worker(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.valueOf(role));
@@ -39,13 +44,7 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
             default:
                 throw new AssertionError(Role.valueOf(role).name());
         }
-        if(Persistence.INSTANCE.register(username, password, person.getUuid(), person)){
-            if(r == Role.SOCIALWORKER){
-                addWorkerToInstitution(institution, (Worker) person);
-            }
-            return true;
-        }
-        return false;
+        return persistenceFacade.register(username, password, person.getUuid(), person.getMap());
     }
 
     @Override
@@ -53,15 +52,15 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
         Institution institution = new Institution(name, adress);
         Persistence.INSTANCE.writeObjectToFile("institutions/" + institution.getName() + ".ser", institution, false);
     }
-    
+
     @Override
-    public List<String> getInstitutionNames(){
+    public List<String> getInstitutionNames() {
         return Persistence.INSTANCE.readFileNamesInDir("institutions");
     }
 
-    private void addWorkerToInstitution(String name, Worker worker) {
-        Institution institution = (Institution) Persistence.INSTANCE.readObjectFromFile("institutions/" + name + ".ser");
-        institution.getWorkers().put(worker.getUuid(), worker);
-        Persistence.INSTANCE.writeObjectToFile("institutions/" + institution.getName() + ".ser", institution, false);
-    }
+//    private void addWorkerToInstitution(String name, Worker worker) {
+//        Institution institution = (Institution) Persistence.INSTANCE.readObjectFromFile("institutions/" + name + ".ser");
+//        institution.getWorkers().put(worker.getUuid(), worker);
+//        Persistence.INSTANCE.writeObjectToFile("institutions/" + institution.getName() + ".ser", institution, false);
+//    }
 }

@@ -5,6 +5,7 @@
  */
 package semesterprojektf19.domain;
 
+import semesterprojektf19.aquaintance.UserContainer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

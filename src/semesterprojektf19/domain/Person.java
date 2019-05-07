@@ -2,7 +2,10 @@ package semesterprojektf19.domain;
 
 import semesterprojektf19.domain.accesscontrol.Role;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import org.postgresql.PGProperty;
 import semesterprojektf19.persistence.Persistence;
 
 public class Person implements Comparable<Person>, Serializable {
@@ -41,7 +44,7 @@ public class Person implements Comparable<Person>, Serializable {
         this.address = address;
         this.role = role;
     }
-    
+
     //String ID + institution
     public Person(String id, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber, Role role, Institution institution) {
         this.id = id;
@@ -54,6 +57,22 @@ public class Person implements Comparable<Person>, Serializable {
         this.address = address;
         this.role = role;
         this.institution = institution;
+    }
+
+    public Map<String, String> getMap() {
+        Map<String, String> personMap = new HashMap<>();
+        personMap.put("uuid", uuid.toString());
+        personMap.put("fname", firstName);
+        personMap.put("lname", lastName);
+        personMap.put("bday", birthday);
+        personMap.put("cnumber", controlNumber);
+        personMap.put("phone", phoneNumber);
+        personMap.put("addr", address);
+        personMap.put("role", role.toString());
+        if (institution != null) {
+            personMap.put("institution", institution.getName());
+        }
+        return personMap;
     }
 
     public UUID getUuid() {
@@ -126,4 +145,9 @@ public class Person implements Comparable<Person>, Serializable {
     public void saveToFile() {
         Persistence.INSTANCE.writeObjectToFile("persons/" + uuid.toString() + ".ser", this, false);
     }
+
+//    public static void main(String[] args) {
+//        Person p = new Person(UUID.randomUUID(), "Sof", "Mad", "2906982202", "1111", "vej", "99999999", Role.ADMIN);
+//        System.out.println(p.getMap().toString());
+//    }
 }

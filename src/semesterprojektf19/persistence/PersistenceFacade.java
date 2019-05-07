@@ -5,6 +5,8 @@
  */
 package semesterprojektf19.persistence;
 
+import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -17,7 +19,9 @@ public interface PersistenceFacade {
     
     public Map<String, String> getWorkerDetails(String uuid);
     
-    public boolean register(String username, String password, UUID uuid, Object person);
+    public boolean register(String username, String password, UUID uuid, Map<String, String> personInfo);
     
-    public String getInstitutionAddress(String name);
+    public boolean registerCitizen(Map<String, String> personInfo);
+    
+    public List<Map<String, String>> getInstitutionNames();
 }

@@ -1,8 +1,8 @@
 package semesterprojektf19.domain;
 
+import semesterprojektf19.aquaintance.UserContainer;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import semesterprojektf19.domain.accesscontrol.Role;
 import semesterprojektf19.persistence.Persistence;
 import semesterprojektf19.persistence.PersistenceFacade;
