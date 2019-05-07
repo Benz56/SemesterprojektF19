@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="552.0" prefWidth="607.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="semesterprojektf19.presentation.DiaryNoteVersionsUIDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="552.0" prefWidth="607.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="semesterprojektf19.presentation.DiaryNoteVersionsUIController">
    <children>
       <ListView fx:id="diaryNotesLV" layoutX="178.0" layoutY="143.0" prefHeight="490.0" prefWidth="607.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <JFXButton fx:id="closeBtn" layoutX="271.0" layoutY="504.0" text="Luk" />

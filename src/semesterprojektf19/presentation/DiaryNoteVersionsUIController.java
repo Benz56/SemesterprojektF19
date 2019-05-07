@@ -17,13 +17,13 @@ import javafx.scene.control.ListView;
  *
  * @author Jacob
  */
-public class DiaryNoteVersionsUIDocumentController implements Initializable {
+public class DiaryNoteVersionsUIController implements Initializable {
 
     @FXML
     private JFXButton closeBtn;
     private final DiaryItem diaryItem;
 
-    public DiaryNoteVersionsUIDocumentController(DiaryItem diaryItem) {
+    public DiaryNoteVersionsUIController(DiaryItem diaryItem) {
         this.diaryItem = diaryItem;
         
     }

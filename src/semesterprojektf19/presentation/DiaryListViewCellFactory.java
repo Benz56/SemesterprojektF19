@@ -79,7 +79,6 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
         AnchorPane anchorPane = new AnchorPane(diaryNoteEditor, buttons, dates);
 
         //opens Version Windows
-        versionsButton.setOnAction(event -> SimpleStageBuilder.create("Note versioner", "DiaryNoteVersionsUIDocument.fxml").setResizable(false).setCloseOnUnfocused(true).open());
         anchorPane.setPrefHeight(370);
 
         return new ListCell<DiaryItem>() {
@@ -97,6 +96,7 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
                 diaryNoteEditor.setHtmlText(diaryItem.getDiaryVersions().get(0).getContent());
                 observationDate.setText(diaryItem.getDiaryVersions().get(0).getObsDate());
                 originDate.setText(diaryItem.getDiaryVersions().get(0).getNoteDate());
+                versionsButton.setOnAction(event -> SimpleStageBuilder.create("Note versioner", "DiaryNoteVersionsUIDocument.fxml").setControllerFactory(new DiaryNoteVersionsUIController(diaryItem)).setResizable(false).setCloseOnUnfocused(true).open());
                 setGraphic(titledPane);
             }
         };
