@@ -22,7 +22,7 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
 
     @Override
     public void registerCitizen(String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber) {
-        Citizen citizen = new Citizen(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.CITIZEN);
+        Citizen citizen = new Citizen(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber);
         persistenceFacade.registerCitizen(citizen.getMap());
     }
 
@@ -30,17 +30,16 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
     public boolean registerEmployee(String username, String password, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber, String role, String institution) {
         Person person;
         Role r = Role.valueOf(role);
-        Institution inst = getInstitution(institution);
         
         switch (r) {
             case CASEWORKER:
-                person = new Worker(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.valueOf(role), inst);
+                person = new Worker(UUID.randomUUID(), firstName, lastName,Role.valueOf(role));
                 break;
             case SOCIALWORKER:
-                person = new Worker(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.valueOf(role), inst);
+                person = new Worker(UUID.randomUUID(), firstName, lastName,Role.valueOf(role), getInstitution(institution));
                 break;
             case ADMIN:
-                person = new Person(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber, Role.valueOf(role));
+                person = new Person(UUID.randomUUID(), firstName, lastName, Role.valueOf(role));
                 break;
             default:
                 throw new AssertionError(Role.valueOf(role).name());

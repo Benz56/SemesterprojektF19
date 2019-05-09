@@ -4,6 +4,7 @@ import semesterprojektf19.aquaintance.UserContainer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import semesterprojektf19.aquaintance.Column;
 import semesterprojektf19.domain.accesscontrol.Role;
 import semesterprojektf19.persistence.PersistenceFacade;
 import semesterprojektf19.persistence.PersistenceFacadeImpl;
@@ -24,13 +25,9 @@ public class LoginFacadeImpl implements LoginFacade {
             System.out.println("Details returned: " + details);
             if (details != null) {
                 UserContainer.setUser(new Worker(
-                    UUID.fromString(details.get("uuid")),
-                    details.get("fname"), 
-                    details.get("lname"),
-                    details.get("bday"),
-                    details.get("cnumber"),
-                    details.get("addr"),
-                    details.get("phone"),
+                    UUID.fromString(details.get(Column.UUID.getColumnName())),
+                    details.get(Column.FNAME.getColumnName()), 
+                    details.get(Column.LNAME.getColumnName()),
                     Role.valueOf(details.get("role").toUpperCase()),
                     new Institution(details.get("instituion"), (details.get("instituionaddr"))
                     )));
