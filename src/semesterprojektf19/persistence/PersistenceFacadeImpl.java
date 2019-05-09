@@ -34,12 +34,11 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     @Override
     public Map<String, String> authenticate(String username, String password) {
         try {
-            String query = "SELECT * FROM account WHERE username = '?' AND password = crypt(?, password)";
+            String query = "SELECT * FROM account WHERE username = ? AND password = crypt(?, password)";
             PreparedStatement pst = connection.getDb().prepareStatement(query);
             pst.setString(1, username);
             pst.setString(2, password);
             ResultSet rs = pst.executeQuery();
-            System.out.println("RS next?: " + rs.next());
             while (rs.next()) {
                 UUID uuid = (UUID) rs.getObject(Column.UUID.getColumnName());
                 System.out.println("UUID got: " + uuid);
@@ -145,7 +144,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
         try {
             String query = "SELECT * FROM worker WHERE uuid = ?";
             PreparedStatement pst = connection.getDb().prepareStatement(query);
-            pst.setString(1, uuid.toString());
+            pst.setObject(1, uuid);
             ResultSet rs = pst.executeQuery();
             rs.next();
             System.out.println("workerDetails: UUID: " + rs.getObject(Column.UUID.getColumnName()).toString());

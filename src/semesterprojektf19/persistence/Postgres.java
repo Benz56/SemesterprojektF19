@@ -16,9 +16,9 @@ import java.util.logging.Logger;
 public class Postgres {
 
     //url syntax for database connection: (driver:sqltype://server:port/)
-    private final static String URL = "jdbc:postgresql://manny.db.elephantsql.com:5432/";
-    private final static String USERNAME = "jwzwncwf";
-    private final static String PASSWORD = "Hl-A8_Bb93HTAXJuBjDXRfPJtyU64vDL";
+    private final static String URL = "jdbc:postgresql://egboosted-beehive-do-user-6026035-0.db.ondigitalocean.com:25060/defaultdb?sslmode=require";
+    private final static String USERNAME = "doadmin";
+    private final static String PASSWORD = "ij7o5cn750qeaz46";
     private Connection db;
 
     public Postgres() {
