@@ -21,8 +21,9 @@ public class LoginFacadeImpl implements LoginFacade {
             details.put("lname", "admin");
         } else {
             details = persistenceFacade.authenticate(username, password);
-            System.out.println(details);
-            UserContainer.setUser(new Worker(
+            System.out.println("Details returned: " + details);
+            if (details != null) {
+                UserContainer.setUser(new Worker(
                     UUID.fromString(details.get("uuid")),
                     details.get("fname"), 
                     details.get("lname"),
@@ -33,7 +34,8 @@ public class LoginFacadeImpl implements LoginFacade {
                     Role.valueOf(details.get("role").toUpperCase()),
                     new Institution(details.get("instituion"), (details.get("instituionaddr"))
                     )));
+            }
         }
-        return details.isEmpty() ? null : details;
+        return details;
     }
 }

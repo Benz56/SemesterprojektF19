@@ -129,7 +129,6 @@ public class MainUIController implements Initializable {
             List<List<Map<String, String>>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
             diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
         });
-
         refresh();
     }
 

@@ -34,13 +34,17 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     @Override
     public Map<String, String> authenticate(String username, String password) {
         try {
-            Statement st = connection.getDb().createStatement();
-            ResultSet rs = st.executeQuery("Select * FROM account");
+            String query = "SELECT * FROM account WHERE username = '?' AND password = crypt(?, password)";
+            PreparedStatement pst = connection.getDb().prepareStatement(query);
+            pst.setString(1, username);
+            pst.setString(2, password);
+            ResultSet rs = pst.executeQuery();
+            System.out.println("RS next?: " + rs.next());
             while (rs.next()) {
-                if (username.equals(rs.getString(Column.USERNAME.getColumnName())) && password.equals(rs.getString(Column.PASSWORD.getColumnName()))) {
+                UUID uuid = (UUID) rs.getObject(Column.UUID.getColumnName());
+                System.out.println("UUID got: " + uuid);
+                if (uuid != null) {
                     System.out.println("Authenticated.");
-                    String uuid = rs.getString(Column.UUID.getColumnName());
-                    System.out.println(uuid);
                     return getWorkerDetails(uuid);
                 }
             }
@@ -56,23 +60,18 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
         System.out.println("Registering...");
         try {
             System.out.println("Trying to register...");
-            PreparedStatement pst = connection.getDb().prepareStatement("INSERT INTO worker VALUES (?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement pst = connection.getDb().prepareStatement("INSERT INTO worker VALUES (?,?,?,?,?)");
             int i = 1;
-            pst.setString(i++, uuid.toString());
+            pst.setObject(i++, uuid);
             pst.setString(i++, personInfo.get(Column.FNAME.getColumnName()));
             pst.setString(i++, personInfo.get(Column.LNAME.getColumnName()));
-            pst.setDate(i++, Date.valueOf(personInfo.get(Column.BDAY.getColumnName())));
-            pst.setString(i++, personInfo.get(Column.CNUMBER.getColumnName()));
-            pst.setString(i++, personInfo.get(Column.ADDR.getColumnName()));
-            pst.setString(i++, personInfo.get(Column.PHONE.getColumnName()));
             pst.setString(i++, personInfo.get(Column.ROLE.getColumnName()));
             pst.setString(i++, personInfo.get(Column.INSTITUTION.getColumnName()));
-            pst.setString(i, personInfo.get(Column.INSTITUTIONADDR.getColumnName()));
             pst.executeUpdate();
             pst.close();
 
-            PreparedStatement pstAccount = connection.getDb().prepareStatement("INSERT INTO account VALUES (?,?,?)");
-            pstAccount.setString(1, uuid.toString());
+            PreparedStatement pstAccount = connection.getDb().prepareStatement("INSERT INTO account VALUES (?, ?, crypt(?, gen_salt('bf')));");
+            pstAccount.setObject(1, uuid);
             pstAccount.setString(2, username);
             pstAccount.setString(3, password);
             pstAccount.executeUpdate();
@@ -92,7 +91,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
         try {
             PreparedStatement pst = connection.getDb().prepareStatement("INSERT INTO citizen VALUES (?,?,?,?,?,?,?)");
             int i = 1;
-            pst.setString(i++, personInfo.get(Column.UUID.getColumnName()));
+            pst.setObject(i++, UUID.fromString(personInfo.get(Column.UUID.getColumnName())));
             pst.setString(i++, personInfo.get(Column.FNAME.getColumnName()));
             pst.setString(i++, personInfo.get(Column.LNAME.getColumnName()));
             pst.setDate(i++, Date.valueOf(personInfo.get(Column.BDAY.getColumnName())));
@@ -110,55 +109,56 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     }
 
     @Override
-    public boolean registerCase(Map<String, String> caseDetails, UUID caseUUID,UUID citizenUUID, UUID workerUUID) {
+    public boolean registerCase(Map<String, String> caseDetails, UUID caseUUID, UUID citizenUUID, UUID workerUUID) {
         try {
-            PreparedStatement pst = connection.getDb().prepareStatement("INSERT INTO casefile VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            int i = 1;
-            pst.setString(i++, caseUUID.toString());
-            pst.setString(i++, citizenUUID.toString());
-            pst.setString(i++, workerUUID.toString());
-            pst.setString(i++, caseDetails.get(Column.INSTITUTION.getColumnName()));
-            pst.setString(i++, caseDetails.get(Column.GUARDIAN.getColumnName()));
-            pst.setString(i++, caseDetails.get(Column.REPRESENTATION.getColumnName()));
-            pst.setString(i++, caseDetails.get(Column.AGREEMENTSONFURTHERPROCESS.getColumnName()));
-            pst.setString(i++, caseDetails.get(Column.SPECIALCURCUMSTANCES.getColumnName()));
-            pst.setString(i++, caseDetails.get(Column.EXECUTINGMUNICIPALITY.getColumnName()));
-            pst.setString(i++, caseDetails.get(Column.PAYINGMUNICIPALITY.getColumnName()));
-            pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.RIGHTTOREPRESENTATION.getColumnName())));
-            pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.INFORMEDONELECTRONICINFO.getColumnName())));
-            pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.CONSENTRELEVANT.getColumnName())));
-            pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.CONSENTGIVEN.getColumnName())));
-            pst.executeUpdate();
-            pst.close();
+            try (PreparedStatement pst = connection.getDb().prepareStatement("INSERT INTO casefile VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
+                int i = 1;
+                pst.setObject(i++, caseUUID);
+                pst.setObject(i++, citizenUUID);
+                pst.setObject(i++, workerUUID);
+                pst.setString(i++, caseDetails.get(Column.INSTITUTION.getColumnName()));
+                pst.setString(i++, caseDetails.get(Column.GUARDIAN.getColumnName()));
+                pst.setString(i++, caseDetails.get(Column.REPRESENTATION.getColumnName()));
+                pst.setString(i++, caseDetails.get(Column.AGREEMENTSONFURTHERPROCESS.getColumnName()));
+                pst.setString(i++, caseDetails.get(Column.SPECIALCURCUMSTANCES.getColumnName()));
+                pst.setString(i++, caseDetails.get(Column.EXECUTINGMUNICIPALITY.getColumnName()));
+                pst.setString(i++, caseDetails.get(Column.PAYINGMUNICIPALITY.getColumnName()));
+                pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.RIGHTTOREPRESENTATION.getColumnName())));
+                pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.INFORMEDONELECTRONICINFO.getColumnName())));
+                pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.CONSENTRELEVANT.getColumnName())));
+                pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.CONSENTGIVEN.getColumnName())));
+                pst.executeUpdate();
+            }
             connection.closeDb();
             System.out.println("CaseID: " + caseUUID.toString());
             return true;
         } catch (SQLException e) {
+            connection.closeDb();
+            Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, e);
         }
         return false;
     }
 
     @Override
-    public Map<String, String> getWorkerDetails(String uuid) {
+    public Map<String, String> getWorkerDetails(UUID uuid) {
         Map<String, String> workerDetails = new HashMap<>();
         try {
-            Statement st = connection.getDb().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM worker WHERE uuid = '" + uuid + "';");
+            String query = "SELECT * FROM worker WHERE uuid = ?";
+            PreparedStatement pst = connection.getDb().prepareStatement(query);
+            pst.setString(1, uuid.toString());
+            ResultSet rs = pst.executeQuery();
             rs.next();
-            workerDetails.put(Column.UUID.getColumnName(), rs.getString(Column.UUID.getColumnName()));
+            System.out.println("workerDetails: UUID: " + rs.getObject(Column.UUID.getColumnName()).toString());
+            workerDetails.put(Column.UUID.getColumnName(), rs.getObject(Column.UUID.getColumnName()).toString());
             workerDetails.put(Column.FNAME.getColumnName(), rs.getString(Column.FNAME.getColumnName()));
             workerDetails.put(Column.LNAME.getColumnName(), rs.getString(Column.LNAME.getColumnName()));
-            workerDetails.put(Column.BDAY.getColumnName(), rs.getString(Column.BDAY.getColumnName()));
-            workerDetails.put(Column.CNUMBER.getColumnName(), rs.getString(Column.CNUMBER.getColumnName()));
-            workerDetails.put(Column.ADDR.getColumnName(), rs.getString(Column.ADDR.getColumnName()));
-            workerDetails.put(Column.PHONE.getColumnName(), rs.getString(Column.PHONE.getColumnName()));
             workerDetails.put(Column.ROLE.getColumnName(), rs.getString(Column.ROLE.getColumnName()));
             workerDetails.put(Column.INSTITUTION.getColumnName(), rs.getString(Column.INSTITUTION.getColumnName()));
-            workerDetails.put(Column.INSTITUTIONADDR.getColumnName(), rs.getString(Column.INSTITUTIONADDR.getColumnName()));
             rs.close();
-            st.close();
+            pst.close();
             connection.closeDb();
         } catch (SQLException ex) {
+            connection.closeDb();
             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return workerDetails;
@@ -206,4 +206,8 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
         return citizens;
     }
 
+    public static void main(String[] args) {
+        Map<String, String> map = new HashMap<>();
+        System.out.println(map);
+    }
 }
