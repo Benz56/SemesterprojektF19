@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.UUID;
 import semesterprojektf19.aquaintance.Column;
 import semesterprojektf19.domain.accesscontrol.Role;
+import semesterprojektf19.persistence.Persistence;
 
 public class Citizen extends Person {
 
@@ -23,7 +24,7 @@ public class Citizen extends Person {
         this.birthday = birthday;
         formatCpr();
     }
-    
+
     public Citizen(UUID uuid, String firstName, String lastName, String address, String phoneNumber, String controlNumber, String birthday) {
         super(uuid, firstName, lastName, Role.CITIZEN);
         this.address = address;
@@ -102,5 +103,9 @@ public class Citizen extends Person {
     public String getControlNumber() {
         return controlNumber;
     }
-    
+
+    public void saveToFile() {
+        Persistence.INSTANCE.writeObjectToFile("citizens/" + cpr + ".ser", this, false);
+    }
+
 }
