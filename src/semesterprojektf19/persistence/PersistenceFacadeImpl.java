@@ -39,14 +39,16 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             pst.setString(1, username);
             pst.setString(2, password);
             ResultSet rs = pst.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 UUID uuid = (UUID) rs.getObject(Column.UUID.getColumnName());
                 System.out.println("UUID got: " + uuid);
                 if (uuid != null) {
                     System.out.println("Authenticated.");
                     return getWorkerDetails(uuid);
-                }else authenticate(username, password);
+                }
             }
+            rs.close();
+            pst.close();
         } catch (SQLException ex) {
             Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -149,6 +151,8 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             workerDetails.put(Column.LNAME.getColumnName(), rs.getString(Column.LNAME.getColumnName()));
             workerDetails.put(Column.ROLE.getColumnName(), rs.getString(Column.ROLE.getColumnName()));
             workerDetails.put(Column.INSTITUTION.getColumnName(), rs.getString(Column.INSTITUTION.getColumnName()));
+            rs.close();
+            pst.close();
         } catch (SQLException ex) {
             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -164,6 +168,8 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             while (rs.next()) {
                 institutions.put(rs.getString(1), rs.getString(2));
             }
+            rs.close();
+            st.close();
         } catch (SQLException ex) {
             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
