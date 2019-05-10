@@ -13,8 +13,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.UUID;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,8 +30,8 @@ public class CreateNoteUIController implements Initializable {
 
     private final DiaryNoteFacade diaryNoteFacade;
 
-    private String index;
-    private String citizenInfo;
+    private final String index;
+    private final String citizenInfo;
 
     @FXML
     private JFXTextField titleTextField;
@@ -56,6 +54,9 @@ public class CreateNoteUIController implements Initializable {
 
     /**
      * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

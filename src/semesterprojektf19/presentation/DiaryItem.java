@@ -28,11 +28,14 @@ public class DiaryItem {
         return diaryVersions;
     }
 
+    public void addNewVersion(Map<String, String> content) {
+        diaryVersions.add(0, new NoteVersion(content));
+    }
+
     public class NoteVersion {
 
         private final UUID uuid;
         private final String title, obsDate, noteDate, content, creator;
-
 
         public NoteVersion(Map<String, String> note) {
             uuid = UUID.fromString(note.get("uuid"));
@@ -66,8 +69,6 @@ public class DiaryItem {
         public String getCreator() {
             return creator;
         }
-        
-        
 
     }
 }

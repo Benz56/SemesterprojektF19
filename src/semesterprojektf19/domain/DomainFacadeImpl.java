@@ -97,10 +97,20 @@ public class DomainFacadeImpl implements DomainFacade {
     }
 
     @Override
-    public void addDiaryNoteVersion(String citizenString, int caseIndex, Map<String, String> details) {
+    public Map<String, String> addDiaryNoteVersion(String citizenString, int caseIndex, Map<String, String> details) {
         Citizen citizen = CitizenManager.INSTANCE.getCitizen(citizenString);
         UUID uuid = UUID.fromString(details.get("uuid"));
-        citizen.getCase(caseIndex).getDiary().getNotes().stream().filter(note -> note.getUuid().equals(uuid)).findFirst().ifPresent(note -> note.addNoteVersion(new DiaryNote(UUID.fromString(details.get("uuid")), UserContainer.getUser(), details.get("content"), details.get("title"), details.get("obsDate"))));
+        DiaryNote version = new DiaryNote(UUID.fromString(details.get("uuid")), UserContainer.getUser(), details.get("content"), details.get("title"), details.get("obsDate"));
+        citizen.getCase(caseIndex).getDiary().getNotes().stream().filter(note -> note.getUuid().equals(uuid)).findFirst().ifPresent(note -> note.addNoteVersion(version));
+        Map<String, String> content = new HashMap<>();
+        content.put("uuid", version.getUuid().toString());
+        content.put("title", version.getTitel());
+        content.put("obsDate", version.getDateOfObservation());
+        content.put("noteDate", version.getDate().toString());
+        content.put("content", version.getNote());
+        content.put("creator", version.getCreator().getFirstName() + " " + version.getCreator().getLastName());
         //Husk at gemme i persistens herefter.
+        return content;
+
     }
 }
