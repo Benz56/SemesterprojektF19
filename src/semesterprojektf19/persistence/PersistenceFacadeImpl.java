@@ -76,7 +76,6 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
                 pst.setString(i++, personInfo.get(Column.INSTITUTION.getColumnName()));
                 pst.executeUpdate();
             }
-            connection.closeDb();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -93,13 +92,12 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             pst.setObject(i++, UUID.fromString(personInfo.get(Column.UUID.getColumnName())));
             pst.setString(i++, personInfo.get(Column.FNAME.getColumnName()));
             pst.setString(i++, personInfo.get(Column.LNAME.getColumnName()));
-            pst.setDate(i++, Date.valueOf(personInfo.get(Column.BDAY.getColumnName())));
+            pst.setString(i++, personInfo.get(Column.BDAY.getColumnName()));
             pst.setString(i++, personInfo.get(Column.CNUMBER.getColumnName()));
             pst.setString(i++, personInfo.get(Column.ADDR.getColumnName()));
             pst.setString(i, personInfo.get(Column.PHONE.getColumnName()));
             pst.executeUpdate();
             pst.close();
-            connection.closeDb();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -196,7 +194,6 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             }
             rs.close();
             st.close();
-            connection.closeDb();
         } catch (SQLException ex) {
             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

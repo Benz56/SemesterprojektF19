@@ -10,10 +10,12 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,10 +31,10 @@ import semesterprojektf19.domain.DiaryNoteFacadeImpl;
  */
 public class CreateNoteUIController implements Initializable {
 
+    private final ObservableList<DiaryItem> diarynotesObservable;
+    private final String index;
+    private final String citizenInfo;
     private final DiaryNoteFacade diaryNoteFacade;
-
-    private String index;
-    private String citizenInfo;
 
     @FXML
     private JFXTextField titleTextField;
@@ -47,7 +49,8 @@ public class CreateNoteUIController implements Initializable {
     @FXML
     private HTMLEditor noteEditor;
 
-    public CreateNoteUIController(String index, String citizenInfo) {
+    public CreateNoteUIController(ObservableList<DiaryItem> diarynotesObservable, String index, String citizenInfo) {
+        this.diarynotesObservable = diarynotesObservable;
         this.index = index;
         this.citizenInfo = citizenInfo;
         this.diaryNoteFacade = new DiaryNoteFacadeImpl();
@@ -55,6 +58,9 @@ public class CreateNoteUIController implements Initializable {
 
     /**
      * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -71,7 +77,8 @@ public class CreateNoteUIController implements Initializable {
             noteDetails.put("titel", titleTextField.getText());
             noteDetails.put("note", noteEditor.getHtmlText());
             noteDetails.put("dateOfObservation", datePicker.getValue().toString());
-            diaryNoteFacade.createNote(noteDetails);
+            Map<String, String> savedNote = diaryNoteFacade.createNote(noteDetails);
+            diarynotesObservable.add(0, new DiaryItem(new ArrayList<>(Arrays.asList(savedNote))));
 
             // For closing the stage
             ((Stage) noteEditor.getScene().getWindow()).close();

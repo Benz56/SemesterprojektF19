@@ -1,25 +1,25 @@
 package semesterprojektf19.domain;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 import semesterprojektf19.aquaintance.Column;
 import semesterprojektf19.domain.accesscontrol.Role;
 import semesterprojektf19.persistence.Persistence;
 
 public class Citizen extends Person {
-
+    
     private String cpr;
     private String address, phoneNumber, controlNumber, birthday;
     private static final long serialVersionUID = 4813878493760830975L;
 
-    public Citizen(UUID uuid, String firstName, String lastName, String address, String phoneNumber, String controlNumber, String birthday) {
+    public Citizen(UUID uuid, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber) {
         super(uuid, firstName, lastName, Role.CITIZEN);
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.controlNumber = controlNumber;
         this.birthday = birthday;
-        formatCpr();
+        this.cpr = birthday + controlNumber;
     }
 
     public Citizen(Map<String, String> details) {
@@ -27,7 +27,11 @@ public class Citizen extends Person {
                 details.get(Column.FNAME.getColumnName()),
                 details.get(Column.LNAME.getColumnName()),
                 Role.CITIZEN);
-        formatCpr();
+        this.address = details.get(Column.ADDR.getColumnName());
+        this.phoneNumber = details.get(Column.PHONE.getColumnName());
+        this.controlNumber = details.get(Column.CNUMBER.getColumnName());
+        this.birthday = details.get(Column.BDAY.getColumnName());
+        this.cpr = birthday + controlNumber;
     }
 
     public void addCase(Case c) {
@@ -35,7 +39,6 @@ public class Citizen extends Person {
     }
 
     public Case getCase(int index) {
-        System.out.println(index);
         return getCases().get(index);
     }
 
@@ -46,30 +49,6 @@ public class Citizen extends Person {
     @Override
     public String toString() {
         return getFirstName() + " " + getLastName() + " (Birthday: " + birthday + ")\n";
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 67 * hash + Objects.hashCode(this.cpr);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        return this == obj || this.cpr.equals(((Citizen) obj).cpr);
-    }
-
-    private String formatCpr() {
-        String birthdayDDMMYY = "";
-        birthdayDDMMYY += birthday.substring(8, 10);
-        birthdayDDMMYY += birthday.substring(5, 7);
-        birthdayDDMMYY += birthday.substring(2, 4);
-        this.cpr = birthdayDDMMYY + controlNumber;
-        return cpr;
     }
 
     public String getAddress() {
@@ -89,7 +68,20 @@ public class Citizen extends Person {
     }
 
     public void saveToFile() {
-        Persistence.INSTANCE.writeObjectToFile("citizens/" + cpr + ".ser", this, false);
+        Persistence.INSTANCE.writeObjectToFile("citizens/" + birthday + controlNumber + ".ser", this, false);
     }
 
+    @Override
+    public Map<String, String> getMap() {
+        Map<String, String> personMap = new HashMap<>(super.getMap());
+        personMap.put(Column.BDAY.getColumnName(), birthday);
+        personMap.put(Column.CNUMBER.getColumnName(), controlNumber);
+        personMap.put(Column.ADDR.getColumnName(), address);
+        personMap.put(Column.PHONE.getColumnName(), phoneNumber);
+        return personMap;
+    }
+
+    String getCpr() {
+        return cpr;
+    }
 }
