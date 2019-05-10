@@ -29,10 +29,16 @@ public class DiaryNoteVersionListViewFactory implements Callback<ListView<DiaryI
         titledPane.setExpanded(false);
 
         WebView webView = new WebView();
-        webView.setPrefHeight(200);
+        webView.setPrefHeight(250);
         AnchorPane.setTopAnchor(webView, 1D);
         AnchorPane.setLeftAnchor(webView, 1D);
         AnchorPane.setRightAnchor(webView, 1D);
+        AnchorPane.setBottomAnchor(webView, 1D);
+        AnchorPane webViewWrapper = new AnchorPane(webView);
+        webViewWrapper.setStyle("-fx-background-color: #E5E5E5;");
+        AnchorPane.setTopAnchor(webViewWrapper, 10D);
+        AnchorPane.setLeftAnchor(webViewWrapper, 10D);
+        AnchorPane.setRightAnchor(webViewWrapper, 10D);
 
         Label observationDate = new Label(), originDate = new Label(), creatorLabel = new Label();
 
@@ -47,9 +53,9 @@ public class DiaryNoteVersionListViewFactory implements Callback<ListView<DiaryI
         AnchorPane.setBottomAnchor(labels, 10D);
         AnchorPane.setLeftAnchor(labels, 10D);
 
-        AnchorPane anchorPane = new AnchorPane(webView, labels);
+        AnchorPane anchorPane = new AnchorPane(webViewWrapper, labels);
 
-        anchorPane.setPrefHeight(350);
+        anchorPane.setPrefHeight(360);
 
         return new ListCell<DiaryItem.NoteVersion>() {
 
@@ -62,7 +68,7 @@ public class DiaryNoteVersionListViewFactory implements Callback<ListView<DiaryI
                     return;
                 }
                 titledPane.setContent(anchorPane);
-                titledPane.setText(noteVersion.getTitle());
+                titledPane.setText(noteVersion.getNoteDate());
                 webView.getEngine().loadContent(noteVersion.getContent());
                 webView.addEventFilter(KeyEvent.KEY_PRESSED, event -> webView.getEngine().loadContent(noteVersion.getContent()));
                 observationDate.setText(noteVersion.getObsDate());

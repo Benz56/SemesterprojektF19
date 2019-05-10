@@ -88,7 +88,6 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
 
         AnchorPane anchorPane = new AnchorPane(diaryNoteEditor, buttons, dates);
 
-        //opens Version Windows
         anchorPane.setPrefHeight(370);
 
         return new ListCell<DiaryItem>() {
@@ -100,7 +99,6 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
                     titledPane.setText("");
                     return;
                 }
-                titledPane.setUserData(diaryItem);
                 titledPane.setContent(anchorPane);
                 titledPane.setText(diaryItem.getDiaryVersions().get(0).getTitle());
                 diaryNoteEditor.setHtmlText(diaryItem.getDiaryVersions().get(0).getContent());
@@ -117,7 +115,7 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
                     List<List<Map<String, String>>> diaryNoteDetails = mainUIController.getDomainFacade().getDiaryDetails(mainUIController.getClientList().getSelectionModel().getSelectedItem(), mainUIController.getDiaryCaseCb().getSelectionModel().getSelectedIndex());
                     diaryNoteDetails.forEach(note -> listView.getItems().add(new DiaryItem(note)));
                 });
-                versionsButton.setOnAction(event -> SimpleStageBuilder.create("Note versioner", "DiaryNoteVersionsUIDocument.fxml").setControllerFactory(new DiaryNoteVersionsUIController(diaryItem)).setCloseOnUnfocused(true).open());
+                versionsButton.setOnAction(event -> SimpleStageBuilder.create(diaryItem.getDiaryVersions().get(0).getTitle() + " Note versioner", "DiaryNoteVersionsUIDocument.fxml").setControllerFactory(new DiaryNoteVersionsUIController(diaryItem)).setCloseOnUnfocused(true).open());
                 setGraphic(titledPane);
             }
         };

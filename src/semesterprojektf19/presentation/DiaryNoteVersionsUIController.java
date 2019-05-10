@@ -8,7 +8,6 @@ package semesterprojektf19.presentation;
 import com.jfoenix.controls.JFXButton;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
@@ -43,10 +42,5 @@ public class DiaryNoteVersionsUIController implements Initializable {
         closeBtn.setOnAction(event -> ((Stage) closeBtn.getScene().getWindow()).close());
         diaryNotesLV.setCellFactory(new DiaryNoteVersionListViewFactory());
         diaryNotesLV.getItems().setAll(diaryItem.getDiaryVersions());
-        Platform.runLater(() -> {
-            System.out.println(closeBtn.getScene());
-            closeBtn.getScene().getStylesheets().add(getClass().getResource("css/DiaryListViewCSS.css").toExternalForm());
-        });
     }
-
 }

@@ -52,3 +52,7 @@ and open the template in the editor.
 .anchor-pane {
     -fx-background-color: #cccccc;
 }
+
+.titled-pane > *.content {
+    -fx-background-color: #f9f9f9;
+}
