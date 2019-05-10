@@ -3,6 +3,7 @@ package semesterprojektf19.presentation;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -41,6 +42,8 @@ public class LoginUIController implements Initializable {
     private JFXPasswordField loginPasswordField;
     @FXML
     private AnchorPane registerPane;
+    @FXML
+    private FontAwesomeIconView usernameIcon, passwordIcon;
 
     /**
      * Initializes the controller class.
