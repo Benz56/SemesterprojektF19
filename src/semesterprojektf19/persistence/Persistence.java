@@ -10,6 +10,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -25,6 +29,7 @@ public enum Persistence {
     INSTANCE;
 
     private final File accounts;
+    private final Postgres conn = new Postgres();
 
     private Persistence() {
         new File("persons").mkdirs();
@@ -52,6 +57,23 @@ public enum Persistence {
             Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    public boolean authenticateDB(String username, String password) {
+        try {
+            Statement st = conn.getDb().createStatement();
+            ResultSet rs = st.executeQuery("Select * FROM account");
+            while (rs.next()) {
+                if (username.equals(rs.getString("username")) && password.equalsIgnoreCase(rs.getString("password"))) {
+                    System.out.println("Authenticated.");
+                    return true;
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     public boolean register(String username, String password, UUID uuid, Object person) {

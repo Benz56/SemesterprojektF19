@@ -1,7 +1,10 @@
 package semesterprojektf19.domain;
 
 import java.io.Serializable;
+import java.util.Map;
 import java.util.UUID;
+import semesterprojektf19.aquaintance.Column;
+import semesterprojektf19.aquaintance.UserContainer;
 
 public class Case implements Serializable {
 
@@ -24,6 +27,23 @@ public class Case implements Serializable {
         this.caseWorker = caseWorker;
     }
 
+    public Case(Map<String, String> caseDetails){
+        this((Worker) UserContainer.getUser(), 
+                CitizenManager.INSTANCE.getCitizen(caseDetails.get(Column.CITIZEN.getColumnName())),
+                new Inquiry(caseDetails.get(Column.SHORTINFO.getColumnName()))
+                );
+        setGuardianship(caseDetails.get(Column.GUARDIAN.getColumnName()));
+        setExecutingMunicipality(caseDetails.get(Column.EXECUTINGMUNICIPALITY.getColumnName()));
+        setRepresentation(caseDetails.get(Column.REPRESENTATION.getColumnName()));
+        setPayingMunicipality(caseDetails.get(Column.PAYINGMUNICIPALITY.getColumnName()));
+        setConsentRelevant(Boolean.valueOf(caseDetails.get(Column.CONSENTRELEVANT.getColumnName())));
+        setConsentObtained(Boolean.valueOf(caseDetails.get(Column.CONSENTGIVEN.getColumnName())));
+        setRightToRepresentation(Boolean.valueOf(caseDetails.get(Column.RIGHTTOREPRESENTATION.getColumnName())));
+        setInformedOnElectronicInfo(Boolean.valueOf(caseDetails.get(Column.INFORMEDONELECTRONICINFO.getColumnName())));
+        setAgreementsAboutFurtherProcess(caseDetails.get(Column.AGREEMENTSONFURTHERPROCESS.getColumnName()));
+        setSpecialCircumstances(caseDetails.get(Column.SPECIALCURCUMSTANCES.getColumnName()));
+    }
+    
     public void startElucidation(String background) {
         elucidation = new Elucidation(background);
     }
@@ -144,9 +164,7 @@ public class Case implements Serializable {
         return institution;
     }
     
-
     public Diary getDiary() {
         return diary;
     }
-   
 }

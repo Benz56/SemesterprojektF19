@@ -6,6 +6,7 @@
 package semesterprojektf19.domain;
 
 import java.util.HashMap;
+import semesterprojektf19.aquaintance.UserContainer;
 import java.util.Map;
 
 /**

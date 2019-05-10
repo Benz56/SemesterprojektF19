@@ -1,21 +1,24 @@
 package semesterprojektf19.domain;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import semesterprojektf19.persistence.Persistence;
+import semesterprojektf19.persistence.PersistenceFacade;
+import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
 public enum CitizenManager {
     INSTANCE;
 
     private final Map<String, Citizen> citizensMap;
+    private final PersistenceFacade persistenceFacade = new PersistenceFacadeImpl();
 
     private CitizenManager() {
         citizensMap = new TreeMap<>();
-        Arrays.asList(new File("citizens").listFiles()).forEach(file -> addCitizen((Citizen) Persistence.INSTANCE.readObjectFromFile("citizens/" + file.getName())));
+        for (Map<String, String> citizenMap : persistenceFacade.getCitizens()) {
+            addCitizen(new Citizen(citizenMap));
+        }
+//        Arrays.asList(new File("citizens").listFiles()).forEach(file -> addCitizen((Citizen) Persistence.INSTANCE.readObjectFromFile("citizens/" + file.getName())));
     }
 
     public Citizen addCitizen(Citizen citizen) {
@@ -77,19 +80,20 @@ public enum CitizenManager {
         return citizensMap;
     }
 
-    public boolean isCitizenCreated(String birthday, int controlNumber) {
+    public boolean isCitizenCreated(String birthday, String controlNumber) {
         for (Citizen citizen : citizensMap.values()) {
-            if (citizen.getBirthday().equals(birthday) && citizen.getControlNumber() == controlNumber) {
+            if (citizen.getBirthday().equals(birthday) && citizen.getControlNumber().equals(controlNumber)) {
                 return true;
             }
         }
         return false;
     }
 
-
-
     public void refresh() {
         citizensMap.clear();
-        Arrays.asList(new File("citizens").listFiles()).forEach(file -> addCitizen((Citizen) Persistence.INSTANCE.readObjectFromFile("citizens/" + file.getName())));
+        for (Map<String, String> citizenMap : persistenceFacade.getCitizens()) {
+            addCitizen(new Citizen(citizenMap));
+        }
+//        Arrays.asList(new File("citizens").listFiles()).forEach(file -> addCitizen((Citizen) Persistence.INSTANCE.readObjectFromFile("citizens/" + file.getName())));
     }
 }

@@ -27,9 +27,9 @@
             <AnchorPane fx:id="loginPane" prefHeight="225.0" prefWidth="400.0">
                <children>
                   <JFXTextField fx:id="usernameTextField" focusColor="#43a047" labelFloat="true" layoutX="85.0" layoutY="40.0" prefHeight="25.0" prefWidth="265.0" promptText="Brugernavn" unFocusColor="#bfbfbf" />
-                  <FontAwesomeIconView glyphName="USER_CIRCLE" layoutX="50.0" layoutY="64.0" size="25" />
+                  <FontAwesomeIconView fx:id="usernameIcon" glyphName="USER_CIRCLE" layoutX="50.0" layoutY="64.0" size="25" />
                   <JFXPasswordField fx:id="loginPasswordField" focusColor="#43a047" labelFloat="true" layoutX="85.0" layoutY="100.0" prefHeight="25.0" prefWidth="265.0" promptText="Adgangskode" unFocusColor="#bfbfbf" />
-                  <FontAwesomeIconView glyphName="UNLOCK_ALT" layoutX="53.0" layoutY="124.0" size="25" />
+                  <FontAwesomeIconView fx:id="passwordIcon" glyphName="UNLOCK_ALT" layoutX="53.0" layoutY="124.0" size="25" />
                   <JFXButton fx:id="loginBtn" layoutX="50.0" layoutY="160.0" prefWidth="148.0" style="-fx-background-color: #E5E5E5;" text="Login" />
                   <JFXButton fx:id="forgotPasswordBtn" layoutX="204.0" layoutY="160.0" prefWidth="148.0" style="-fx-background-color: #E5E5E5;" text="Glemt adgangskode?" />
                </children>

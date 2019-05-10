@@ -2,27 +2,57 @@ package semesterprojektf19.domain;
 
 import semesterprojektf19.domain.accesscontrol.Role;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
-import semesterprojektf19.persistence.Persistence;
+import semesterprojektf19.aquaintance.Column;
 
 public class Person implements Comparable<Person>, Serializable {
 
     private final UUID uuid;
-    private final int controlNumber;
-    private final String birthday;
-    private String firstName, lastName, address;
-    private int phoneNumber;
+    private String firstName, lastName;
     private Role role;
+    private Institution institution;
 
-    public Person(UUID uuid, String firstName, String lastName, String birthday, int controlNumber, String address, int phoneNumber, Role role) {
+    //UUID - institution
+
+    public Person(UUID uuid, String firstName, String lastName, Role role) {
         this.uuid = uuid;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthday = birthday;
-        this.controlNumber = controlNumber;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
         this.role = role;
+    }
+    
+    public Person(UUID uuid, String firstName, String lastName, Role role, Institution institution){
+        this.uuid = uuid;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+        this.institution = institution;
+    }
+
+    public Map<String, String> getMap() {
+        Map<String, String> personMap = new HashMap<>();
+        personMap.put(Column.UUID.getColumnName(), uuid.toString());
+        personMap.put(Column.FNAME.getColumnName(), firstName);
+        personMap.put(Column.LNAME.getColumnName(), lastName);
+        personMap.put(Column.ROLE.getColumnName(), role.toString());
+        if (institution != null) {
+            personMap.put(Column.INSTITUTION.getColumnName(), institution.getName());
+        }
+        return personMap;
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        int r = lastName.compareTo(o.lastName);
+        if (r == 0) {
+            r = firstName.compareTo(o.firstName);
+        }
+        if (r == 0) {
+            r = uuid.compareTo(o.uuid);
+        }
+        return r;
     }
 
     public UUID getUuid() {
@@ -45,22 +75,6 @@ public class Person implements Comparable<Person>, Serializable {
         this.lastName = lastName;
     }
 
-    public int getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(int phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public Role getRole() {
         return role;
     }
@@ -69,30 +83,11 @@ public class Person implements Comparable<Person>, Serializable {
         this.role = role;
     }
 
-    public String getBirthday() {
-        return birthday;
+    public Institution getInstitution() {
+        return institution;
     }
 
-    public int getControlNumber() {
-        return controlNumber;
-    }
-
-    @Override
-    public int compareTo(Person o) {
-        int r = birthday.compareTo(o.birthday);
-        if (r == 0) {
-            r = lastName.compareTo(o.lastName);
-        }
-        if (r == 0) {
-            r = firstName.compareTo(o.firstName);
-        }
-        if (r == 0) {
-            r = Integer.compare(phoneNumber, o.phoneNumber);
-        }
-        return r;
-    }
-
-    public void saveToFile() {
-        Persistence.INSTANCE.writeObjectToFile("persons/" + uuid.toString() + ".ser", this, false);
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
     }
 }

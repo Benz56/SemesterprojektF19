@@ -10,37 +10,34 @@ package semesterprojektf19.persistence;
  * @author sofielouise
  */
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Postgres {
 
-    public static void main(String[] args) {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (java.lang.ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+    //url syntax for database connection: (driver:sqltype://server:port/)
+    private final static String URL = "jdbc:postgresql://egboosted-beehive-do-user-6026035-0.db.ondigitalocean.com:25060/defaultdb?sslmode=require";
+    private final static String USERNAME = "doadmin";
+    private final static String PASSWORD = "ij7o5cn750qeaz46";
+    private Connection db;
 
-        //url syntax for database connection: (driver : sqltype :// server : port/)
-        String url = "jdbc:postgresql://manny.db.elephantsql.com:5432/";
-        String username = "jwzwncwf";
-        String password = "Hl-A8_Bb93HTAXJuBjDXRfPJtyU64vDL";
-
+    public Postgres() {
         try {
-            Connection db = DriverManager.getConnection(url, username, password);
-            System.out.println("Connected to database@" + url);
-//            Statement st = db.createStatement();
-//            ResultSet rs = st.executeQuery("SELECT * FROM account");
-//            while (rs.next()) {
-//                System.out.print("Column 1 returned ");
-//                System.out.println(rs.getString(1));
-//                System.out.print("Column 2 returned ");
-//                System.out.println(rs.getString(2));
-//            }
-//            rs.close();
-//            st.close();
-        } catch (java.sql.SQLException e) {
-            System.out.println(e.getMessage());
+            this.db = DriverManager.getConnection(Postgres.URL, Postgres.USERNAME, Postgres.PASSWORD);
+        } catch (SQLException ex) {
+            Logger.getLogger(Postgres.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    public Connection getDb() {
+        return db;
+    }
+
+    public void closeDb(){
+        try {
+            db.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Postgres.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
