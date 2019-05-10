@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebView;
@@ -21,14 +22,13 @@ import javafx.util.Callback;
 public class DiaryNoteVersionListViewFactory implements Callback<ListView<DiaryItem.NoteVersion>, ListCell<DiaryItem.NoteVersion>> {
 
     @Override
-    public ListCell<DiaryItem.NoteVersion> call(ListView<DiaryItem.NoteVersion> param) {
+    public ListCell<DiaryItem.NoteVersion> call(ListView<DiaryItem.NoteVersion> listview) {
         TitledPane titledPane = new TitledPane();
         titledPane.setAnimated(false);
         titledPane.setCollapsible(true);
         titledPane.setExpanded(false);
 
         WebView webView = new WebView();
-
         webView.setPrefHeight(200);
         AnchorPane.setTopAnchor(webView, 1D);
         AnchorPane.setLeftAnchor(webView, 1D);
@@ -64,6 +64,7 @@ public class DiaryNoteVersionListViewFactory implements Callback<ListView<DiaryI
                 titledPane.setContent(anchorPane);
                 titledPane.setText(noteVersion.getTitle());
                 webView.getEngine().loadContent(noteVersion.getContent());
+                webView.addEventFilter(KeyEvent.KEY_PRESSED, event -> webView.getEngine().loadContent(noteVersion.getContent()));
                 observationDate.setText(noteVersion.getObsDate());
                 originDate.setText(noteVersion.getNoteDate());
                 creatorLabel.setText(noteVersion.getCreator());

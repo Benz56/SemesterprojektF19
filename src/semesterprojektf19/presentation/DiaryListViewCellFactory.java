@@ -16,6 +16,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -45,7 +46,7 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
         HTMLEditor diaryNoteEditor = new HTMLEditor();
         JFXToggleButton toggleEdit = new JFXToggleButton();
         toggleEdit.setText("Slå redigering til ved at klikke her");
-        diaryNoteEditor.setOnKeyPressed(value -> {
+        diaryNoteEditor.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (!toggleEdit.isSelected()) {
                 diaryNoteEditor.setHtmlText(diaryNoteEditor.getHtmlText());
                 toggleEdit.requestFocus();
@@ -116,7 +117,7 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
                     List<List<Map<String, String>>> diaryNoteDetails = mainUIController.getDomainFacade().getDiaryDetails(mainUIController.getClientList().getSelectionModel().getSelectedItem(), mainUIController.getDiaryCaseCb().getSelectionModel().getSelectedIndex());
                     diaryNoteDetails.forEach(note -> listView.getItems().add(new DiaryItem(note)));
                 });
-                versionsButton.setOnAction(event -> SimpleStageBuilder.create("Note versioner", "DiaryNoteVersionsUIDocument.fxml").setControllerFactory(new DiaryNoteVersionsUIController(diaryItem)).setResizable(false).setCloseOnUnfocused(true).open());
+                versionsButton.setOnAction(event -> SimpleStageBuilder.create("Note versioner", "DiaryNoteVersionsUIDocument.fxml").setControllerFactory(new DiaryNoteVersionsUIController(diaryItem)).setCloseOnUnfocused(true).open());
                 setGraphic(titledPane);
             }
         };
