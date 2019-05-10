@@ -131,9 +131,7 @@ public class MainUIController implements Initializable {
             diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
         });
         diarynotesObservable = FXCollections.observableList(diarynotesListview.getItems());
-        diarynotesObservable.addListener((ListChangeListener.Change<? extends DiaryItem> c) -> {
-            diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
-        });
+        diarynotesObservable.addListener((ListChangeListener.Change<? extends DiaryItem> event) -> diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this)));
 
         refresh();
     }
