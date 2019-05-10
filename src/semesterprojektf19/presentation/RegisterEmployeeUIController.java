@@ -29,9 +29,7 @@ public class RegisterEmployeeUIController implements Initializable {
     private boolean valid = false;
 
     @FXML
-    private JFXTextField firstnameTextField, lastnameTextField, controlNumberTextField, phoneNumberTextField, addressTextField, usernameTextField;
-    @FXML
-    private JFXDatePicker birthdayDatePicker;
+    private JFXTextField firstnameTextField, lastnameTextField, usernameTextField;
     @FXML
     private JFXPasswordField passwordPasswordField, confirmPasswordField;
     @FXML
@@ -43,13 +41,8 @@ public class RegisterEmployeeUIController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         roleComboBox.getItems().addAll("Caseworker", "Socialworker", "Admin");
         institutionComboBox.getItems().addAll(registrationFacade.getInstitutionNames());
-        
         firstnameTextField.textProperty().addListener(listener -> valid = validate());
         lastnameTextField.textProperty().addListener(listener -> valid = validate());
-        birthdayDatePicker.valueProperty().addListener(listener -> valid = validate());
-        controlNumberTextField.textProperty().addListener(listener -> valid = validate());
-        phoneNumberTextField.textProperty().addListener(listener -> valid = validate());
-        addressTextField.textProperty().addListener(listener -> valid = validate());
         usernameTextField.textProperty().addListener(listener -> valid = validate());
         passwordPasswordField.textProperty().addListener(listener -> valid = validate());
         confirmPasswordField.textProperty().addListener(listener -> valid = validate());
@@ -65,10 +58,6 @@ public class RegisterEmployeeUIController implements Initializable {
                     passwordPasswordField.getText(),
                     firstnameTextField.getText(),
                     lastnameTextField.getText(),
-                    birthdayDatePicker.getValue().toString(),
-                    controlNumberTextField.getText(),
-                    addressTextField.getText(),
-                    phoneNumberTextField.getText(),
                     roleComboBox.getSelectionModel().getSelectedItem().toUpperCase(),
                     institutionComboBox.getSelectionModel().getSelectedItem()
             )) {
@@ -93,39 +82,6 @@ public class RegisterEmployeeUIController implements Initializable {
         } else if (lastnameTextField.getText().isEmpty()) {
             statusTextField.setText("Efternavn mangler!");
             return false;
-        } else if (birthdayDatePicker.getValue() == null) {
-            statusTextField.setText("Fødselsdato ikke udfyldt!");
-            return false;
-        }
-        try {
-            if (controlNumberTextField.getText().isEmpty()) {
-                statusTextField.setText("CPR Løbenummer mangler!");
-                return false;
-            } else if (controlNumberTextField.getText().length() != 4) {
-                statusTextField.setText("CPR Løbenummer skal være 4 tal!");
-                return false;
-            }
-            Integer.parseInt(controlNumberTextField.getText());
-        } catch (NumberFormatException e) {
-            statusTextField.setText("CPR Løbenummer må kun indeholde tal!");
-            return false;
-        }
-        try {
-            if (phoneNumberTextField.getText().isEmpty()) {
-                statusTextField.setText("Telefonnummer mangler!");
-                return false;
-            } else if (phoneNumberTextField.getText().length() != 8) {
-                statusTextField.setText("Telefonnummer skal være 8 tal!");
-                return false;
-            }
-            Integer.parseInt(phoneNumberTextField.getText());
-        } catch (NumberFormatException e) {
-            statusTextField.setText("Telefonnummer må kun indeholde tal!");
-            return false;
-        }
-        if (addressTextField.getText().isEmpty()) {
-            statusTextField.setText("Addresse mangler!");
-            return false;
         } else if (usernameTextField.getText().isEmpty()) {
             statusTextField.setText("Brugernavn mangler!");
             return false;
@@ -143,6 +99,10 @@ public class RegisterEmployeeUIController implements Initializable {
             return false;
         } else if(roleComboBox.getSelectionModel().getSelectedItem().toUpperCase().equals("SOCIALWORKER")){
             institutionComboBox.setDisable(false);
+            if (institutionComboBox.getSelectionModel().getSelectedItem() == null) {
+                statusTextField.setText("Institution ikke valgt!");
+                return false;
+            }
         } else {
             institutionComboBox.setDisable(true);
         }

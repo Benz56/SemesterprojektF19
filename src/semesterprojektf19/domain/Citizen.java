@@ -1,7 +1,5 @@
 package semesterprojektf19.domain;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -13,17 +11,7 @@ public class Citizen extends Person {
 
     private String cpr;
     private String address, phoneNumber, controlNumber, birthday;
-    private final List<Case> cases = new ArrayList<>();
     private static final long serialVersionUID = 4813878493760830975L;
-
-    public Citizen(UUID uuid, String firstName, String lastName, String address, String phoneNumber, String controlNumber, String birthday, Institution institution) {
-        super(uuid, firstName, lastName, Role.CITIZEN, institution);
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.controlNumber = controlNumber;
-        this.birthday = birthday;
-        formatCpr();
-    }
 
     public Citizen(UUID uuid, String firstName, String lastName, String address, String phoneNumber, String controlNumber, String birthday) {
         super(uuid, firstName, lastName, Role.CITIZEN);
@@ -43,16 +31,12 @@ public class Citizen extends Person {
     }
 
     public void addCase(Case c) {
-        cases.add(c);
-    }
-
-    public List<Case> getCases() {
-        return cases;
+        getCases().add(c);
     }
 
     public Case getCase(int index) {
         System.out.println(index);
-        return cases.get(index);
+        return getCases().get(index);
     }
 
     public String getCpr() {

@@ -27,10 +27,9 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
     }
 
     @Override
-    public boolean registerEmployee(String username, String password, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber, String role, String institution) {
+    public boolean registerEmployee(String username, String password, String firstName, String lastName, String role, String institution) {
         Person person;
         Role r = Role.valueOf(role);
-        
         switch (r) {
             case CASEWORKER:
                 person = new Worker(UUID.randomUUID(), firstName, lastName,Role.valueOf(role));

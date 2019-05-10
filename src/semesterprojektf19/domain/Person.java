@@ -2,7 +2,9 @@ package semesterprojektf19.domain;
 
 import semesterprojektf19.domain.accesscontrol.Role;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import semesterprojektf19.aquaintance.Column;
@@ -13,17 +15,17 @@ public class Person implements Comparable<Person>, Serializable {
     private String firstName, lastName;
     private Role role;
     private Institution institution;
+    private List<Case> cases = new ArrayList<>();
 
     //UUID - institution
-
     public Person(UUID uuid, String firstName, String lastName, Role role) {
         this.uuid = uuid;
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
     }
-    
-    public Person(UUID uuid, String firstName, String lastName, Role role, Institution institution){
+
+    public Person(UUID uuid, String firstName, String lastName, Role role, Institution institution) {
         this.uuid = uuid;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,9 +39,7 @@ public class Person implements Comparable<Person>, Serializable {
         personMap.put(Column.FNAME.getColumnName(), firstName);
         personMap.put(Column.LNAME.getColumnName(), lastName);
         personMap.put(Column.ROLE.getColumnName(), role.toString());
-        if (institution != null) {
-            personMap.put(Column.INSTITUTION.getColumnName(), institution.getName());
-        }
+        personMap.put(Column.INSTITUTION.getColumnName(), institution == null ? null : institution.getName());
         return personMap;
     }
 
@@ -90,4 +90,13 @@ public class Person implements Comparable<Person>, Serializable {
     public void setInstitution(Institution institution) {
         this.institution = institution;
     }
+
+    public List<Case> getCases() {
+        return cases;
+    }
+
+    public void setCases(List<Case> cases) {
+        this.cases = cases;
+    }
+
 }
