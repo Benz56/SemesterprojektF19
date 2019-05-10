@@ -12,7 +12,7 @@ import java.util.Map;
  * @author Glumby
  */
 public interface DiaryNoteFacade {
-    
-    public void createNote(Map<String, String> noteDetails);
-    
+
+    Map<String, String> createNote(Map<String, String> noteDetails);
+
 }

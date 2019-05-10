@@ -12,8 +12,7 @@ public class Diary implements Serializable {
     private List<DiaryNote> list;
     private Person editor;
     private UUID caseID;
-    private static final long serialVersionUID =  5184679964539683569L;
-   
+    private static final long serialVersionUID = 5184679964539683569L;
 
     public Diary(UUID caseID) {
         list = new ArrayList<>();
@@ -21,9 +20,9 @@ public class Diary implements Serializable {
     }
 
     public void createNote(Person person, String note, String titel, String dateOfObservation) {
-        list.add(new DiaryNote(person, note, titel, dateOfObservation));
-        DiaryNote diaryNote = list.get(list.size()-1);
+        DiaryNote diaryNote = new DiaryNote(UUID.randomUUID(), person, note, titel, dateOfObservation);
         diaryNote.addNoteVersion(diaryNote);
+        list.add(diaryNote);
     }
 
     public void editNote(int index, Person person, String note) {
@@ -33,13 +32,12 @@ public class Diary implements Serializable {
         diaryNote.setCreator(editor);
         diaryNote.addNoteVersion(diaryNote);
     }
-    
-    public void addTopic(int index, Topic topic){
+
+    public void addTopic(int index, Topic topic) {
         DiaryNote diaryNote = list.get(index);
         diaryNote.addTopic(topic);
     }
-    
-    
+
     public List<DiaryNote> searchTopic(Topic topic) {
         List<DiaryNote> searchResult = new ArrayList<>();
         for (DiaryNote diaryNote : list) {
@@ -49,8 +47,8 @@ public class Diary implements Serializable {
         }
         return searchResult;
     }
-    
-    public List<DiaryNote> getNotes(){
+
+    public List<DiaryNote> getNotes() {
         return list;
     }
 }

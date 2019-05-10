@@ -16,6 +16,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,6 +35,7 @@ public class MainUIController implements Initializable {
     private final DomainFacade domainFacade = new DomainFacadeImpl();
     private final Map<String, String> userDetails;
     private final Map<JFXButton, AnchorPane> btnPaneMap = new HashMap<>();
+    private ObservableList<DiaryItem> diarynotesObservable;
     private JFXButton selectedBtn;
 
     //Global nodes:
@@ -85,8 +89,8 @@ public class MainUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        homeHelloLabel.setText(homeHelloLabel.getText() + userDetails.get(Column.FNAME.getColumnName()) + " " + userDetails.get(Column.LNAME.getColumnName()));
-        if(userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("socialworker")){
+        homeHelloLabel.setText(homeHelloLabel.getText() + userDetails.get("firstname") + " " + userDetails.get("lastname"));
+        if (userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("socialworker")) {
             homePlaceLabel.setText(homePlaceLabel.getText() + userDetails.get(Column.INSTITUTION.getColumnName()));
         }
         selectedBtn = homeBtn;
@@ -117,18 +121,22 @@ public class MainUIController implements Initializable {
         adminCreateInstitutionBtn.setOnAction(event -> SimpleStageBuilder.create("Opret Bosted", "RegisterInstitutionUIDocument.fxml").setResizable(false).setCloseOnUnfocused(true).open());
 
         diaryCreateNoteBtn.setOnAction(event -> SimpleStageBuilder.create("Opret Notat", "CreateNoteUIDocument.fxml").setResizable(false)
-                .setCloseOnUnfocused(true).setControllerFactory(new CreateNoteUIController(String.valueOf(diaryCaseCb.getSelectionModel().getSelectedIndex()), clientList.getSelectionModel().getSelectedItem())).open());
+                .setCloseOnUnfocused(true).setControllerFactory(new CreateNoteUIController(diarynotesObservable, String.valueOf(diaryCaseCb.getSelectionModel().getSelectedIndex()), clientList.getSelectionModel().getSelectedItem())).open());
 
         ccSearchCitizenTextField.textProperty().addListener(listener -> refresh());
 
         setClientListener();
 
-        diarynotesListview.setCellFactory(new DiaryListViewCellFactory());
+        diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
         diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             diarynotesListview.getItems().clear();
+            diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
             List<List<Map<String, String>>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
             diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
         });
+        diarynotesObservable = FXCollections.observableList(diarynotesListview.getItems());
+        diarynotesObservable.addListener((ListChangeListener.Change<? extends DiaryItem> event) -> diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this)));
+
         refresh();
     }
 
@@ -208,12 +216,16 @@ public class MainUIController implements Initializable {
         SimpleStageBuilder.create("EGBoosted", "LoginUIDocument.fxml").closeOpenWindow(homeBtn).setResizable(false).open();
     }
 
+    public DomainFacade getDomainFacade() {
+        return domainFacade;
+    }
+
     public JFXComboBox<String> getDiaryCaseCb() {
         return diaryCaseCb;
     }
 
     public JFXListView<String> getClientList() {
         return clientList;
-    }   
-    
+    }
+
 }

@@ -39,8 +39,11 @@ public class Citizen extends Person {
     }
 
     public Case getCase(int index) {
-        System.out.println(index);
         return getCases().get(index);
+    }
+
+    public String getCpr() {
+        return cpr;
     }
 
     @Override

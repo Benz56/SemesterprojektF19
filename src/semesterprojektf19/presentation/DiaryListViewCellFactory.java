@@ -7,12 +7,15 @@ package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -26,6 +29,12 @@ import javafx.util.Callback;
  */
 public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, ListCell<DiaryItem>> {
 
+    private final MainUIController mainUIController;
+
+    public DiaryListViewCellFactory(MainUIController mainUIController) {
+        this.mainUIController = mainUIController;
+    }
+
     @Override
     public ListCell<DiaryItem> call(ListView<DiaryItem> listView) {
         TitledPane titledPane = new TitledPane();
@@ -36,7 +45,7 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
         HTMLEditor diaryNoteEditor = new HTMLEditor();
         JFXToggleButton toggleEdit = new JFXToggleButton();
         toggleEdit.setText("Slå redigering til ved at klikke her");
-        diaryNoteEditor.setOnKeyPressed(value -> {
+        diaryNoteEditor.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (!toggleEdit.isSelected()) {
                 diaryNoteEditor.setHtmlText(diaryNoteEditor.getHtmlText());
                 toggleEdit.requestFocus();
@@ -78,7 +87,6 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
 
         AnchorPane anchorPane = new AnchorPane(diaryNoteEditor, buttons, dates);
 
-        //opens Version Windows
         anchorPane.setPrefHeight(370);
 
         return new ListCell<DiaryItem>() {
@@ -90,13 +98,22 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
                     titledPane.setText("");
                     return;
                 }
-                titledPane.setUserData(diaryItem);
                 titledPane.setContent(anchorPane);
                 titledPane.setText(diaryItem.getDiaryVersions().get(0).getTitle());
                 diaryNoteEditor.setHtmlText(diaryItem.getDiaryVersions().get(0).getContent());
                 observationDate.setText(diaryItem.getDiaryVersions().get(0).getObsDate());
                 originDate.setText(diaryItem.getDiaryVersions().get(0).getNoteDate());
-                versionsButton.setOnAction(event -> SimpleStageBuilder.create("Note versioner", "DiaryNoteVersionsUIDocument.fxml").setControllerFactory(new DiaryNoteVersionsUIController(diaryItem)).setResizable(false).setCloseOnUnfocused(true).open());
+                editButton.setOnAction(event -> {
+                    Map<String, String> content = new HashMap<>();
+                    content.put("uuid", diaryItem.getDiaryVersions().get(0).getUuid().toString());
+                    content.put("title", diaryItem.getDiaryVersions().get(0).getTitle());
+                    content.put("obsDate", diaryItem.getDiaryVersions().get(0).getObsDate());
+                    content.put("obsDate", diaryItem.getDiaryVersions().get(0).getObsDate());
+                    content.put("content", diaryNoteEditor.getHtmlText());
+                    Map<String, String> savedVersion = mainUIController.getDomainFacade().addDiaryNoteVersion(mainUIController.getClientList().getSelectionModel().getSelectedItem(), mainUIController.getDiaryCaseCb().getSelectionModel().getSelectedIndex(), content);
+                    diaryItem.addNewVersion(savedVersion);
+                });
+                versionsButton.setOnAction(event -> SimpleStageBuilder.create(diaryItem.getDiaryVersions().get(0).getTitle() + " Note versioner", "DiaryNoteVersionsUIDocument.fxml").setControllerFactory(new DiaryNoteVersionsUIController(diaryItem)).setCloseOnUnfocused(true).open());
                 setGraphic(titledPane);
             }
         };

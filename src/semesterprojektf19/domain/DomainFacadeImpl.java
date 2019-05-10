@@ -73,23 +73,20 @@ public class DomainFacadeImpl implements DomainFacade {
     public List<List<Map<String, String>>> getDiaryDetails(String citizenString, int caseIndex) {
         List<List<Map<String, String>>> notes = new ArrayList<>();
         Citizen citizen = CitizenManager.INSTANCE.getCitizen(citizenString);
-        //details.put("title", citizen.getCase(caseIndex).getDiary().getNotes().stream().map(d -> d.getTitel()).collect(Collectors.joining("\n")));
         citizen.getCase(caseIndex).getDiary().getNotes().forEach(note -> {
+
             List<Map<String, String>> versions = new ArrayList<>();
             note.getVersions().forEach(version -> {
                 Map<String, String> content = new HashMap<>();
-                content.put("title", note.getTitel());
-                content.put("obsDate", note.getDateOfObservation());
-                content.put("noteDate", note.getDate().toString());
-                content.put("content", note.getNote());
+                content.put("uuid", version.getUuid().toString());
+                content.put("title", version.getTitel());
+                content.put("obsDate", version.getDateOfObservation());
+                content.put("noteDate", version.getDate().toString());
+                content.put("content", version.getNote());
+                content.put("creator", version.getCreator().getFirstName() + " " + version.getCreator().getLastName());
                 versions.add(content);
             });
-            Map<String, String> content = new HashMap<>();
-            content.put("title", note.getTitel());
-            content.put("obsDate", note.getDateOfObservation());
-            content.put("noteDate", note.getDate().toString());
-            content.put("content", note.getNote());
-            versions.add(content);
+
             Collections.reverse(versions);
             notes.add(versions);
         });
@@ -97,4 +94,21 @@ public class DomainFacadeImpl implements DomainFacade {
         return notes;
     }
 
+    @Override
+    public Map<String, String> addDiaryNoteVersion(String citizenString, int caseIndex, Map<String, String> details) {
+        Citizen citizen = CitizenManager.INSTANCE.getCitizen(citizenString);
+        UUID uuid = UUID.fromString(details.get("uuid"));
+        DiaryNote version = new DiaryNote(UUID.fromString(details.get("uuid")), UserContainer.getUser(), details.get("content"), details.get("title"), details.get("obsDate"));
+        citizen.getCase(caseIndex).getDiary().getNotes().stream().filter(note -> note.getUuid().equals(uuid)).findFirst().ifPresent(note -> note.addNoteVersion(version));
+        Map<String, String> content = new HashMap<>();
+        content.put("uuid", version.getUuid().toString());
+        content.put("title", version.getTitel());
+        content.put("obsDate", version.getDateOfObservation());
+        content.put("noteDate", version.getDate().toString());
+        content.put("content", version.getNote());
+        content.put("creator", version.getCreator().getFirstName() + " " + version.getCreator().getLastName());
+        //Husk at gemme i persistens herefter.
+        return content;
+
+    }
 }
