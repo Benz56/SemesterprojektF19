@@ -221,7 +221,6 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="ccExecutingMuniTextField" focusColor="#43a047" layoutX="435.0" layoutY="107.0" prefHeight="25.0" prefWidth="150.0" unFocusColor="#bfbfbf" />
                   <Label layoutX="620.0" layoutY="87.0" text="Repræsentation">
                      <font>
                         <Font name="System Bold" size="12.0" />
@@ -256,6 +255,7 @@
                      </font>
                   </Label>
                   <JFXTextField fx:id="ccShortInfoTextField" focusColor="#43a047" layoutX="250.0" layoutY="390.0" prefHeight="25.0" prefWidth="335.0" unFocusColor="#bfbfbf" />
+                  <JFXComboBox fx:id="ccExecutingMuniCB" disable="true" focusColor="#43a047" layoutX="430.0" layoutY="107.0" prefHeight="31.0" prefWidth="148.0" promptText="Institution" unFocusColor="#bfbfbf" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="adminPane" prefHeight="700.0" prefWidth="1000.0" visible="false">

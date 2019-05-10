@@ -70,6 +70,8 @@ public class MainUIController implements Initializable {
     private JFXTextArea ccSpecialCircumstancesTextArea, ccProcessAgreementsTextArea;
     @FXML
     private JFXCheckBox ccRightToRepCB, ccInformedECardCB, ccConsentRelevantCB, ccConsentGivenCB;
+    @FXML
+    private JFXComboBox<String> ccExecutingMuniCB;
 
     //Diary nodes.
     @FXML
@@ -124,8 +126,8 @@ public class MainUIController implements Initializable {
                 .setCloseOnUnfocused(true).setControllerFactory(new CreateNoteUIController(diarynotesObservable, String.valueOf(diaryCaseCb.getSelectionModel().getSelectedIndex()), clientList.getSelectionModel().getSelectedItem())).open());
 
         ccSearchCitizenTextField.textProperty().addListener(listener -> refresh());
-
         setClientListener();
+        ccExecutingMuniCB.getItems().addAll(registrationFacade.getInstitutionNames());
 
         diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
         diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -159,14 +161,14 @@ public class MainUIController implements Initializable {
     private void onCreateCase(ActionEvent event) {
         Tooltip tooltip = new Tooltip();
         if (ccCitizenListView.getSelectionModel().getSelectedItem() != null
-                && !ccExecutingMuniTextField.getText().isEmpty()
+                && ccExecutingMuniCB.getSelectionModel().getSelectedItem() != null
                 && !ccRepresentationTextField.getText().isEmpty()
                 && !ccPayingMuniTextField.getText().isEmpty()
                 && !ccShortInfoTextField.getText().isEmpty()) {
             Map<String, String> caseDetails = new HashMap<>();
             caseDetails.put(Column.CITIZEN.getColumnName(), ccCitizenListView.getSelectionModel().getSelectedItem());
             caseDetails.put(Column.GUARDIAN.getColumnName(), ccGuardianTextField.getText());
-            caseDetails.put(Column.EXECUTINGMUNICIPALITY.getColumnName(), ccExecutingMuniTextField.getText());
+            caseDetails.put(Column.EXECUTINGMUNICIPALITY.getColumnName(), ccExecutingMuniCB.getSelectionModel().getSelectedItem());
             caseDetails.put(Column.REPRESENTATION.getColumnName(), ccRepresentationTextField.getText());
             caseDetails.put(Column.PAYINGMUNICIPALITY.getColumnName(), ccPayingMuniTextField.getText());
             caseDetails.put(Column.CONSENTRELEVANT.getColumnName(), String.valueOf(ccConsentRelevantCB.isSelected()));
@@ -227,5 +229,5 @@ public class MainUIController implements Initializable {
     public JFXListView<String> getClientList() {
         return clientList;
     }
-
 }
+
