@@ -25,9 +25,8 @@ public class Citizen extends Person {
     public List<Case> getCases() {
         return cases;
     }
-    
-    public Case getCase(int index){
-        System.out.println(index);
+
+    public Case getCase(int index) {
         return cases.get(index);
     }
 
