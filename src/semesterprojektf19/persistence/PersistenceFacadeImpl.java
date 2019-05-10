@@ -45,12 +45,12 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
                 if (uuid != null) {
                     System.out.println("Authenticated.");
                     return getWorkerDetails(uuid);
-                }
+                }else authenticate(username, password);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
         }
-        connection.closeDb();
+        
         return null;
     }
 
@@ -128,11 +128,9 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
                 pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.CONSENTGIVEN.getColumnName())));
                 pst.executeUpdate();
             }
-            connection.closeDb();
             System.out.println("CaseID: " + caseUUID.toString());
             return true;
         } catch (SQLException e) {
-            connection.closeDb();
             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, e);
         }
         return false;
@@ -153,11 +151,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             workerDetails.put(Column.LNAME.getColumnName(), rs.getString(Column.LNAME.getColumnName()));
             workerDetails.put(Column.ROLE.getColumnName(), rs.getString(Column.ROLE.getColumnName()));
             workerDetails.put(Column.INSTITUTION.getColumnName(), rs.getString(Column.INSTITUTION.getColumnName()));
-            rs.close();
-            pst.close();
-            connection.closeDb();
         } catch (SQLException ex) {
-            connection.closeDb();
             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return workerDetails;
