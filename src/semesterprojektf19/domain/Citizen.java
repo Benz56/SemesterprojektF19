@@ -8,9 +8,8 @@ import semesterprojektf19.domain.accesscontrol.Role;
 import semesterprojektf19.persistence.Persistence;
 
 public class Citizen extends Person {
-    
-    private String cpr;
-    private String address, phoneNumber, controlNumber, birthday;
+
+    private final String cpr, address, phoneNumber, controlNumber, birthday;
     private static final long serialVersionUID = 4813878493760830975L;
 
     public Citizen(UUID uuid, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber) {
@@ -79,9 +78,5 @@ public class Citizen extends Person {
         personMap.put(Column.ADDR.getColumnName(), address);
         personMap.put(Column.PHONE.getColumnName(), phoneNumber);
         return personMap;
-    }
-
-    String getCpr() {
-        return cpr;
     }
 }

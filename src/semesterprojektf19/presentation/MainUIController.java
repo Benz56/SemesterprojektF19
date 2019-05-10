@@ -29,10 +29,13 @@ import javafx.scene.layout.HBox;
 import semesterprojektf19.aquaintance.Column;
 import semesterprojektf19.domain.DomainFacade;
 import semesterprojektf19.domain.DomainFacadeImpl;
+import semesterprojektf19.domain.RegistrationFacade;
+import semesterprojektf19.domain.RegistrationFacadeImpl;
 
 public class MainUIController implements Initializable {
 
     private final DomainFacade domainFacade = new DomainFacadeImpl();
+    private final RegistrationFacade registrationFacade = new RegistrationFacadeImpl();
     private final Map<String, String> userDetails;
     private final Map<JFXButton, AnchorPane> btnPaneMap = new HashMap<>();
     private ObservableList<DiaryItem> diarynotesObservable;
@@ -230,4 +233,3 @@ public class MainUIController implements Initializable {
         return clientList;
     }
 }
-
