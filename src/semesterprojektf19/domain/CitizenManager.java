@@ -18,7 +18,6 @@ public enum CitizenManager {
         for (Map<String, String> citizenMap : persistenceFacade.getCitizens()) {
             addCitizen(new Citizen(citizenMap));
         }
-//        Arrays.asList(new File("citizens").listFiles()).forEach(file -> addCitizen((Citizen) Persistence.INSTANCE.readObjectFromFile("citizens/" + file.getName())));
     }
 
     public Citizen addCitizen(Citizen citizen) {
@@ -94,6 +93,5 @@ public enum CitizenManager {
         for (Map<String, String> citizenMap : persistenceFacade.getCitizens()) {
             addCitizen(new Citizen(citizenMap));
         }
-//        Arrays.asList(new File("citizens").listFiles()).forEach(file -> addCitizen((Citizen) Persistence.INSTANCE.readObjectFromFile("citizens/" + file.getName())));
     }
 }
