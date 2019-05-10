@@ -59,23 +59,21 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
         System.out.println("Registering...");
         try {
             System.out.println("Trying to register...");
-            PreparedStatement pst = connection.getDb().prepareStatement("INSERT INTO worker VALUES (?,?,?,?,?)");
-            int i = 1;
-            pst.setObject(i++, uuid);
-            pst.setString(i++, personInfo.get(Column.FNAME.getColumnName()));
-            pst.setString(i++, personInfo.get(Column.LNAME.getColumnName()));
-            pst.setString(i++, personInfo.get(Column.ROLE.getColumnName()));
-            pst.setString(i++, personInfo.get(Column.INSTITUTION.getColumnName()));
-            pst.executeUpdate();
-            pst.close();
-
-            PreparedStatement pstAccount = connection.getDb().prepareStatement("INSERT INTO account VALUES (?, ?, crypt(?, gen_salt('bf')));");
-            pstAccount.setObject(1, uuid);
-            pstAccount.setString(2, username);
-            pstAccount.setString(3, password);
-            pstAccount.executeUpdate();
-
-            pstAccount.close();
+            try (PreparedStatement pstAccount = connection.getDb().prepareStatement("INSERT INTO account VALUES (?, ?, crypt(?, gen_salt('bf')));")) {
+                pstAccount.setObject(1, uuid);
+                pstAccount.setString(2, username);
+                pstAccount.setString(3, password);
+                pstAccount.executeUpdate();
+            }
+            try (PreparedStatement pst = connection.getDb().prepareStatement("INSERT INTO worker VALUES (?,?,?,?,?)")) {
+                int i = 1;
+                pst.setObject(i++, uuid);
+                pst.setString(i++, personInfo.get(Column.FNAME.getColumnName()));
+                pst.setString(i++, personInfo.get(Column.LNAME.getColumnName()));
+                pst.setString(i++, personInfo.get(Column.ROLE.getColumnName()));
+                pst.setString(i++, personInfo.get(Column.INSTITUTION.getColumnName()));
+                pst.executeUpdate();
+            }
             connection.closeDb();
             return true;
         } catch (SQLException e) {

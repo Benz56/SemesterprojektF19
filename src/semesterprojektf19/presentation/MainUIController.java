@@ -86,14 +86,14 @@ public class MainUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         homeHelloLabel.setText(homeHelloLabel.getText() + userDetails.get(Column.FNAME.getColumnName()) + " " + userDetails.get(Column.LNAME.getColumnName()));
-        if(userDetails.get(Column.ROLE.getColumnName()).equals("socialworker")){
+        if(userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("socialworker")){
             homePlaceLabel.setText(homePlaceLabel.getText() + userDetails.get(Column.INSTITUTION.getColumnName()));
         }
         selectedBtn = homeBtn;
         btnPaneMap.put(homeBtn, homePane);
         btnPaneMap.put(casesBtn, casesPane);
         btnPaneMap.put(diaryBtn, diaryPane);
-        if (userDetails.get(Column.ROLE.getColumnName()).equals("admin")) {
+        if (userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("admin")) {
             btnPaneMap.put(adminBtn, adminPane);
         } else {
             ((HBox) adminBtn.getParent()).getChildren().remove(adminBtn);
