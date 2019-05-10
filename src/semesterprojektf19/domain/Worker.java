@@ -11,9 +11,13 @@ public class Worker extends Person {
     private final List<Case> cases = new ArrayList<>();
     
     //UUID + institution
-    public Worker(UUID uuid, String firstName, String lastName, String birthday,
-            String controlNumber, String address, String phoneNumber, Role role, Institution institution) {
-        super(uuid, firstName, lastName, birthday, controlNumber, address, phoneNumber, role, institution);
+
+    Worker(UUID uuid, String firstName, String lastName, Role role, Institution institution) {
+        super(uuid, firstName, lastName, role, institution);
+    }
+    
+    Worker(UUID uuid, String firstName, String lastName, Role role) {
+        super(uuid, firstName, lastName, role);
     }
     
     public Case addCase(Case c) {

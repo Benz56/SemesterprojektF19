@@ -10,8 +10,16 @@ package semesterprojektf19.aquaintance;
  * @author sofielouise
  */
 public enum Column {
-    USERNAME("username"), PASSWORD("password"), UUID("uuid"), FNAME("fName"), LNAME("lName"), BDAY("bDay"), CNUMBER("cNumber"),
-    ADDR("addr"), PHONE("phone"), ROLE("role"), INSTITUTION("institution"), INSTITUTIONADDR("institutionAddr");
+    USERNAME("username"), PASSWORD("password"), UUID("uuid"), FNAME("fName"), 
+    LNAME("lName"), BDAY("bDay"), CNUMBER("cNumber"), ADDR("addr"), PHONE("phone"), 
+    ROLE("role"), INSTITUTION("institution"), INSTITUTIONADDR("institutionAddr"), 
+    CITIZEN("citizenUuid"), CASEWORKER("caseworkerUuid"), SHORTINFO("shortInfo"), 
+    GUARDIAN("guardianship"), EXECUTINGMUNICIPALITY("executingMunicipality"), 
+    PAYINGMUNICIPALITY("payingMunicipality"), REPRESENTATION("representation"), 
+    CONSENTRELEVANT("consentRelevant"), CONSENTGIVEN("consentObtained"), 
+    RIGHTTOREPRESENTATION("rightToRep"), INFORMEDONELECTRONICINFO("informed"),
+    AGREEMENTSONFURTHERPROCESS("agreementProcess"), 
+    SPECIALCURCUMSTANCES("specialCircumstances");
     private final String name;
     
     private Column(String name){

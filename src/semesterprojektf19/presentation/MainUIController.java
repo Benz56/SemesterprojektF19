@@ -86,19 +86,19 @@ public class MainUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         homeHelloLabel.setText(homeHelloLabel.getText() + userDetails.get(Column.FNAME.getColumnName()) + " " + userDetails.get(Column.LNAME.getColumnName()));
-        if(userDetails.get(Column.ROLE.getColumnName()).equals("socialworker")){
+        if(userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("socialworker")){
             homePlaceLabel.setText(homePlaceLabel.getText() + userDetails.get(Column.INSTITUTION.getColumnName()));
         }
         selectedBtn = homeBtn;
         btnPaneMap.put(homeBtn, homePane);
         btnPaneMap.put(casesBtn, casesPane);
         btnPaneMap.put(diaryBtn, diaryPane);
-        if (userDetails.get(Column.ROLE.getColumnName()).equals("admin")) {
+        if (userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("admin")) {
             btnPaneMap.put(adminBtn, adminPane);
         } else {
             ((HBox) adminBtn.getParent()).getChildren().remove(adminBtn);
         }
-        if (userDetails.get(Column.ROLE.getColumnName()).equals("caseworker") || userDetails.get(Column.ROLE.getColumnName()).equals("admin")) {
+        if (userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("caseworker") || userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("admin")) {
             btnPaneMap.put(casesCreateBtn, createCasePane);
         } else {
             ((HBox) casesCreateBtn.getParent()).getChildren().remove(casesCreateBtn);
@@ -129,7 +129,6 @@ public class MainUIController implements Initializable {
             List<List<Map<String, String>>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
             diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
         });
-
         refresh();
     }
 
@@ -157,18 +156,18 @@ public class MainUIController implements Initializable {
                 && !ccPayingMuniTextField.getText().isEmpty()
                 && !ccShortInfoTextField.getText().isEmpty()) {
             Map<String, String> caseDetails = new HashMap<>();
-            caseDetails.put("citizen", ccCitizenListView.getSelectionModel().getSelectedItem());
-            caseDetails.put("guardian", ccGuardianTextField.getText());
-            caseDetails.put("executingMunicipality", ccExecutingMuniTextField.getText());
-            caseDetails.put("representation", ccRepresentationTextField.getText());
-            caseDetails.put("payingMunicipality", ccPayingMuniTextField.getText());
-            caseDetails.put("consentRelevant", String.valueOf(ccConsentRelevantCB.isSelected()));
-            caseDetails.put("consentGiven", String.valueOf(ccConsentGivenCB.isSelected()));
-            caseDetails.put("rightToRepresentation", String.valueOf(ccRightToRepCB.isSelected()));
-            caseDetails.put("informedOnElectronicInfo", String.valueOf(ccInformedECardCB.isSelected()));
-            caseDetails.put("agreementsAboutFurtherProcess", ccProcessAgreementsTextArea.getText());
-            caseDetails.put("specialCircumstances", ccSpecialCircumstancesTextArea.getText());
-            caseDetails.put("shortInfo", ccShortInfoTextField.getText());
+            caseDetails.put(Column.CITIZEN.getColumnName(), ccCitizenListView.getSelectionModel().getSelectedItem());
+            caseDetails.put(Column.GUARDIAN.getColumnName(), ccGuardianTextField.getText());
+            caseDetails.put(Column.EXECUTINGMUNICIPALITY.getColumnName(), ccExecutingMuniTextField.getText());
+            caseDetails.put(Column.REPRESENTATION.getColumnName(), ccRepresentationTextField.getText());
+            caseDetails.put(Column.PAYINGMUNICIPALITY.getColumnName(), ccPayingMuniTextField.getText());
+            caseDetails.put(Column.CONSENTRELEVANT.getColumnName(), String.valueOf(ccConsentRelevantCB.isSelected()));
+            caseDetails.put(Column.CONSENTGIVEN.getColumnName(), String.valueOf(ccConsentGivenCB.isSelected()));
+            caseDetails.put(Column.RIGHTTOREPRESENTATION.getColumnName(), String.valueOf(ccRightToRepCB.isSelected()));
+            caseDetails.put(Column.INFORMEDONELECTRONICINFO.getColumnName(), String.valueOf(ccInformedECardCB.isSelected()));
+            caseDetails.put(Column.AGREEMENTSONFURTHERPROCESS.getColumnName(), ccProcessAgreementsTextArea.getText());
+            caseDetails.put(Column.SPECIALCURCUMSTANCES.getColumnName(), ccSpecialCircumstancesTextArea.getText());
+            caseDetails.put(Column.SHORTINFO.getColumnName(), ccShortInfoTextField.getText());
             domainFacade.createCase(caseDetails);
             refresh();
             tooltip.setText("Sag oprettet!");

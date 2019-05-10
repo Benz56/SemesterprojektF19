@@ -11,10 +11,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
+import semesterprojektf19.aquaintance.Column;
 import semesterprojektf19.persistence.Persistence;
+import semesterprojektf19.persistence.PersistenceFacade;
+import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
 public class DomainFacadeImpl implements DomainFacade {
+
+    PersistenceFacade persistenceFacade = new PersistenceFacadeImpl();
 
     public DomainFacadeImpl() {
         Persistence.INSTANCE.toString(); //Initialize persistence i.e. create required files.
@@ -23,22 +29,13 @@ public class DomainFacadeImpl implements DomainFacade {
 
     @Override
     public void createCase(Map<String, String> caseDetails) {
-        Citizen citizen = CitizenManager.INSTANCE.getCitizen(caseDetails.get("citizen"));
-        Case c = new Case((Worker) UserContainer.getUser(), citizen, new Inquiry(caseDetails.get("shortInfo")));
-        c.setGuardianship(caseDetails.get("guardian"));
-        c.setExecutingMunicipality(caseDetails.get("executingMunicipality"));
-        c.setRepresentation(caseDetails.get("representation"));
-        c.setPayingMunicipality(caseDetails.get("payingMunicipality"));
-        c.setConsentRelevant(Boolean.valueOf(caseDetails.get("consentRelevant")));
-        c.setConsentObtained(Boolean.valueOf(caseDetails.get("consentGiven")));
-        c.setRightToRepresentation(Boolean.valueOf(caseDetails.get("rightToRepresentation")));
-        c.setInformedOnElectronicInfo(Boolean.valueOf(caseDetails.get("informedOnElectronicInfo")));
-        c.setAgreementsAboutFurtherProcess(caseDetails.get("agreementsAboutFurtherProcess"));
-        c.setSpecialCircumstances(caseDetails.get("specialCircumstances"));
+        Case c = new Case(caseDetails);
         ((Worker) UserContainer.getUser()).addCase(c);
-        UserContainer.getUser().saveToFile();
+        Citizen citizen = CitizenManager.INSTANCE.getCitizen(caseDetails.get(Column.CITIZEN.getColumnName()));
         citizen.addCase(c);
-        citizen.saveToFile();
+        UUID citizenUUID = citizen.getUuid();
+        UUID caseUUID = c.getUUID();
+        persistenceFacade.registerCase(caseDetails, caseUUID, citizenUUID, UserContainer.getUser().getUuid());
     }
 
     @Override
