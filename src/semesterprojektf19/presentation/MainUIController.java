@@ -16,6 +16,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,7 +26,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import semesterprojektf19.aquaintance.Column;
 import semesterprojektf19.domain.DomainFacade;
 import semesterprojektf19.domain.DomainFacadeImpl;
 
@@ -32,6 +34,7 @@ public class MainUIController implements Initializable {
     private final DomainFacade domainFacade = new DomainFacadeImpl();
     private final Map<String, String> userDetails;
     private final Map<JFXButton, AnchorPane> btnPaneMap = new HashMap<>();
+    private ObservableList<DiaryItem> diarynotesObservable;
     private JFXButton selectedBtn;
 
     //Global nodes:
@@ -85,20 +88,17 @@ public class MainUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        homeHelloLabel.setText(homeHelloLabel.getText() + userDetails.get(Column.FNAME.getColumnName()) + " " + userDetails.get(Column.LNAME.getColumnName()));
-        if(userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("socialworker")){
-            homePlaceLabel.setText(homePlaceLabel.getText() + userDetails.get(Column.INSTITUTION.getColumnName()));
-        }
+        homeHelloLabel.setText(homeHelloLabel.getText() + userDetails.get("firstname") + " " + userDetails.get("lastname"));
         selectedBtn = homeBtn;
         btnPaneMap.put(homeBtn, homePane);
         btnPaneMap.put(casesBtn, casesPane);
         btnPaneMap.put(diaryBtn, diaryPane);
-        if (userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("admin")) {
+        if (userDetails.get("role").equals("admin")) {
             btnPaneMap.put(adminBtn, adminPane);
         } else {
             ((HBox) adminBtn.getParent()).getChildren().remove(adminBtn);
         }
-        if (userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("caseworker") || userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("admin")) {
+        if (userDetails.get("role").equals("caseworker") || userDetails.get("role").equals("admin")) {
             btnPaneMap.put(casesCreateBtn, createCasePane);
         } else {
             ((HBox) casesCreateBtn.getParent()).getChildren().remove(casesCreateBtn);
@@ -117,18 +117,22 @@ public class MainUIController implements Initializable {
         adminCreateInstitutionBtn.setOnAction(event -> SimpleStageBuilder.create("Opret Bosted", "RegisterInstitutionUIDocument.fxml").setResizable(false).setCloseOnUnfocused(true).open());
 
         diaryCreateNoteBtn.setOnAction(event -> SimpleStageBuilder.create("Opret Notat", "CreateNoteUIDocument.fxml").setResizable(false)
-                .setCloseOnUnfocused(true).setControllerFactory(new CreateNoteUIController(String.valueOf(diaryCaseCb.getSelectionModel().getSelectedIndex()), clientList.getSelectionModel().getSelectedItem())).open());
+                .setCloseOnUnfocused(true).setControllerFactory(new CreateNoteUIController(diarynotesObservable, String.valueOf(diaryCaseCb.getSelectionModel().getSelectedIndex()), clientList.getSelectionModel().getSelectedItem())).open());
 
         ccSearchCitizenTextField.textProperty().addListener(listener -> refresh());
 
         setClientListener();
 
-        diarynotesListview.setCellFactory(new DiaryListViewCellFactory());
+        diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
         diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             diarynotesListview.getItems().clear();
+            diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
             List<List<Map<String, String>>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
             diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
         });
+        diarynotesObservable = FXCollections.observableList(diarynotesListview.getItems());
+        diarynotesObservable.addListener((ListChangeListener.Change<? extends DiaryItem> event) -> diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this)));
+
         refresh();
     }
 
@@ -192,7 +196,7 @@ public class MainUIController implements Initializable {
     }
 
     private void refresh() {
-        if (!userDetails.get(Column.ROLE.getColumnName()).equals("admin")) {
+        if (!userDetails.get("role").equals("admin")) {
             String selectedItem = clientList.getSelectionModel().getSelectedItem();
             clientList.getItems().setAll(domainFacade.getUserCitizens());
             if (clientList.getItems().contains(selectedItem)) {
@@ -208,12 +212,16 @@ public class MainUIController implements Initializable {
         SimpleStageBuilder.create("EGBoosted", "LoginUIDocument.fxml").closeOpenWindow(homeBtn).setResizable(false).open();
     }
 
+    public DomainFacade getDomainFacade() {
+        return domainFacade;
+    }
+
     public JFXComboBox<String> getDiaryCaseCb() {
         return diaryCaseCb;
     }
 
     public JFXListView<String> getClientList() {
         return clientList;
-    }   
-    
+    }
+
 }

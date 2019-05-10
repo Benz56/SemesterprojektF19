@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class DiaryNote implements Serializable {
 
     private static final long serialVersionUID = 2266792567973358800L;
 
+    private final UUID uuid;
     private String titel, note, dateOfObservation;
     private Date date;
     private Person creator;
@@ -17,7 +19,8 @@ public class DiaryNote implements Serializable {
 
     // TODO Implementer date picker i javaFX. skal holde dato for observation som ikke nødvendigvis er den samme som oprettelses dato 
     // TODO implementere 
-    public DiaryNote(Person creator, String note, String titel, String dateOfObservation) {
+    public DiaryNote(UUID uuid, Person creator, String note, String titel, String dateOfObservation) {
+        this.uuid = uuid;
         this.creator = creator;
         this.note = note;
         this.titel = titel;
@@ -25,7 +28,10 @@ public class DiaryNote implements Serializable {
         this.date = new Date();
         this.topics = new ArrayList<>();
         this.noteVersions = new ArrayList<>();
-        
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 
     public String getNote() {
@@ -104,8 +110,6 @@ public class DiaryNote implements Serializable {
                 + " Sidst redigeret: " + this.date
                 + " af: " + creator.getFirstName() + " " + creator.getLastName() + "\n\n\n\n";
     }
-
-
 
     public List<DiaryNote> getVersions() {
         return noteVersions;
