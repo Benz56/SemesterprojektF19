@@ -5,7 +5,7 @@
  */
 package semesterprojektf19.domain;
 
-import semesterprojektf19.aquaintance.UserContainer;
+import semesterprojektf19.acquaintance.UserContainer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import semesterprojektf19.aquaintance.Column;
+import semesterprojektf19.acquaintance.Column;
 import semesterprojektf19.persistence.Persistence;
 import semesterprojektf19.persistence.PersistenceFacade;
 import semesterprojektf19.persistence.PersistenceFacadeImpl;

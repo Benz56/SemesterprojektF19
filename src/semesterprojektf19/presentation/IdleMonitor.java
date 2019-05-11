@@ -14,18 +14,17 @@ import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.util.Duration;
 
-
 public class IdleMonitor {
 
-    private final Timeline idleTimeline ;
+    private final Timeline idleTimeline;
 
-    private final EventHandler<Event> userEventHandler ;
+    private final EventHandler<Event> userEventHandler;
 
     public IdleMonitor(Duration idleTime, Runnable notifier, boolean startMonitoring) {
         idleTimeline = new Timeline(new KeyFrame(idleTime, e -> notifier.run()));
         idleTimeline.setCycleCount(Animation.INDEFINITE);
 
-        userEventHandler = e -> notIdle() ; 
+        userEventHandler = e -> notIdle();
 
         if (startMonitoring) {
             startMonitoring();

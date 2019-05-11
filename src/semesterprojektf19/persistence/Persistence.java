@@ -58,7 +58,7 @@ public enum Persistence {
         }
         return null;
     }
-    
+
     public boolean authenticateDB(String username, String password) {
         try {
             Statement st = conn.getDb().createStatement();

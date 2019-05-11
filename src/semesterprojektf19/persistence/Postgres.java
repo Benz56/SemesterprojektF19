@@ -33,7 +33,7 @@ public class Postgres {
         return db;
     }
 
-    public void closeDb(){
+    public void closeDb() {
         try {
             db.close();
         } catch (SQLException ex) {

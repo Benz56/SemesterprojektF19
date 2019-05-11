@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import semesterprojektf19.aquaintance.Column;
+import semesterprojektf19.acquaintance.Column;
 
 public class Person implements Comparable<Person>, Serializable {
 

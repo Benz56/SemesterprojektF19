@@ -3,7 +3,7 @@ package semesterprojektf19.domain;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import semesterprojektf19.aquaintance.Column;
+import semesterprojektf19.acquaintance.Column;
 import semesterprojektf19.domain.accesscontrol.Role;
 import semesterprojektf19.persistence.Persistence;
 

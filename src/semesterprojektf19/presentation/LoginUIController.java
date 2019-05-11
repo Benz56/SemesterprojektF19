@@ -28,7 +28,7 @@ public class LoginUIController implements Initializable {
      * Determines whether the logon menu is selected or the register menu.
      */
     private static final int IDLE_DURATION = 30;
-    
+
     private IdleMonitor mainIdleMonitor;
 
     private boolean isLoginMenu = true;

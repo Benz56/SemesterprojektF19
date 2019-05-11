@@ -18,6 +18,6 @@ public interface RegistrationFacade {
     boolean registerEmployee(String username, String password, String firstName, String lastName, String role, String institution);
 
     void registerInstitution(String name, String adress);
-    
+
     List<String> getInstitutionNames();
 }

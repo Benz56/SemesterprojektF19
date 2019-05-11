@@ -3,8 +3,8 @@ package semesterprojektf19.domain;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.UUID;
-import semesterprojektf19.aquaintance.Column;
-import semesterprojektf19.aquaintance.UserContainer;
+import semesterprojektf19.acquaintance.Column;
+import semesterprojektf19.acquaintance.UserContainer;
 
 public class Case implements Serializable {
 
@@ -27,11 +27,11 @@ public class Case implements Serializable {
         this.caseWorker = caseWorker;
     }
 
-    public Case(Map<String, String> caseDetails){
-        this((Worker) UserContainer.getUser(), 
+    public Case(Map<String, String> caseDetails) {
+        this((Worker) UserContainer.getUser(),
                 CitizenManager.INSTANCE.getCitizen(caseDetails.get(Column.CITIZEN.getColumnName())),
                 new Inquiry(caseDetails.get(Column.SHORTINFO.getColumnName()))
-                );
+        );
         setGuardianship(caseDetails.get(Column.GUARDIAN.getColumnName()));
         setExecutingMunicipality(caseDetails.get(Column.EXECUTINGMUNICIPALITY.getColumnName()));
         setRepresentation(caseDetails.get(Column.REPRESENTATION.getColumnName()));
@@ -43,7 +43,7 @@ public class Case implements Serializable {
         setAgreementsAboutFurtherProcess(caseDetails.get(Column.AGREEMENTSONFURTHERPROCESS.getColumnName()));
         setSpecialCircumstances(caseDetails.get(Column.SPECIALCURCUMSTANCES.getColumnName()));
     }
-    
+
     public void startElucidation(String background) {
         elucidation = new Elucidation(background);
     }
@@ -151,7 +151,7 @@ public class Case implements Serializable {
     public Citizen getCitizen() {
         return citizen;
     }
-    
+
     public UUID getUUID() {
         return uuid;
     }
@@ -163,7 +163,7 @@ public class Case implements Serializable {
     public Institution getInstitution() {
         return institution;
     }
-    
+
     public Diary getDiary() {
         return diary;
     }

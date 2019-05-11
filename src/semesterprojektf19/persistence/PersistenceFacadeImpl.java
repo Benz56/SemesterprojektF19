@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import semesterprojektf19.aquaintance.Column;
+import semesterprojektf19.acquaintance.Column;
 
 /**
  *
@@ -52,7 +52,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
         } catch (SQLException ex) {
             Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return null;
     }
 
