@@ -13,31 +13,47 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Postgres {
+public final class Postgres {
 
     //url syntax for database connection: (driver:sqltype://server:port/)
-    private final static String URL = "jdbc:postgresql://egboosted-beehive-do-user-6026035-0.db.ondigitalocean.com:25060/defaultdb?sslmode=require";
+    private final static String URL = "jdbc:postgresql://egboosted-beehive-do-user-6026035-0.db.ondigitalocean.com:25060/defaultdb?autoReconnect=true&sslmode=require";
     private final static String USERNAME = "doadmin";
     private final static String PASSWORD = "ij7o5cn750qeaz46";
-    private Connection db;
+    private Connection connection;
 
     public Postgres() {
+        openConnection();
+    }
+
+    public void openConnection() {
         try {
-            this.db = DriverManager.getConnection(Postgres.URL, Postgres.USERNAME, Postgres.PASSWORD);
+            if (connection == null || connection.isClosed()) {
+                this.connection = DriverManager.getConnection(Postgres.URL, Postgres.USERNAME, Postgres.PASSWORD);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Postgres.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public Connection getDb() {
-        return db;
+    public Connection getConnection() {
+        try {
+            connection.createStatement().executeQuery("SELECT 1");
+        } catch (SQLRecoverableException ignored) {
+            //Connection automatically reconnects. Hopefully.
+        } catch (SQLException ex) {
+            Logger.getLogger(Postgres.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        openConnection(); //Reopens if closed.
+        return connection;
     }
 
     public void closeDb() {
-        try {
-            db.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Postgres.class.getName()).log(Level.SEVERE, null, ex);
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Postgres.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

@@ -8,40 +8,34 @@ import semesterprojektf19.acquaintance.UserContainer;
 
 public class Case implements Serializable {
 
-    private final Worker caseWorker;
+    private final UUID uuid;
+    private final UUID caseWorker;
     private final Citizen citizen;
+    private final Diary diary;
     private String guardianship, representation, agreementsAboutFurtherProcess, specialCircumstances, executingMunicipality, payingMunicipality;
     private boolean rightToRepresentation, informedOnElectronicInfo, consentRelevant, consentObtained;
     private Inquiry inquiry;
     private Elucidation elucidation;
     private Institution institution;
-    private UUID uuid;
-    private Diary diary;
     private static final long serialVersionUID = 5173068602800697696L;
 
-    public Case(Worker caseWorker, Citizen citizen, Inquiry inquiry) {
+    public Case(Map<String, String> caseDetails, Citizen citizen) {
+        this.caseWorker = caseDetails.containsKey(Column.CASEWORKER.getColumnName()) ? UUID.fromString(caseDetails.get(Column.CASEWORKER.getColumnName())) : UserContainer.getUser().getUuid();
         this.citizen = citizen;
-        this.inquiry = inquiry;
-        this.uuid = UUID.randomUUID();
+        this.inquiry = new Inquiry(caseDetails.get(Column.SHORTINFO.getColumnName()));
+        this.uuid = caseDetails.containsKey(Column.UUID.getColumnName()) ? UUID.fromString(caseDetails.get(Column.UUID.getColumnName())) : UUID.randomUUID();
         this.diary = new Diary(uuid); // Kan fjernes hvis dagbogen skal oprettes et andet sted, men det skal bare tilhøre sagen.
-        this.caseWorker = caseWorker;
-    }
-
-    public Case(Map<String, String> caseDetails) {
-        this((Worker) UserContainer.getUser(),
-                CitizenManager.INSTANCE.getCitizen(caseDetails.get(Column.CITIZEN.getColumnName())),
-                new Inquiry(caseDetails.get(Column.SHORTINFO.getColumnName()))
-        );
-        setGuardianship(caseDetails.get(Column.GUARDIAN.getColumnName()));
-        setExecutingMunicipality(caseDetails.get(Column.EXECUTINGMUNICIPALITY.getColumnName()));
-        setRepresentation(caseDetails.get(Column.REPRESENTATION.getColumnName()));
-        setPayingMunicipality(caseDetails.get(Column.PAYINGMUNICIPALITY.getColumnName()));
-        setConsentRelevant(Boolean.valueOf(caseDetails.get(Column.CONSENTRELEVANT.getColumnName())));
-        setConsentObtained(Boolean.valueOf(caseDetails.get(Column.CONSENTGIVEN.getColumnName())));
-        setRightToRepresentation(Boolean.valueOf(caseDetails.get(Column.RIGHTTOREPRESENTATION.getColumnName())));
-        setInformedOnElectronicInfo(Boolean.valueOf(caseDetails.get(Column.INFORMEDONELECTRONICINFO.getColumnName())));
-        setAgreementsAboutFurtherProcess(caseDetails.get(Column.AGREEMENTSONFURTHERPROCESS.getColumnName()));
-        setSpecialCircumstances(caseDetails.get(Column.SPECIALCURCUMSTANCES.getColumnName()));
+        this.guardianship = caseDetails.get(Column.GUARDIAN.getColumnName());
+        this.executingMunicipality = caseDetails.get(Column.EXECUTINGMUNICIPALITY.getColumnName());
+        this.representation = caseDetails.get(Column.REPRESENTATION.getColumnName());
+        this.payingMunicipality = caseDetails.get(Column.PAYINGMUNICIPALITY.getColumnName());
+        this.consentRelevant = Boolean.valueOf(caseDetails.get(Column.CONSENTRELEVANT.getColumnName()));
+        this.consentObtained = Boolean.valueOf(caseDetails.get(Column.CONSENTGIVEN.getColumnName()));
+        this.rightToRepresentation = Boolean.valueOf(caseDetails.get(Column.RIGHTTOREPRESENTATION.getColumnName()));
+        this.informedOnElectronicInfo = Boolean.valueOf(caseDetails.get(Column.INFORMEDONELECTRONICINFO.getColumnName()));
+        this.agreementsAboutFurtherProcess = caseDetails.get(Column.AGREEMENTSONFURTHERPROCESS.getColumnName());
+        this.specialCircumstances = caseDetails.get(Column.SPECIALCURCUMSTANCES.getColumnName());
+        this.institution = new Institution(caseDetails.get(Column.INSTITUTION.getColumnName()), caseDetails.get(Column.INSTITUTIONADDR.getColumnName()));
     }
 
     public void startElucidation(String background) {
@@ -144,7 +138,7 @@ public class Case implements Serializable {
         this.elucidation = elucidation;
     }
 
-    public Worker getCaseWorker() {
+    public UUID getCaseWorker() {
         return caseWorker;
     }
 

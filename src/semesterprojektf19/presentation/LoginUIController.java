@@ -7,9 +7,13 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -35,13 +39,11 @@ public class LoginUIController implements Initializable {
     @FXML
     private JFXButton loginMenuBtn, registerMenuBtn, loginBtn, forgotPasswordBtn;
     @FXML
-    private AnchorPane loginPane;
+    private AnchorPane loginPane, registerPane;
     @FXML
     private JFXTextField usernameTextField;
     @FXML
     private JFXPasswordField loginPasswordField;
-    @FXML
-    private AnchorPane registerPane;
     @FXML
     private FontAwesomeIconView usernameIcon, passwordIcon;
 
@@ -61,6 +63,11 @@ public class LoginUIController implements Initializable {
                 usernameTextField.requestFocus();
                 usernameTextField.setText("");
                 loginPasswordField.setText("");
+            }
+        });
+        loginPane.setOnKeyPressed((KeyEvent event) -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                loginBtn.fire();
             }
         });
     }

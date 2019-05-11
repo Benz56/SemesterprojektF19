@@ -20,7 +20,7 @@ import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
 public class DomainFacadeImpl implements DomainFacade {
 
-    PersistenceFacade persistenceFacade = new PersistenceFacadeImpl();
+    private final PersistenceFacade persistenceFacade = new PersistenceFacadeImpl();
 
     public DomainFacadeImpl() {
         Persistence.INSTANCE.toString(); //Initialize persistence i.e. create required files.
@@ -28,9 +28,9 @@ public class DomainFacadeImpl implements DomainFacade {
 
     @Override
     public void createCase(Map<String, String> caseDetails) {
-        Case c = new Case(caseDetails);
-        ((Worker) UserContainer.getUser()).addCase(c);
         Citizen citizen = CitizenManager.INSTANCE.getCitizen(caseDetails.get(Column.CITIZEN.getColumnName()));
+        Case c = new Case(caseDetails, citizen);
+        ((Worker) UserContainer.getUser()).addCase(c);
         citizen.addCase(c);
         UUID citizenUUID = citizen.getUuid();
         UUID caseUUID = c.getUUID();
@@ -43,10 +43,10 @@ public class DomainFacadeImpl implements DomainFacade {
     }
 
     @Override
-    public List<String> getUserCitizens() {
+    public List<String> getInstitutionCitizens() {
         Person user = UserContainer.getUser();
         if (user != null) {
-            return ((Worker) UserContainer.getUser()).getCitizens().stream().map(Citizen::toString).collect(Collectors.toList());
+            return CitizenManager.INSTANCE.getCitizens().values().stream().filter(citizen -> citizen.getCases().stream().anyMatch(c -> c.getInstitution().equals(user.getInstitution()))).map(Citizen::toString).collect(Collectors.toList());
         } else {
             return Collections.emptyList();
         }

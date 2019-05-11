@@ -20,7 +20,7 @@ public interface DomainFacade {
 
     public void refresh();
 
-    public List<String> getUserCitizens();
+    public List<String> getInstitutionCitizens();
 
     public Map<String, String> getCitizenDetails(String citizen);
 

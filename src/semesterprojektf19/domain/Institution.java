@@ -7,14 +7,14 @@ import java.util.UUID;
 
 public class Institution implements Serializable {
 
-    private String name;
-    private String adress;
-    private Map<UUID, Worker> workers;
+    private final Map<UUID, Worker> workers = new HashMap<>();
+
+    private final String name;
+    private final String address;
 
     public Institution(String name, String adress) {
         this.name = name;
-        this.adress = adress;
-        this.workers = new HashMap<>();
+        this.address = adress;
     }
 
     public String getName() {
@@ -25,4 +25,24 @@ public class Institution implements Serializable {
         return workers;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        return this.name.equals(((Institution) obj).name);
+    }
+    
 }

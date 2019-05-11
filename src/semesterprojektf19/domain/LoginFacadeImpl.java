@@ -30,7 +30,7 @@ public class LoginFacadeImpl implements LoginFacade {
                         details.get(Column.LNAME.getColumnName()),
                         Role.valueOf(details.get("role").toUpperCase()),
                         Role.valueOf(details.get("role").toUpperCase()) == Role.SOCIALWORKER
-                        ? new Institution(details.get("instituion"), (details.get("instituionaddr"))) : null
+                        ? new Institution(details.get("institution"), (details.get("institutionaddr"))) : null
                 ));
             }
         }

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import semesterprojektf19.acquaintance.Column;
 import semesterprojektf19.persistence.PersistenceFacade;
 import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
@@ -15,8 +18,11 @@ public enum CitizenManager {
 
     private CitizenManager() {
         citizensMap = new TreeMap<>();
+        List<Map<String, String>> cases = persistenceFacade.getCases();
         for (Map<String, String> citizenMap : persistenceFacade.getCitizens()) {
-            addCitizen(new Citizen(citizenMap));
+            Citizen citizen = new Citizen(citizenMap);
+            addCitizen(citizen);
+            citizen.setCases(cases.stream().filter(details -> details.get(Column.CITIZEN.getColumnName()).equals(citizen.getUuid().toString())).map(details -> new Case(details, citizen)).collect(Collectors.toList()));
         }
     }
 
@@ -31,6 +37,10 @@ public enum CitizenManager {
 
     public Citizen getCitizen(String stringValue) {
         return citizensMap.values().stream().filter(citizen -> citizen.toString().equalsIgnoreCase(stringValue)).findFirst().orElse(null);
+    }
+
+    public Citizen getCitizen(UUID uuid) {
+        return citizensMap.values().stream().filter(citizen -> citizen.getUuid().equals(uuid)).findFirst().orElse(null);
     }
 
     /**

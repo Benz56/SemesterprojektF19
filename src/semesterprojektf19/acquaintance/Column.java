@@ -13,7 +13,7 @@ public enum Column {
     USERNAME("username"), PASSWORD("password"), UUID("uuid"), FNAME("fName"),
     LNAME("lName"), BDAY("bDay"), CNUMBER("cNumber"), ADDR("addr"), PHONE("phone"),
     ROLE("role"), INSTITUTION("institution"), INSTITUTIONADDR("institutionAddr"),
-    CITIZEN("citizenUuid"), CASEWORKER("caseworkerUuid"), SHORTINFO("shortInfo"),
+    CITIZEN("citizenuuid"), CASEWORKER("caseworkeruuid"), SHORTINFO("shortInfo"),
     GUARDIAN("guardianship"), EXECUTINGMUNICIPALITY("executingMunicipality"),
     PAYINGMUNICIPALITY("payingMunicipality"), REPRESENTATION("representation"),
     CONSENTRELEVANT("consentRelevant"), CONSENTGIVEN("consentObtained"),

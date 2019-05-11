@@ -207,12 +207,14 @@ public class MainUIController implements Initializable {
     private void refresh() {
         if (!userDetails.get(Column.ROLE.getColumnName()).equals("admin")) {
             String selectedItem = clientList.getSelectionModel().getSelectedItem();
-            clientList.getItems().setAll(domainFacade.getUserCitizens());
+            List<String> institutionCitizens = domainFacade.getInstitutionCitizens();
+            System.out.println("---" + institutionCitizens);
+            clientList.getItems().setAll(institutionCitizens);
             if (clientList.getItems().contains(selectedItem)) {
                 clientList.getSelectionModel().select(selectedItem);
             }
         }
-        homeCitizenCountLabel.setText(homeCitizenCountLabel.getText() + domainFacade.getUserCitizens().size());
+        homeCitizenCountLabel.setText(homeCitizenCountLabel.getText() + domainFacade.getInstitutionCitizens().size());
         ccCitizenListView.getItems().setAll(domainFacade.matchCitizens(ccSearchCitizenTextField.getText()));
     }
 
