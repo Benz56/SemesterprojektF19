@@ -61,11 +61,15 @@ public class DomainFacadeImpl implements DomainFacade {
     public Map<String, String> getCitizenDetails(String citizenString) {
         Map<String, String> details = new HashMap<>();
         Citizen citizen = CitizenManager.INSTANCE.getCitizen(citizenString);
+        details.put("firstName", citizen.getFirstName());
+        details.put("lastName", citizen.getLastName());
+        details.put("phoneNumber", citizen.getPhoneNumber());
         details.put("name", citizen.getFirstName() + " " + citizen.getLastName());
         details.put("cpr", citizen.getCpr());
         details.put("birthday", citizen.getBirthday());
         details.put("address", citizen.getAddress());
         details.put("cases", citizen.getCases().stream().map(c -> c.getInquiry().getShortInfo()).collect(Collectors.joining("\n")));
+        details.put("uuid", citizen.getUuid().toString());
         return details;
     }
 

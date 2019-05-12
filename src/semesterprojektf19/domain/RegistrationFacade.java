@@ -20,4 +20,6 @@ public interface RegistrationFacade {
     void registerInstitution(String name, String adress);
 
     List<String> getInstitutionNames();
+
+    void editCitizen(String firstName, String lastName, String address, String phoneNumber, String uuid);
 }

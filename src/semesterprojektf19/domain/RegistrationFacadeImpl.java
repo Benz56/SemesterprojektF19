@@ -17,15 +17,15 @@ import semesterprojektf19.persistence.PersistenceFacadeImpl;
  * @author Benjamin Staugaard | Benz56
  */
 public class RegistrationFacadeImpl implements RegistrationFacade {
-
+    
     PersistenceFacade persistenceFacade = new PersistenceFacadeImpl();
-
+    
     @Override
     public void registerCitizen(String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber) {
         Citizen citizen = new Citizen(UUID.randomUUID(), firstName, lastName, birthday, controlNumber, address, phoneNumber);
         persistenceFacade.registerCitizen(citizen.getMap());
     }
-
+    
     @Override
     public boolean registerEmployee(String username, String password, String firstName, String lastName, String role, String institution) {
         Person person;
@@ -45,7 +45,7 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
         }
         return persistenceFacade.registerEmployee(username, password, person.getUuid(), person.getMap());
     }
-
+    
     private Institution getInstitution(String institution) {
         Institution inst = null;
         if (institution != null) {
@@ -53,15 +53,27 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
         }
         return inst;
     }
-
+    
     @Override
     public void registerInstitution(String name, String adress) {
         Institution institution = new Institution(name, adress);
 //        Persistence.INSTANCE.writeObjectToFile("institutions/" + institution.getName() + ".ser", institution, false);
     }
-
+    
     @Override
     public List<String> getInstitutionNames() {
         return new ArrayList<>(persistenceFacade.getInstitutions().keySet());
     }
+    
+    @Override
+    public void editCitizen(String firstName, String lastName, String address, String phoneNumber, String uuid) {
+        Citizen citizen = CitizenManager.INSTANCE.getCitizen(UUID.fromString(uuid));
+        citizen.setFirstName(firstName);
+        citizen.setLastName(lastName);
+        citizen.setAddress(address);
+        citizen.setPhoneNumber(phoneNumber);
+        persistenceFacade.editCitizen(citizen.getMap());
+        
+    }
+    
 }

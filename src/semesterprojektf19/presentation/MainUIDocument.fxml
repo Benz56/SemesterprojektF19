@@ -256,6 +256,7 @@
                   </Label>
                   <JFXTextField fx:id="ccShortInfoTextField" focusColor="#43a047" layoutX="250.0" layoutY="390.0" prefHeight="25.0" prefWidth="335.0" unFocusColor="#bfbfbf" />
                   <JFXComboBox fx:id="ccExecutingMuniCB" focusColor="#43a047" layoutX="430.0" layoutY="107.0" prefHeight="31.0" prefWidth="148.0" promptText="Institution" unFocusColor="#bfbfbf" />
+                  <JFXButton fx:id="ccEditCitizenBtn" layoutX="235.0" layoutY="649.0" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Rediger Borger" textFill="#43a047" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="adminPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
