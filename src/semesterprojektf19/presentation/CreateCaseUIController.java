@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -36,7 +37,7 @@ import semesterprojektf19.domain.DomainFacadeImpl;
 public class CreateCaseUIController implements Initializable {
 
     @FXML
-    private AnchorPane createCasePane1;
+    private AnchorPane createCasePane1, createCasePane2;
     @FXML
     private JFXTextField shortInfo;
     @FXML
@@ -58,9 +59,30 @@ public class CreateCaseUIController implements Initializable {
 
     private DomainFacade domainFacade = new DomainFacadeImpl();
     private String citizenInfo;
+    @FXML
+    private JFXCheckBox inquiryOriginCitizen, inquiryOriginRelative, inquiryOriginDoctor;
+    @FXML
+    private JFXCheckBox citizenAgreeYes, citizenAgreeNo;
+    @FXML
+    private JFXCheckBox guardianship, reprensentation;
+    @FXML
+    private JFXCheckBox electronicAgree, electronicDisagree;
+    @FXML
+    private JFXTextArea furtherProcess;
+    @FXML
+    private JFXCheckBox rightToRepYes, rightToRepNo;
+    @FXML
+    private JFXTextField txtGuardian, txtRep;
+
+    private int currentPageNumber;
+    private final Map<Integer, AnchorPane> anchorPanes;
+    @FXML
+    private Label txtCitizen;
 
     public CreateCaseUIController(String citizenInfo) {
+        this.anchorPanes = new TreeMap<>();
         this.citizenInfo = citizenInfo;
+        System.out.println(this.citizenInfo);
     }
 
     /**
@@ -68,41 +90,64 @@ public class CreateCaseUIController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        currentPageNumber = 1;
+        anchorPanes.put(1, createCasePane1);
+        anchorPanes.put(2, createCasePane2);
+        txtCitizen.setText("Borger: " + citizenInfo);
+        lblPageNumber.setText("Side " + currentPageNumber + "/" + anchorPanes.size());
     }
 
     @FXML
     private void next(ActionEvent event) {
+        currentPageNumber++;
+        anchorPanes.values().forEach(pane -> pane.setVisible(false));
+        if (anchorPanes.containsKey(currentPageNumber)) {
+            anchorPanes.get(currentPageNumber).setVisible(true);
+            if (currentPageNumber > 1) {
+                back.setVisible(true);
+            }
+        }
+        if (currentPageNumber == anchorPanes.size()) {
+            next.setVisible(false);
+            createCase.setVisible(true);
+        }
+        lblPageNumber.setText("Side " + currentPageNumber + "/" + anchorPanes.size());
     }
 
     @FXML
     private void back(ActionEvent event) {
+        currentPageNumber--;
+        anchorPanes.values().forEach(pane -> pane.setVisible(false));
+        anchorPanes.get(currentPageNumber).setVisible(true);
+        if (currentPageNumber == 1) {
+            back.setVisible(false);
+        }
+        if (currentPageNumber < anchorPanes.size()) {
+            next.setVisible(true);
+            createCase.setVisible(false);
+        }
+        lblPageNumber.setText("Side " + currentPageNumber + "/" + anchorPanes.size());
     }
 
     @FXML
     private void onCreateCase(ActionEvent event) {
         Tooltip tooltip = new Tooltip();
-        if (!shortInfo.getText().isEmpty()
-//                && ccCitizenListView.getSelectionModel().getSelectedItem() != null
-//                && ccExecutingMuniCB.getSelectionModel().getSelectedItem() != null
-//                && !ccRepresentationTextField.getText().isEmpty()
-//                && !ccPayingMuniTextField.getText().isEmpty()
-//                && !ccShortInfoTextField.getText().isEmpty()
-                ) {
+        if (!shortInfo.getText().isEmpty()) {
             Map<String, String> caseDetails = new HashMap<>();
+            caseDetails.put(Column.SHORTINFO.getColumnName(), shortInfo.getText());
+            caseDetails.put(Column.BACKGROUND.getColumnName(), background.getText());
             caseDetails.put(Column.CITIZEN.getColumnName(), citizenInfo);
-//            caseDetails.put(Column.GUARDIAN.getColumnName(), ccGuardianTextField.getText());
-//            caseDetails.put(Column.EXECUTINGMUNICIPALITY.getColumnName(), ccExecutingMuniCB.getSelectionModel().getSelectedItem());
-//            caseDetails.put(Column.REPRESENTATION.getColumnName(), ccRepresentationTextField.getText());
+            caseDetails.put(Column.GUARDIAN.getColumnName(), txtGuardian.getText());
+            caseDetails.put(Column.REPRESENTATION.getColumnName(), txtRep.getText());
+            caseDetails.put(Column.RIGHTTOREPRESENTATION.getColumnName(), String.valueOf(rightToRepYes.isSelected()));
+            caseDetails.put(Column.INFORMEDONELECTRONICINFO.getColumnName(), String.valueOf(electronicAgree.isSelected()));
+            caseDetails.put(Column.AGREEMENTSONFURTHERPROCESS.getColumnName(), furtherProcess.getText());
+//            caseDetails.put(Column.SPECIALCURCUMSTANCES.getColumnName(), ccSpecialCircumstancesTextArea.getText());
 //            caseDetails.put(Column.PAYINGMUNICIPALITY.getColumnName(), ccPayingMuniTextField.getText());
 //            caseDetails.put(Column.CONSENTRELEVANT.getColumnName(), String.valueOf(ccConsentRelevantCB.isSelected()));
 //            caseDetails.put(Column.CONSENTGIVEN.getColumnName(), String.valueOf(ccConsentGivenCB.isSelected()));
-//            caseDetails.put(Column.RIGHTTOREPRESENTATION.getColumnName(), String.valueOf(ccRightToRepCB.isSelected()));
-//            caseDetails.put(Column.INFORMEDONELECTRONICINFO.getColumnName(), String.valueOf(ccInformedECardCB.isSelected()));
-//            caseDetails.put(Column.AGREEMENTSONFURTHERPROCESS.getColumnName(), ccProcessAgreementsTextArea.getText());
-//            caseDetails.put(Column.SPECIALCURCUMSTANCES.getColumnName(), ccSpecialCircumstancesTextArea.getText());
-            caseDetails.put(Column.SHORTINFO.getColumnName(), shortInfo.getText());
-            caseDetails.put(Column.BACKGROUND.getColumnName(),background.getText());
+//            caseDetails.put(Column.EXECUTINGMUNICIPALITY.getColumnName(), ccExecutingMuniCB.getSelectionModel().getSelectedItem());
+
             domainFacade.createCase(caseDetails);
             tooltip.setText("Sag oprettet!");
         } else {
