@@ -97,7 +97,7 @@ public class RegisterEmployeeUIController implements Initializable {
         } else if (roleComboBox.getSelectionModel().getSelectedItem() == null) {
             statusTextField.setText("Rolle ikke valgt!");
             return false;
-        } else if(roleComboBox.getSelectionModel().getSelectedItem().toUpperCase().equals("SOCIALWORKER")){
+        } else if (roleComboBox.getSelectionModel().getSelectedItem().toUpperCase().equals("SOCIALWORKER")) {
             institutionComboBox.setDisable(false);
             if (institutionComboBox.getSelectionModel().getSelectedItem() == null) {
                 statusTextField.setText("Institution ikke valgt!");

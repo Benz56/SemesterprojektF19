@@ -6,17 +6,16 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class Worker extends Person {
-    
-    //UUID + institution
 
+    //UUID + institution
     Worker(UUID uuid, String firstName, String lastName, Role role, Institution institution) {
         super(uuid, firstName, lastName, role, institution);
     }
-    
+
     Worker(UUID uuid, String firstName, String lastName, Role role) {
         super(uuid, firstName, lastName, role);
     }
-    
+
     public Case addCase(Case c) {
         getCases().add(c);
         return c;

@@ -5,7 +5,7 @@
  */
 package semesterprojektf19.domain;
 
-import semesterprojektf19.aquaintance.UserContainer;
+import semesterprojektf19.acquaintance.UserContainer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,14 +13,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import semesterprojektf19.aquaintance.Column;
+import semesterprojektf19.acquaintance.Column;
 import semesterprojektf19.persistence.Persistence;
 import semesterprojektf19.persistence.PersistenceFacade;
 import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
 public class DomainFacadeImpl implements DomainFacade {
 
-    PersistenceFacade persistenceFacade = new PersistenceFacadeImpl();
+    private final PersistenceFacade persistenceFacade = new PersistenceFacadeImpl();
 
     public DomainFacadeImpl() {
         Persistence.INSTANCE.toString(); //Initialize persistence i.e. create required files.
@@ -28,9 +28,9 @@ public class DomainFacadeImpl implements DomainFacade {
 
     @Override
     public void createCase(Map<String, String> caseDetails) {
-        Case c = new Case(caseDetails);
-        ((Worker) UserContainer.getUser()).addCase(c);
         Citizen citizen = CitizenManager.INSTANCE.getCitizen(caseDetails.get(Column.CITIZEN.getColumnName()));
+        Case c = new Case(caseDetails, citizen);
+        ((Worker) UserContainer.getUser()).addCase(c);
         citizen.addCase(c);
         UUID citizenUUID = citizen.getUuid();
         UUID caseUUID = c.getUUID();
@@ -43,10 +43,10 @@ public class DomainFacadeImpl implements DomainFacade {
     }
 
     @Override
-    public List<String> getUserCitizens() {
+    public List<String> getInstitutionCitizens() {
         Person user = UserContainer.getUser();
         if (user != null) {
-            return ((Worker) UserContainer.getUser()).getCitizens().stream().map(Citizen::toString).collect(Collectors.toList());
+            return CitizenManager.INSTANCE.getCitizens().values().stream().filter(citizen -> citizen.getCases().stream().anyMatch(c -> c.getInstitution().equals(user.getInstitution()))).map(Citizen::toString).collect(Collectors.toList());
         } else {
             return Collections.emptyList();
         }

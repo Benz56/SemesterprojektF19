@@ -1,4 +1,3 @@
-
 package semesterprojektf19;
 
 import javafx.application.Application;

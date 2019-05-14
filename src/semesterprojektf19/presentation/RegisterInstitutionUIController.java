@@ -23,7 +23,7 @@ import semesterprojektf19.domain.RegistrationFacadeImpl;
 public class RegisterInstitutionUIController implements Initializable {
 
     private final RegistrationFacade registrationFacade = new RegistrationFacadeImpl();
-    
+
     @FXML
     private JFXTextField addressTextField;
     @FXML

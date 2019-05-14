@@ -32,10 +32,10 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
         Role r = Role.valueOf(role);
         switch (r) {
             case CASEWORKER:
-                person = new Worker(UUID.randomUUID(), firstName, lastName,Role.valueOf(role));
+                person = new Worker(UUID.randomUUID(), firstName, lastName, Role.valueOf(role));
                 break;
             case SOCIALWORKER:
-                person = new Worker(UUID.randomUUID(), firstName, lastName,Role.valueOf(role), getInstitution(institution));
+                person = new Worker(UUID.randomUUID(), firstName, lastName, Role.valueOf(role), getInstitution(institution));
                 break;
             case ADMIN:
                 person = new Person(UUID.randomUUID(), firstName, lastName, Role.valueOf(role));
@@ -48,7 +48,7 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
 
     private Institution getInstitution(String institution) {
         Institution inst = null;
-        if (institution != null){
+        if (institution != null) {
             inst = new Institution(institution, persistenceFacade.getInstitutions().get(institution));
         }
         return inst;

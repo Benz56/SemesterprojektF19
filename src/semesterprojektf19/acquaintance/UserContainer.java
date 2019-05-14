@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package semesterprojektf19.aquaintance;
+package semesterprojektf19.acquaintance;
 
 import semesterprojektf19.domain.Person;
 

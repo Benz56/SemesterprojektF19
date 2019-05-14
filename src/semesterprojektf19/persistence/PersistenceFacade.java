@@ -14,17 +14,20 @@ import java.util.UUID;
  * @author sofielouise
  */
 public interface PersistenceFacade {
-    public Map<String, String> authenticate(String username, String password);
-    
-    public Map<String, String> getWorkerDetails(UUID uuid);
-    
-    public boolean registerEmployee(String username, String password, UUID uuid, Map<String, String> personInfo);
-    
-    public boolean registerCitizen(Map<String, String> personInfo);
-    
-    public Map<String, String> getInstitutions();
-    
-    public List<Map<String, String>> getCitizens();
 
-    public boolean registerCase(Map<String, String> caseDetails, UUID caseUUID, UUID citizenUUID, UUID uuid);
+    Map<String, String> authenticate(String username, String password);
+
+    Map<String, String> getWorkerDetails(UUID uuid);
+
+    boolean registerEmployee(String username, String password, UUID uuid, Map<String, String> personInfo);
+
+    boolean registerCitizen(Map<String, String> personInfo);
+
+    Map<String, String> getInstitutions();
+
+    List<Map<String, String>> getCitizens();
+
+    boolean registerCase(Map<String, String> caseDetails, UUID caseUUID, UUID citizenUUID, UUID uuid);
+
+    List<Map<String, String>> getCases();
 }

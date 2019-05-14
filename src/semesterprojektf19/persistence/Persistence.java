@@ -58,10 +58,10 @@ public enum Persistence {
         }
         return null;
     }
-    
+
     public boolean authenticateDB(String username, String password) {
         try {
-            Statement st = conn.getDb().createStatement();
+            Statement st = conn.getConnection().createStatement();
             ResultSet rs = st.executeQuery("Select * FROM account");
             while (rs.next()) {
                 if (username.equals(rs.getString("username")) && password.equalsIgnoreCase(rs.getString("password"))) {
