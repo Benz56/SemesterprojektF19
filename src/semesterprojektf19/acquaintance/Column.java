@@ -18,7 +18,7 @@ public enum Column {
     PAYINGMUNICIPALITY("payingMunicipality"), REPRESENTATION("representation"),
     CONSENTRELEVANT("consentRelevant"), CONSENTGIVEN("consentObtained"),
     RIGHTTOREPRESENTATION("rightToRep"), INFORMEDONELECTRONICINFO("informed"),
-    AGREEMENTSONFURTHERPROCESS("agreementProcess"),
+    AGREEMENTSONFURTHERPROCESS("agreementProcess"), BACKGROUND("background"),
     SPECIALCURCUMSTANCES("specialCircumstances");
     private final String name;
 

@@ -105,5 +105,10 @@
             <Font size="18.0" />
          </font>
       </JFXButton>
+      <JFXButton fx:id="createCase" layoutX="726.0" layoutY="639.0" onAction="#onCreateCase" prefHeight="35.0" prefWidth="141.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Opret sag" textFill="#43a047" visible="false">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
