@@ -133,7 +133,7 @@
       </GridPane>
       <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
-            <AnchorPane fx:id="homePane" prefHeight="700.0" prefWidth="1000.0">
+            <AnchorPane fx:id="homePane" prefHeight="700.0" prefWidth="1000.0" visible="false">
                <children>
                   <Label fx:id="homeHelloLabel" layoutX="50.0" layoutY="50.0" prefHeight="35.0" prefWidth="757.0" text="Hej " AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
                      <font>
@@ -192,7 +192,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="createCasePane" prefHeight="700.0" prefWidth="1000.0" visible="false">
+            <AnchorPane fx:id="createCasePane" prefHeight="700.0" prefWidth="1000.0">
                <children>
                   <JFXButton fx:id="ccCreateCitizenBtn" layoutX="20.0" layoutY="655.0" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Opret Ny Borger" textFill="#43a047" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
                   <Label layoutX="20.0" layoutY="20.0" text="Vælg borger:">

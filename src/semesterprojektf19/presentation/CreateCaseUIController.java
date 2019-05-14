@@ -25,6 +25,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import semesterprojektf19.acquaintance.Column;
 import semesterprojektf19.domain.DomainFacade;
 import semesterprojektf19.domain.DomainFacadeImpl;
@@ -82,7 +83,6 @@ public class CreateCaseUIController implements Initializable {
     public CreateCaseUIController(String citizenInfo) {
         this.anchorPanes = new TreeMap<>();
         this.citizenInfo = citizenInfo;
-        System.out.println(this.citizenInfo);
     }
 
     /**
@@ -93,40 +93,39 @@ public class CreateCaseUIController implements Initializable {
         currentPageNumber = 1;
         anchorPanes.put(1, createCasePane1);
         anchorPanes.put(2, createCasePane2);
+        showCurrentPane();
         txtCitizen.setText("Borger: " + citizenInfo);
         lblPageNumber.setText("Side " + currentPageNumber + "/" + anchorPanes.size());
     }
 
     @FXML
     private void next(ActionEvent event) {
-        currentPageNumber++;
-        anchorPanes.values().forEach(pane -> pane.setVisible(false));
-        if (anchorPanes.containsKey(currentPageNumber)) {
-            anchorPanes.get(currentPageNumber).setVisible(true);
-            if (currentPageNumber > 1) {
-                back.setVisible(true);
-            }
-        }
-        if (currentPageNumber == anchorPanes.size()) {
-            next.setVisible(false);
-            createCase.setVisible(true);
-        }
-        lblPageNumber.setText("Side " + currentPageNumber + "/" + anchorPanes.size());
+        moveToPane(true);
     }
 
     @FXML
     private void back(ActionEvent event) {
-        currentPageNumber--;
-        anchorPanes.values().forEach(pane -> pane.setVisible(false));
-        anchorPanes.get(currentPageNumber).setVisible(true);
-        if (currentPageNumber == 1) {
-            back.setVisible(false);
+        moveToPane(false);
+    }
+
+    private void moveToPane(boolean forward) {
+        if (forward) {
+            currentPageNumber++;
+        } else {
+            currentPageNumber--;
         }
-        if (currentPageNumber < anchorPanes.size()) {
-            next.setVisible(true);
-            createCase.setVisible(false);
-        }
+        showCurrentPane();
+        back.setDisable(currentPageNumber == 1);
+        next.setVisible(currentPageNumber < anchorPanes.size());
+        createCase.setVisible(currentPageNumber == anchorPanes.size());
         lblPageNumber.setText("Side " + currentPageNumber + "/" + anchorPanes.size());
+    }
+
+    private void showCurrentPane() {
+        anchorPanes.values().forEach(pane -> pane.setVisible(false));
+        if (anchorPanes.containsKey(currentPageNumber)) {
+            anchorPanes.get(currentPageNumber).setVisible(true);
+        }
     }
 
     @FXML
@@ -157,6 +156,11 @@ public class CreateCaseUIController implements Initializable {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executor.schedule(() -> Platform.runLater(() -> tooltip.hide()), 2, TimeUnit.SECONDS);
         executor.shutdown();
+    }
+
+    @FXML
+    private void onCancel(ActionEvent event) {
+        ((Stage) next.getScene().getWindow()).close();
     }
 
 }
