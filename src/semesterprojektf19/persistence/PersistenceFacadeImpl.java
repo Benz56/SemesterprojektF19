@@ -12,6 +12,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import semesterprojektf19.acquaintance.Column;
+import semesterprojektf19.acquaintance.UserContainer;
 
 public class PersistenceFacadeImpl implements PersistenceFacade {
 
@@ -101,7 +102,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             int i = 1;
             pst.setObject(i++, caseUUID);
             pst.setObject(i++, citizenUUID);
-            pst.setObject(i++, workerUUID);
+            pst.setObject(i++, UserContainer.getUser().getUuid());
             pst.setString(i++, caseDetails.get(Column.INSTITUTION.getColumnName()));
             pst.setString(i++, caseDetails.get(Column.GUARDIAN.getColumnName()));
             pst.setString(i++, caseDetails.get(Column.REPRESENTATION.getColumnName()));
