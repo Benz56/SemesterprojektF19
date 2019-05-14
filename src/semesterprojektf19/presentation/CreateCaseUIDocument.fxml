@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="@css/RegisterUICSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="semesterprojektf19.presentation.CreateNoteUIController">
+   <children>
+      <AnchorPane fx:id="createCasePane1" layoutY="38.0" prefHeight="578.0" prefWidth="1000.0" AnchorPane.bottomAnchor="84.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
+         <children>
+            <Label layoutX="63.0" layoutY="41.0" text="Hvad drejer henvendelsen om?">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <JFXTextArea fx:id="shortInfo" focusColor="#43a047" layoutX="63.0" layoutY="72.0" prefHeight="100.0" prefWidth="826.0" style="-fx-background-color: white;" unFocusColor="#bfbfbf" />
+            <VBox layoutX="65.0" layoutY="321.0" prefHeight="200.0" prefWidth="162.0" spacing="10.0">
+               <children>
+                  <JFXCheckBox fx:id="ccConsentRelevantCB11" checkedColor="#43a047" text="Befordring til og fra et tilbud (§ 105)" />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB111" checkedColor="#43a047" text="Misbrugsbehandling (§ 101)" />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB112" checkedColor="#43a047" text="Psykologisk behandling (§ 102) " />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB113" checkedColor="#43a047" text="Støtte til personlig pleje (§ 85)" />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB1" checkedColor="#43a047" text="Døgnaflastning (§ 84) " />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB12" checkedColor="#43a047" layoutX="10.0" layoutY="122.0" text="Længevarende ophold (§ 108) " />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB121" checkedColor="#43a047" layoutX="10.0" layoutY="150.0" text="Midlertidigt ophold (§ 80) " />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB1211" checkedColor="#43a047" layoutX="10.0" layoutY="178.0" text="Støtte til praktiske opgaver i hjemmet (§ 85) " />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB12111" checkedColor="#43a047" layoutX="10.0" layoutY="206.0" text="Genoptræning (§ 85) " />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
+            <Label layoutX="65.0" layoutY="205.0" text="Er det klart, hvad borgeren søger om?">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="citizenSeekYes" checkedColor="#43a047" layoutX="89.0" layoutY="236.0" text="Ja">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="citizenSeekNo" checkedColor="#43a047" layoutX="178.0" layoutY="236.0" text="Nej">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXCheckBox>
+            <Label layoutX="63.0" layoutY="290.0" text="Hvis ja, angiv ydelse:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="587.0" layoutY="290.0" text="Hvis ja, angiv tilbud:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <VBox layoutX="587.0" layoutY="321.0" prefHeight="200.0" prefWidth="162.0" spacing="10.0">
+               <children>
+                  <JFXCheckBox fx:id="ccConsentRelevantCB111" checkedColor="#43a047" text="Ambulant behandlingstilbud til voksne" />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB1112" checkedColor="#43a047" text="Aktivitets- og samværstilbud" />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB1122" checkedColor="#43a047" text="Uddannelsestilbud" />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB1132" checkedColor="#43a047" text="Døgnbehandlingstilbud til voksne" />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB11" checkedColor="#43a047" text="Midlertidigt botilbud" />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB121" checkedColor="#43a047" layoutX="10.0" layoutY="122.0" text="Plejehjem" />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB1211" checkedColor="#43a047" layoutX="10.0" layoutY="150.0" text="Almen ældrebolig/handicapvenlig bolig" />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB12111" checkedColor="#43a047" layoutX="10.0" layoutY="178.0" text="Andet længerevarende botilbud til voksne" />
+                  <JFXCheckBox fx:id="ccConsentRelevantCB121111" checkedColor="#43a047" layoutX="10.0" layoutY="206.0" text="Rehabiliteringstilbud" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <Label layoutX="63.0" layoutY="23.0" text="Sags detaljer:">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="next" layoutX="726.0" layoutY="639.0" onAction="#next" prefHeight="35.0" prefWidth="141.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Næste" textFill="#43a047">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <Label fx:id="lblPageNumber" layoutX="893.0" layoutY="639.0" prefHeight="35.0" prefWidth="68.0" text="Side 1/5">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="back" layoutX="574.0" layoutY="639.0" onAction="#back" prefHeight="35.0" prefWidth="141.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Tilbage" textFill="#43a047" visible="false">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
