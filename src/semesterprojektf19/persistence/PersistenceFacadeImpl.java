@@ -226,7 +226,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 
     @Override
     public boolean editCitizen(Map<String, String> personInfo) {
-                try {
+        try {
             try (PreparedStatement pst = connection.getConnection().prepareStatement("UPDATE citizen SET fname = ?, lname = ?, addr = ?, phone = ? WHERE uuid = ?")) {
                 int i = 1;
                 pst.setString(i++, personInfo.get(Column.FNAME.getColumnName()));
@@ -241,6 +241,6 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-        
+
     }
 }
