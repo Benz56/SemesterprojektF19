@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import semesterprojektf19.acquaintance.Column;
@@ -104,7 +105,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             pst.setObject(i++, caseUUID);
             pst.setObject(i++, citizenUUID);
             pst.setObject(i++, UserContainer.getUser().getUuid());
-            pst.setString(i++, caseDetails.get(Column.INSTITUTION.getColumnName()));
+            pst.setString(i++, caseDetails.get(Column.EXECUTINGMUNICIPALITY.getColumnName()));
             pst.setString(i++, caseDetails.get(Column.GUARDIAN.getColumnName()));
             pst.setString(i++, caseDetails.get(Column.REPRESENTATION.getColumnName()));
             pst.setString(i++, caseDetails.get(Column.AGREEMENTSONFURTHERPROCESS.getColumnName()));
@@ -140,7 +141,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             pst.setObject(i++, editoruuid);
             pst.setString(i++, title);
             pst.setString(i++, content);
-            pst.executeQuery();
+            pst.executeUpdate();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -262,24 +263,22 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 
     @Override
     public Map<UUID, List<Map<String, String>>> getDiaryNotes(UUID diaryUUID) {
-
         Map<UUID, List<Map<String, String>>> notes = new HashMap<>();
-        try (PreparedStatement pst = connection.getConnection().prepareStatement("SELECT * FROM diarynote WHERE diaryuuid = ?")) {
+        try (PreparedStatement pst = connection.getConnection().prepareStatement("SELECT * FROM diarynote WHERE diaryuuid = ? ORDER BY dateofedit DESC")) {
             pst.setObject(1, diaryUUID);
-            ResultSet rs = pst.executeQuery();
-            while (rs.next()) {
-                Map<String, String> map = new HashMap<>();
-                map.put(Column.UUID.getColumnName(), rs.getString(Column.UUID.getColumnName()));
-                map.put(Column.TITLE.getColumnName(), rs.getString(Column.TITLE.getColumnName()));
-                map.put(Column.OBSDATE.getColumnName(), rs.getString(Column.OBSDATE.getColumnName()));
-                map.put(Column.NOTEDATE.getColumnName(), rs.getString(Column.NOTEDATE.getColumnName()));
-                map.put(Column.CONTENT.getColumnName(), rs.getString(Column.CONTENT.getColumnName()));
-                map.put(Column.CREATOR.getColumnName(), rs.getString(Column.CREATOR.getColumnName()));
-                List<Map<String, String>> lMap = notes.get(diaryUUID);
-                if (lMap == null) {
-                    notes.put(diaryUUID, new ArrayList<>());
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    Map<String, String> map = new HashMap<>();
+                    map.put(Column.UUID.getColumnName(), rs.getString(Column.UUID.getColumnName()));
+                    map.put(Column.TITLE.getColumnName(), rs.getString(Column.TITLE.getColumnName()));
+                    map.put(Column.DATE_OF_OBS.getColumnName(), rs.getString(Column.DATE_OF_OBS.getColumnName()));
+                    map.put(Column.DATE_OF_EDIT.getColumnName(), rs.getString(Column.DATE_OF_EDIT.getColumnName()));
+                    map.put(Column.CONTENT.getColumnName(), rs.getString(Column.CONTENT.getColumnName()));
+                    //map.put(Column.CREATOR.getColumnName(), rs.getString(Column.CREATOR.getColumnName()));
+                    notes.computeIfAbsent(UUID.fromString(map.get(Column.UUID.getColumnName())), k -> new ArrayList<>()).add(map);
                 }
-                notes.get(diaryUUID).add(map);
+            } catch (SQLException ex) {
+                Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
