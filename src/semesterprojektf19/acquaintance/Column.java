@@ -20,7 +20,7 @@ public enum Column {
     RIGHTTOREPRESENTATION("rightToRep"), INFORMEDONELECTRONICINFO("informed"),
     AGREEMENTSONFURTHERPROCESS("agreementProcess"),
     SPECIALCURCUMSTANCES("specialCircumstances"), TITLE("title"), 
-    DATE_OF_OBS("dateofobs"), DATE_OF_EDIT("dateofedit"),CONTENT("content"),
+    OBSDATE("obsDate"), NOTEDATE("noteDate"),CONTENT("content"),
     CREATOR("creator");
     private final String name;
 

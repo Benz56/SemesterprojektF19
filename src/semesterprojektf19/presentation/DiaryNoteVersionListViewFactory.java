@@ -68,11 +68,11 @@ public class DiaryNoteVersionListViewFactory implements Callback<ListView<DiaryI
                     return;
                 }
                 titledPane.setContent(anchorPane);
-                titledPane.setText(noteVersion.getDateOfEdit());
+                titledPane.setText(noteVersion.getNoteDate());
                 webView.getEngine().loadContent(noteVersion.getContent());
                 webView.addEventFilter(KeyEvent.KEY_PRESSED, event -> webView.getEngine().loadContent(noteVersion.getContent()));
-                observationDate.setText(noteVersion.getDateOfObs());
-                originDate.setText(noteVersion.getDateOfEdit());
+                observationDate.setText(noteVersion.getObsDate());
+                originDate.setText(noteVersion.getNoteDate());
                 creatorLabel.setText(noteVersion.getCreator());
                 setGraphic(titledPane);
             }

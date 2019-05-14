@@ -35,13 +35,13 @@ public class DiaryItem {
     public class NoteVersion {
 
         private final UUID uuid;
-        private final String title, dateOfObs, dateOfEdit, content, creator;
+        private final String title, obsDate, noteDate, content, creator;
 
         public NoteVersion(Map<String, String> note) {
             uuid = UUID.fromString(note.get("uuid"));
             title = note.get("title");
-            dateOfObs = note.get("dateofobs");
-            dateOfEdit = note.get("dateofedit");
+            obsDate = note.get("obsDate");
+            noteDate = note.get("noteDate");
             content = note.get("content");
             creator = note.get("creator");
         }
@@ -54,12 +54,12 @@ public class DiaryItem {
             return title;
         }
 
-        public String getDateOfObs() {
-            return dateOfObs;
+        public String getObsDate() {
+            return obsDate;
         }
 
-        public String getDateOfEdit() {
-            return dateOfEdit;
+        public String getNoteDate() {
+            return noteDate;
         }
 
         public String getContent() {

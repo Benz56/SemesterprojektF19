@@ -102,14 +102,14 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
                 titledPane.setContent(anchorPane);
                 titledPane.setText(diaryItem.getDiaryVersions().get(0).getTitle());
                 diaryNoteEditor.setHtmlText(diaryItem.getDiaryVersions().get(0).getContent());
-                observationDate.setText(diaryItem.getDiaryVersions().get(0).getDateOfObs());
-                originDate.setText(diaryItem.getDiaryVersions().get(0).getDateOfEdit());
+                observationDate.setText(diaryItem.getDiaryVersions().get(0).getObsDate());
+                originDate.setText(diaryItem.getDiaryVersions().get(0).getNoteDate());
                 editButton.setOnAction(event -> {
                     Map<String, String> content = new HashMap<>();
                     content.put("uuid", diaryItem.getDiaryVersions().get(0).getUuid().toString());
                     content.put("title", diaryItem.getDiaryVersions().get(0).getTitle());
-                    content.put("dateofedit", diaryItem.getDiaryVersions().get(0).getDateOfEdit());
-                    content.put("dateofobs", diaryItem.getDiaryVersions().get(0).getDateOfObs());
+                    content.put("obsDate", diaryItem.getDiaryVersions().get(0).getObsDate());
+                    content.put("obsDate", diaryItem.getDiaryVersions().get(0).getObsDate());
                     content.put("content", diaryNoteEditor.getHtmlText());
                     Map<String, String> savedVersion = mainUIController.getDomainFacade().addDiaryNoteVersion(mainUIController.getClientList().getSelectionModel().getSelectedItem(), mainUIController.getDiaryCaseCb().getSelectionModel().getSelectedIndex(), content);
                     diaryItem.addNewVersion(savedVersion);
