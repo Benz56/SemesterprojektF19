@@ -19,8 +19,8 @@ public class DiaryNote implements Serializable {
 
     // TODO Implementer date picker i javaFX. skal holde dato for observation som ikke nødvendigvis er den samme som oprettelses dato 
     // TODO implementere 
-    public DiaryNote(UUID uuid, Person creator, String note, String titel, String dateOfObservation) {
-        this.uuid = UUID.randomUUID();
+    public DiaryNote(UUID uuid, Person creator, String note, String title, String dateOfObservation) {
+        this.uuid = uuid;
         this.creator = creator;
         this.note = note;
         this.title = title;

@@ -26,5 +26,5 @@ public interface PersistenceFacade {
 
     boolean editCitizen(Map<String, String> map);
     
-    List<Map<String, String>> getDiaryNotes(UUID diaryUUID);
+    Map<UUID,List<Map<String, String>>> getDiaryNotes(UUID diaryUUID);
 }

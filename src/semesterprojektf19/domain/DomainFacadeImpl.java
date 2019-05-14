@@ -73,10 +73,9 @@ public class DomainFacadeImpl implements DomainFacade {
     @Override
     public List<List<Map<String, String>>> getDiaryDetails(String citizenString, int caseIndex) {
         List<List<Map<String, String>>> notes = new ArrayList<>();
+        List<Map<String, String>> versions = new ArrayList<>();
         Citizen citizen = CitizenManager.INSTANCE.getCitizen(citizenString);
-        citizen.getCase(caseIndex).getDiary().getNotes().forEach(note -> {
-
-            List<Map<String, String>> versions = new ArrayList<>();
+        persistenceFacade.getDiaryNotes(citizen.getCase(caseIndex).getDiary().getUuid()).entrySet().forEach(note -> {
             note.getVersions().forEach(version -> {
                 Map<String, String> content = new HashMap<>();
                 content.put("uuid", version.getUuid().toString());

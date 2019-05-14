@@ -98,7 +98,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 
     @Override
     public boolean registerCase(Map<String, String> caseDetails, UUID caseUUID, UUID citizenUUID, UUID workerUUID, UUID diaryUUID) {
-        try (PreparedStatement pst = connection.getConnection().prepareStatement("INSERT INTO casefile VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        try (PreparedStatement pst = connection.getConnection().prepareStatement("INSERT INTO casefile VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 PreparedStatement pst2 = connection.getConnection().prepareStatement("INSERT INTO diary VALUES (?,?)")) {
             int i = 1;
             pst.setObject(i++, caseUUID);
@@ -135,11 +135,12 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             int i = 1;
             pst.setObject(i++, uuid);
             pst.setObject(i++, diaryuuid);
-            pst.setObject(i++, editoruuid);
             pst.setString(i++, dateOfObs);
             pst.setString(i++, dateOfEdit);
+            pst.setObject(i++, editoruuid);
             pst.setString(i++, title);
             pst.setString(i++, content);
+            pst.executeQuery();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -260,8 +261,9 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     }
 
     @Override
-    public List<Map<String, String>> getDiaryNotes(UUID diaryUUID) {
-        List<Map<String, String>> list = new ArrayList<>();
+    public Map<UUID, List<Map<String, String>>> getDiaryNotes(UUID diaryUUID) {
+
+        Map<UUID, List<Map<String, String>>> notes = new HashMap<>();
         try (PreparedStatement pst = connection.getConnection().prepareStatement("SELECT * FROM diarynote WHERE diaryuuid = ?")) {
             pst.setObject(1, diaryUUID);
             ResultSet rs = pst.executeQuery();
@@ -273,11 +275,15 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
                 map.put(Column.NOTEDATE.getColumnName(), rs.getString(Column.NOTEDATE.getColumnName()));
                 map.put(Column.CONTENT.getColumnName(), rs.getString(Column.CONTENT.getColumnName()));
                 map.put(Column.CREATOR.getColumnName(), rs.getString(Column.CREATOR.getColumnName()));
-                list.add(map);
+                List<Map<String, String>> lMap = notes.get(diaryUUID);
+                if (lMap == null) {
+                    notes.put(diaryUUID, new ArrayList<>());
+                }
+                notes.get(diaryUUID).add(map);
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return list;
+        return notes;
     }
 }
