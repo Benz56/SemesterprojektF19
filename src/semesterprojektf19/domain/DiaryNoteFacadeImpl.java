@@ -3,8 +3,12 @@ package semesterprojektf19.domain;
 import java.util.HashMap;
 import semesterprojektf19.acquaintance.UserContainer;
 import java.util.Map;
+import semesterprojektf19.persistence.PersistenceFacade;
+import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
 public class DiaryNoteFacadeImpl implements DiaryNoteFacade {
+    
+    PersistenceFacade persistence = new PersistenceFacadeImpl();
 
     @Override
     public Map<String, String> createNote(Map<String, String> noteDetails) {
@@ -12,15 +16,17 @@ public class DiaryNoteFacadeImpl implements DiaryNoteFacade {
         int index = Integer.parseInt(noteDetails.get("index"));
         Case casefile = citizen.getCase(index);
         casefile.getDiary().createNote((Worker) UserContainer.getUser(), noteDetails.get("note"), noteDetails.get("titel"), noteDetails.get("dateOfObservation"));
-        // Method to save to Database
         DiaryNote diaryNote = casefile.getDiary().getNotes().get(casefile.getDiary().getNotes().size() - 1);
         Map<String, String> content = new HashMap<>();
         content.put("uuid", diaryNote.getUuid().toString());
-        content.put("title", diaryNote.getTitel());
+        content.put("title", diaryNote.getTitle());
         content.put("obsDate", diaryNote.getDateOfObservation());
         content.put("noteDate", diaryNote.getDate().toString());
         content.put("content", diaryNote.getNote());
         content.put("creator", diaryNote.getCreator().getFirstName() + " " + diaryNote.getCreator().getLastName());
+        persistence.createDiaryNote(diaryNote.getUuid(), casefile.getDiary().getUuid(), 
+                UserContainer.getUser().getUuid(), diaryNote.getDateOfObservation().toString(), 
+                diaryNote.getDate().toString(), diaryNote.getTitle(), diaryNote.getNote());
         return content;
         //For debugging
         //System.out.println("Note created for: "+ citizen.getFirstName() + "on case index: " +index);

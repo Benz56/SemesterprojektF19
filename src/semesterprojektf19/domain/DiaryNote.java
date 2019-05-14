@@ -11,7 +11,7 @@ public class DiaryNote implements Serializable {
     private static final long serialVersionUID = 2266792567973358800L;
 
     private final UUID uuid;
-    private String titel, note, dateOfObservation;
+    private String title, note, dateOfObservation;
     private Date date;
     private Person creator;
     private List<Topic> topics;
@@ -23,7 +23,7 @@ public class DiaryNote implements Serializable {
         this.uuid = UUID.randomUUID();
         this.creator = creator;
         this.note = note;
-        this.titel = titel;
+        this.title = title;
         this.dateOfObservation = dateOfObservation;
         this.date = new Date();
         this.topics = new ArrayList<>();
@@ -82,12 +82,12 @@ public class DiaryNote implements Serializable {
         return topics;
     }
 
-    public void setTitel(String titel) {
-        this.titel = titel;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getTitel() {
-        return titel;
+    public String getTitle() {
+        return title;
     }
 
     public void setDateOfObservation(String dateOfObservation) {
@@ -104,7 +104,7 @@ public class DiaryNote implements Serializable {
 
     @Override
     public String toString() {
-        return "Titel: " + this.titel + "\n"
+        return "Titel: " + this.title + "\n"
                 + "Observation foretaget: " + this.dateOfObservation + "\n\n"
                 + this.note + "\n\n\n"
                 + " Sidst redigeret: " + this.date

@@ -79,7 +79,7 @@ public class DomainFacadeImpl implements DomainFacade {
             note.getVersions().forEach(version -> {
                 Map<String, String> content = new HashMap<>();
                 content.put("uuid", version.getUuid().toString());
-                content.put("title", version.getTitel());
+                content.put("title", version.getTitle());
                 content.put("obsDate", version.getDateOfObservation());
                 content.put("noteDate", version.getDate().toString());
                 content.put("content", version.getNote());
@@ -102,7 +102,7 @@ public class DomainFacadeImpl implements DomainFacade {
         citizen.getCase(caseIndex).getDiary().getNotes().stream().filter(note -> note.getUuid().equals(uuid)).findFirst().ifPresent(note -> note.addNoteVersion(version));
         Map<String, String> content = new HashMap<>();
         content.put("uuid", version.getUuid().toString());
-        content.put("title", version.getTitel());
+        content.put("title", version.getTitle());
         content.put("obsDate", version.getDateOfObservation());
         content.put("noteDate", version.getDate().toString());
         content.put("content", version.getNote());
