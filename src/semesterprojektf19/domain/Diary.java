@@ -11,12 +11,16 @@ public class Diary implements Serializable {
     private Case caseFile;
     private List<DiaryNote> list;
     private Person editor;
-    private UUID caseID;
+    private UUID uuid;
     private static final long serialVersionUID = 5184679964539683569L;
 
     public Diary(UUID caseID) {
         list = new ArrayList<>();
-        this.caseID = caseID;
+        this.uuid = UUID.randomUUID();
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 
     public void createNote(Person person, String note, String titel, String dateOfObservation) {

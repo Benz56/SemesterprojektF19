@@ -14,13 +14,13 @@ public class DiaryNote implements Serializable {
     private String titel, note, dateOfObservation;
     private Date date;
     private Person creator;
-    private List<Topic> topics; // til at tilføje emne til note.
-    private List<DiaryNote> noteVersions; // til at holde de forskellige versioner af noten.
+    private List<Topic> topics;
+    private List<DiaryNote> noteVersions;
 
     // TODO Implementer date picker i javaFX. skal holde dato for observation som ikke nødvendigvis er den samme som oprettelses dato 
     // TODO implementere 
     public DiaryNote(UUID uuid, Person creator, String note, String titel, String dateOfObservation) {
-        this.uuid = uuid;
+        this.uuid = UUID.randomUUID();
         this.creator = creator;
         this.note = note;
         this.titel = titel;

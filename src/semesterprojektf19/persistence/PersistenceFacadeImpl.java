@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.persistence;
 
 import java.sql.PreparedStatement;
@@ -18,10 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import semesterprojektf19.acquaintance.Column;
 
-/**
- *
- * @author sofielouise
- */
 public class PersistenceFacadeImpl implements PersistenceFacade {
 
     private final Postgres connection;
@@ -49,7 +40,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
@@ -77,7 +68,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             }
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("SQL Exception caught while executing register employee.");
         }
         return false;
@@ -105,30 +96,51 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     }
 
     @Override
-    public boolean registerCase(Map<String, String> caseDetails, UUID caseUUID, UUID citizenUUID, UUID workerUUID) {
-        try {
-            try (PreparedStatement pst = connection.getConnection().prepareStatement("INSERT INTO casefile VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
-                int i = 1;
-                pst.setObject(i++, caseUUID);
-                pst.setObject(i++, citizenUUID);
-                pst.setObject(i++, workerUUID);
-                pst.setString(i++, caseDetails.get(Column.INSTITUTION.getColumnName()));
-                pst.setString(i++, caseDetails.get(Column.GUARDIAN.getColumnName()));
-                pst.setString(i++, caseDetails.get(Column.REPRESENTATION.getColumnName()));
-                pst.setString(i++, caseDetails.get(Column.AGREEMENTSONFURTHERPROCESS.getColumnName()));
-                pst.setString(i++, caseDetails.get(Column.SPECIALCURCUMSTANCES.getColumnName()));
-                pst.setString(i++, caseDetails.get(Column.EXECUTINGMUNICIPALITY.getColumnName()));
-                pst.setString(i++, caseDetails.get(Column.PAYINGMUNICIPALITY.getColumnName()));
-                pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.RIGHTTOREPRESENTATION.getColumnName())));
-                pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.INFORMEDONELECTRONICINFO.getColumnName())));
-                pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.CONSENTRELEVANT.getColumnName())));
-                pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.CONSENTGIVEN.getColumnName())));
-                pst.executeUpdate();
-            }
-            System.out.println("CaseID: " + caseUUID.toString());
-            return true;
+    public boolean registerCase(Map<String, String> caseDetails, UUID caseUUID, UUID citizenUUID, UUID workerUUID, UUID diaryUUID) {
+        try (PreparedStatement pst = connection.getConnection().prepareStatement("INSERT INTO casefile VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
+            int i = 1;
+            pst.setObject(i++, caseUUID);
+            pst.setObject(i++, citizenUUID);
+            pst.setObject(i++, workerUUID);
+            pst.setString(i++, caseDetails.get(Column.INSTITUTION.getColumnName()));
+            pst.setString(i++, caseDetails.get(Column.GUARDIAN.getColumnName()));
+            pst.setString(i++, caseDetails.get(Column.REPRESENTATION.getColumnName()));
+            pst.setString(i++, caseDetails.get(Column.AGREEMENTSONFURTHERPROCESS.getColumnName()));
+            pst.setString(i++, caseDetails.get(Column.SPECIALCURCUMSTANCES.getColumnName()));
+            pst.setString(i++, caseDetails.get(Column.EXECUTINGMUNICIPALITY.getColumnName()));
+            pst.setString(i++, caseDetails.get(Column.PAYINGMUNICIPALITY.getColumnName()));
+            pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.RIGHTTOREPRESENTATION.getColumnName())));
+            pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.INFORMEDONELECTRONICINFO.getColumnName())));
+            pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.CONSENTRELEVANT.getColumnName())));
+            pst.setBoolean(i++, Boolean.valueOf(caseDetails.get(Column.CONSENTGIVEN.getColumnName())));
+            pst.executeUpdate();
         } catch (SQLException e) {
             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, e);
+            System.out.println("CaseID: " + caseUUID.toString());
+            try (PreparedStatement pst = connection.getConnection().prepareStatement("INSERT INTO diary VALUES (?,?)")) {
+                pst.setObject(1, diaryUUID);
+                pst.setObject(2, caseUUID);
+            } catch (SQLException ex) {
+                Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean createDiaryNote(UUID uuid, UUID diaryuuid, UUID editoruuid, String dateOfObs, String dateOfEdit, String title, String content) {
+        try(PreparedStatement pst = connection.getConnection().prepareStatement("INSERT INTO diarynote VALUES (?,?,?,?,?,?,?)")) {
+            int i = 1;
+            pst.setObject(i++, uuid);
+            pst.setObject(i++, diaryuuid);
+            pst.setObject(i++, editoruuid);
+            pst.setString(i++, dateOfObs);
+            pst.setString(i++, dateOfEdit);
+            pst.setString(i++, title);
+            pst.setString(i++, content);
+            return true;
+    }   catch (SQLException ex) {
+            Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
@@ -226,7 +238,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 
     @Override
     public boolean editCitizen(Map<String, String> personInfo) {
-                try {
+        try {
             try (PreparedStatement pst = connection.getConnection().prepareStatement("UPDATE citizen SET fname = ?, lname = ?, addr = ?, phone = ? WHERE uuid = ?")) {
                 int i = 1;
                 pst.setString(i++, personInfo.get(Column.FNAME.getColumnName()));
@@ -241,6 +253,6 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-        
+
     }
 }

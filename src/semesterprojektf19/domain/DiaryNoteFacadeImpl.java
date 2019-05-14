@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.domain;
 
 import java.util.HashMap;
 import semesterprojektf19.acquaintance.UserContainer;
 import java.util.Map;
 
-/**
- *
- * @author Glumby
- */
 public class DiaryNoteFacadeImpl implements DiaryNoteFacade {
 
     @Override
@@ -21,7 +12,7 @@ public class DiaryNoteFacadeImpl implements DiaryNoteFacade {
         int index = Integer.parseInt(noteDetails.get("index"));
         Case casefile = citizen.getCase(index);
         casefile.getDiary().createNote((Worker) UserContainer.getUser(), noteDetails.get("note"), noteDetails.get("titel"), noteDetails.get("dateOfObservation"));
-        citizen.saveToFile();
+        // Method to save to Database
         DiaryNote diaryNote = casefile.getDiary().getNotes().get(casefile.getDiary().getNotes().size() - 1);
         Map<String, String> content = new HashMap<>();
         content.put("uuid", diaryNote.getUuid().toString());

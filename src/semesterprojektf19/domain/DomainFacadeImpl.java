@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.domain;
 
 import semesterprojektf19.acquaintance.UserContainer;
@@ -14,7 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import semesterprojektf19.acquaintance.Column;
-import semesterprojektf19.persistence.Persistence;
+//import semesterprojektf19.persistence.Persistence;
 import semesterprojektf19.persistence.PersistenceFacade;
 import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
@@ -22,9 +17,9 @@ public class DomainFacadeImpl implements DomainFacade {
 
     private final PersistenceFacade persistenceFacade = new PersistenceFacadeImpl();
 
-    public DomainFacadeImpl() {
-        Persistence.INSTANCE.toString(); //Initialize persistence i.e. create required files.
-    }
+//    public DomainFacadeImpl() {
+//        Persistence.INSTANCE.toString(); //Initialize persistence i.e. create required files.
+//    }
 
     @Override
     public void createCase(Map<String, String> caseDetails) {
@@ -34,7 +29,8 @@ public class DomainFacadeImpl implements DomainFacade {
         citizen.addCase(c);
         UUID citizenUUID = citizen.getUuid();
         UUID caseUUID = c.getUUID();
-        persistenceFacade.registerCase(caseDetails, caseUUID, citizenUUID, UserContainer.getUser().getUuid());
+        UUID diaryUUID = c.getDiary().getUuid();
+        persistenceFacade.registerCase(caseDetails, caseUUID, citizenUUID, diaryUUID, UserContainer.getUser().getUuid());
     }
 
     @Override
