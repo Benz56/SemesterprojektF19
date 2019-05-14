@@ -16,7 +16,7 @@ public class Diary implements Serializable {
 
     public Diary(UUID caseID) {
         list = new ArrayList<>();
-        this.uuid = UUID.randomUUID();
+        this.uuid = caseID;
     }
 
     public UUID getUuid() {
