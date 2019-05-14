@@ -3,79 +3,86 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="@css/RegisterUICSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="semesterprojektf19.presentation.CreateNoteUIController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="@css/RegisterUICSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="semesterprojektf19.presentation.CreateCaseUIController">
    <children>
       <AnchorPane fx:id="createCasePane1" layoutY="38.0" prefHeight="578.0" prefWidth="1000.0" AnchorPane.bottomAnchor="84.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
          <children>
-            <Label layoutX="63.0" layoutY="41.0" text="Hvad drejer henvendelsen om?">
+            <Label layoutX="64.0" layoutY="96.0" text="Hvad drejer henvendelsen om?">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <JFXTextArea fx:id="shortInfo" focusColor="#43a047" layoutX="63.0" layoutY="72.0" prefHeight="100.0" prefWidth="826.0" style="-fx-background-color: white;" unFocusColor="#bfbfbf" />
-            <VBox layoutX="65.0" layoutY="321.0" prefHeight="200.0" prefWidth="162.0" spacing="10.0">
+            <JFXTextArea fx:id="background" focusColor="#43a047" layoutX="64.0" layoutY="119.0" prefHeight="100.0" prefWidth="826.0" style="-fx-background-color: white;" unFocusColor="#bfbfbf" />
+            <VBox layoutX="66.0" layoutY="329.0" prefHeight="200.0" prefWidth="162.0" spacing="10.0">
                <children>
-                  <JFXCheckBox fx:id="ccConsentRelevantCB11" checkedColor="#43a047" text="Befordring til og fra et tilbud (§ 105)" />
-                  <JFXCheckBox fx:id="ccConsentRelevantCB111" checkedColor="#43a047" text="Misbrugsbehandling (§ 101)" />
-                  <JFXCheckBox fx:id="ccConsentRelevantCB112" checkedColor="#43a047" text="Psykologisk behandling (§ 102) " />
-                  <JFXCheckBox fx:id="ccConsentRelevantCB113" checkedColor="#43a047" text="Støtte til personlig pleje (§ 85)" />
-                  <JFXCheckBox fx:id="ccConsentRelevantCB1" checkedColor="#43a047" text="Døgnaflastning (§ 84) " />
-                  <JFXCheckBox fx:id="ccConsentRelevantCB12" checkedColor="#43a047" layoutX="10.0" layoutY="122.0" text="Længevarende ophold (§ 108) " />
-                  <JFXCheckBox fx:id="ccConsentRelevantCB121" checkedColor="#43a047" layoutX="10.0" layoutY="150.0" text="Midlertidigt ophold (§ 80) " />
-                  <JFXCheckBox fx:id="ccConsentRelevantCB1211" checkedColor="#43a047" layoutX="10.0" layoutY="178.0" text="Støtte til praktiske opgaver i hjemmet (§ 85) " />
-                  <JFXCheckBox fx:id="ccConsentRelevantCB12111" checkedColor="#43a047" layoutX="10.0" layoutY="206.0" text="Genoptræning (§ 85) " />
+                  <JFXCheckBox fx:id="y105" checkedColor="#43a047" text="Befordring til og fra et tilbud (§ 105)" />
+                  <JFXCheckBox fx:id="y101" checkedColor="#43a047" text="Misbrugsbehandling (§ 101)" />
+                  <JFXCheckBox fx:id="y102" checkedColor="#43a047" text="Psykologisk behandling (§ 102) " />
+                  <JFXCheckBox fx:id="y85" checkedColor="#43a047" text="Støtte til personlig pleje (§ 85)" />
+                  <JFXCheckBox fx:id="y84" checkedColor="#43a047" text="Døgnaflastning (§ 84) " />
+                  <JFXCheckBox fx:id="y108" checkedColor="#43a047" layoutX="10.0" layoutY="122.0" text="Længevarende ophold (§ 108) " />
+                  <JFXCheckBox fx:id="y80" checkedColor="#43a047" layoutX="10.0" layoutY="150.0" text="Midlertidigt ophold (§ 80) " />
+                  <JFXCheckBox fx:id="y87" checkedColor="#43a047" layoutX="10.0" layoutY="178.0" text="Støtte til praktiske opgaver i hjemmet (§ 87) " />
+                  <JFXCheckBox fx:id="y89" checkedColor="#43a047" layoutX="10.0" layoutY="206.0" text="Genoptræning (§ 89) " />
                </children>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
             </VBox>
-            <Label layoutX="65.0" layoutY="205.0" text="Er det klart, hvad borgeren søger om?">
+            <Label layoutX="66.0" layoutY="233.0" text="Er det klart, hvad borgeren søger om?">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <JFXCheckBox fx:id="citizenSeekYes" checkedColor="#43a047" layoutX="89.0" layoutY="236.0" text="Ja">
+            <JFXCheckBox fx:id="citizenSeekYes" checkedColor="#43a047" layoutX="90.0" layoutY="264.0" text="Ja">
                <font>
                   <Font size="14.0" />
                </font>
             </JFXCheckBox>
-            <JFXCheckBox fx:id="citizenSeekNo" checkedColor="#43a047" layoutX="178.0" layoutY="236.0" text="Nej">
+            <JFXCheckBox fx:id="citizenSeekNo" checkedColor="#43a047" layoutX="179.0" layoutY="264.0" text="Nej">
                <font>
                   <Font size="14.0" />
                </font>
             </JFXCheckBox>
-            <Label layoutX="63.0" layoutY="290.0" text="Hvis ja, angiv ydelse:">
+            <Label layoutX="64.0" layoutY="298.0" text="Hvis ja, angiv ydelse:">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="587.0" layoutY="290.0" text="Hvis ja, angiv tilbud:">
+            <Label layoutX="588.0" layoutY="298.0" text="Hvis ja, angiv tilbud:">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <VBox layoutX="587.0" layoutY="321.0" prefHeight="200.0" prefWidth="162.0" spacing="10.0">
+            <VBox layoutX="588.0" layoutY="329.0" prefHeight="200.0" prefWidth="162.0" spacing="10.0">
                <children>
-                  <JFXCheckBox fx:id="ccConsentRelevantCB111" checkedColor="#43a047" text="Ambulant behandlingstilbud til voksne" />
-                  <JFXCheckBox fx:id="ccConsentRelevantCB1112" checkedColor="#43a047" text="Aktivitets- og samværstilbud" />
-                  <JFXCheckBox fx:id="ccConsentRelevantCB1122" checkedColor="#43a047" text="Uddannelsestilbud" />
-                  <JFXCheckBox fx:id="ccConsentRelevantCB1132" checkedColor="#43a047" text="Døgnbehandlingstilbud til voksne" />
-                  <JFXCheckBox fx:id="ccConsentRelevantCB11" checkedColor="#43a047" text="Midlertidigt botilbud" />
-                  <JFXCheckBox fx:id="ccConsentRelevantCB121" checkedColor="#43a047" layoutX="10.0" layoutY="122.0" text="Plejehjem" />
-                  <JFXCheckBox fx:id="ccConsentRelevantCB1211" checkedColor="#43a047" layoutX="10.0" layoutY="150.0" text="Almen ældrebolig/handicapvenlig bolig" />
-                  <JFXCheckBox fx:id="ccConsentRelevantCB12111" checkedColor="#43a047" layoutX="10.0" layoutY="178.0" text="Andet længerevarende botilbud til voksne" />
-                  <JFXCheckBox fx:id="ccConsentRelevantCB121111" checkedColor="#43a047" layoutX="10.0" layoutY="206.0" text="Rehabiliteringstilbud" />
+                  <JFXCheckBox fx:id="t1" checkedColor="#43a047" text="Ambulant behandlingstilbud til voksne" />
+                  <JFXCheckBox fx:id="t2" checkedColor="#43a047" text="Aktivitets- og samværstilbud" />
+                  <JFXCheckBox fx:id="t3" checkedColor="#43a047" text="Uddannelsestilbud" />
+                  <JFXCheckBox fx:id="t4" checkedColor="#43a047" text="Døgnbehandlingstilbud til voksne" />
+                  <JFXCheckBox fx:id="t5" checkedColor="#43a047" text="Midlertidigt botilbud" />
+                  <JFXCheckBox fx:id="t6" checkedColor="#43a047" layoutX="10.0" layoutY="122.0" text="Plejehjem" />
+                  <JFXCheckBox fx:id="t7" checkedColor="#43a047" layoutX="10.0" layoutY="150.0" text="Almen ældrebolig/handicapvenlig bolig" />
+                  <JFXCheckBox fx:id="t8" checkedColor="#43a047" layoutX="10.0" layoutY="178.0" text="Andet længerevarende botilbud til voksne" />
+                  <JFXCheckBox fx:id="t9" checkedColor="#43a047" layoutX="10.0" layoutY="206.0" text="Rehabiliteringstilbud" />
                </children>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
             </VBox>
+            <Label layoutX="64.0" layoutY="29.0" text="Kort info:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <JFXTextField fx:id="shortInfo" focusColor="#43a047" layoutX="64.0" layoutY="52.0" prefHeight="31.0" prefWidth="550.0" promptText="Titel" unFocusColor="#bfbfbf" />
          </children>
       </AnchorPane>
       <Label layoutX="63.0" layoutY="23.0" text="Sags detaljer:">
