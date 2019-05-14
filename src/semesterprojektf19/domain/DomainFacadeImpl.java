@@ -1,9 +1,7 @@
 package semesterprojektf19.domain;
 
 import semesterprojektf19.acquaintance.UserContainer;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +9,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import semesterprojektf19.acquaintance.Column;
-//import semesterprojektf19.persistence.Persistence;
 import semesterprojektf19.persistence.PersistenceFacade;
 import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
@@ -19,9 +16,6 @@ public class DomainFacadeImpl implements DomainFacade {
 
     private final PersistenceFacade persistenceFacade = new PersistenceFacadeImpl();
 
-//    public DomainFacadeImpl() {
-//        Persistence.INSTANCE.toString(); //Initialize persistence i.e. create required files.
-//    }
     @Override
     public void createCase(Map<String, String> caseDetails) {
         Citizen citizen = CitizenManager.INSTANCE.getCitizen(caseDetails.get(Column.CITIZEN.getColumnName()));

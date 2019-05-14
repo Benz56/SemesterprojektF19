@@ -7,7 +7,7 @@ import semesterprojektf19.persistence.PersistenceFacade;
 import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
 public class DiaryNoteFacadeImpl implements DiaryNoteFacade {
-    
+
     PersistenceFacade persistence = new PersistenceFacadeImpl();
 
     @Override
@@ -24,13 +24,9 @@ public class DiaryNoteFacadeImpl implements DiaryNoteFacade {
         content.put("dateofedit", diaryNote.getDate().toString());
         content.put("content", diaryNote.getNote());
         content.put("creator", diaryNote.getCreator().getFirstName() + " " + diaryNote.getCreator().getLastName());
-        persistence.createDiaryNote(diaryNote.getUuid(), casefile.getDiary().getUuid(), 
+        persistence.createDiaryNote(diaryNote.getUuid(), casefile.getDiary().getUuid(),
                 UserContainer.getUser().getUuid(), diaryNote.getDateOfObservation(),
                 diaryNote.getDate().toString(), diaryNote.getTitle(), diaryNote.getNote());
         return content;
-        //For debugging
-        //System.out.println("Note created for: "+ citizen.getFirstName() + "on case index: " +index);
-        //System.out.println(citizen.getCase(index).getDiary().getNotes());
     }
-
 }
