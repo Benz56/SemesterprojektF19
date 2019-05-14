@@ -3,6 +3,7 @@ package semesterprojektf19.domain;
 import semesterprojektf19.acquaintance.UserContainer;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +108,8 @@ public class DomainFacadeImpl implements DomainFacade {
         content.put("noteDate", version.getDate().toString());
         content.put("content", version.getNote());
         content.put("creator", version.getCreator().getFirstName() + " " + version.getCreator().getLastName());
-        //Husk at gemme i persistens herefter.
+        persistenceFacade.createDiaryNote(version.getUuid(),citizen.getCase(caseIndex).getUUID() , UserContainer.getUser().getUuid(),
+                version.getDateOfObservation(), new Date().toString() , version.getTitle(), version.getNote());
         return content;
 
     }

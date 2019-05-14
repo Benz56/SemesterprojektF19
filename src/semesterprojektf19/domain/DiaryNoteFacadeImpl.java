@@ -25,7 +25,7 @@ public class DiaryNoteFacadeImpl implements DiaryNoteFacade {
         content.put("content", diaryNote.getNote());
         content.put("creator", diaryNote.getCreator().getFirstName() + " " + diaryNote.getCreator().getLastName());
         persistence.createDiaryNote(diaryNote.getUuid(), casefile.getDiary().getUuid(), 
-                UserContainer.getUser().getUuid(), diaryNote.getDateOfObservation().toString(), 
+                UserContainer.getUser().getUuid(), diaryNote.getDateOfObservation(),
                 diaryNote.getDate().toString(), diaryNote.getTitle(), diaryNote.getNote());
         return content;
         //For debugging

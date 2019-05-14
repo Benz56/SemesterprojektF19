@@ -20,10 +20,11 @@ public interface PersistenceFacade {
 
     boolean registerCase(Map<String, String> caseDetails, UUID caseUUID, UUID citizenUUID, UUID diaryUUID, UUID uuid);
 
-    boolean createDiaryNote(UUID uuid, UUID diaryuuid, UUID editoruuid, String dateOfObs, String dateOfEdit, String title, String content);
+    boolean createDiaryNote(UUID uuid, UUID diaryUUID, UUID editorUUID, String dateOfObs, String dateOfEdit, String title, String content);
     
     List<Map<String, String>> getCases();
 
     boolean editCitizen(Map<String, String> map);
-   
+    
+    List<Map<String, String>> getDiaryNotes(UUID diaryUUID);
 }
