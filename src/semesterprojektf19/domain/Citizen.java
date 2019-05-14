@@ -9,7 +9,8 @@ import semesterprojektf19.persistence.Persistence;
 
 public class Citizen extends Person {
 
-    private final String cpr, address, phoneNumber, controlNumber, birthday;
+    private final String cpr, controlNumber, birthday;
+    private String address, phoneNumber;
     private static final long serialVersionUID = 4813878493760830975L;
 
     public Citizen(UUID uuid, String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber) {
@@ -31,6 +32,14 @@ public class Citizen extends Person {
         this.controlNumber = details.get(Column.CNUMBER.getColumnName());
         this.birthday = details.get(Column.BDAY.getColumnName());
         this.cpr = birthday + controlNumber;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void addCase(Case c) {

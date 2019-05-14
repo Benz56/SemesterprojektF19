@@ -223,4 +223,24 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
         }
         return cases;
     }
+
+    @Override
+    public boolean editCitizen(Map<String, String> personInfo) {
+                try {
+            try (PreparedStatement pst = connection.getConnection().prepareStatement("UPDATE citizen SET fname = ?, lname = ?, addr = ?, phone = ? WHERE uuid = ?")) {
+                int i = 1;
+                pst.setString(i++, personInfo.get(Column.FNAME.getColumnName()));
+                pst.setString(i++, personInfo.get(Column.LNAME.getColumnName()));
+                pst.setString(i++, personInfo.get(Column.ADDR.getColumnName()));
+                pst.setString(i++, personInfo.get(Column.PHONE.getColumnName()));
+                pst.setObject(i++, UUID.fromString(personInfo.get(Column.UUID.getColumnName())));
+                pst.executeUpdate();
+            }
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+        
+    }
 }

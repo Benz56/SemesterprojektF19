@@ -52,7 +52,7 @@ public class MainUIController implements Initializable {
 
     //Home nodes:
     @FXML
-    private Label homeHelloLabel, homePlaceLabel, homeCitizenCountLabel, homeTargetAreasLabel;
+    private Label homeHelloLabel, homePlaceLabel, homeCitizenCountLabel;
 
     // Case nodes:
     @FXML
@@ -64,11 +64,11 @@ public class MainUIController implements Initializable {
 
     //Create case nodes:
     @FXML
-    private JFXButton ccCreateCitizenBtn;
+    private JFXButton ccCreateCitizenBtn, ccEditCitizenBtn;
     @FXML
     private JFXListView<String> ccCitizenListView;
     @FXML
-    private JFXTextField ccSearchCitizenTextField, ccGuardianTextField, ccRepresentationTextField, ccExecutingMuniTextField, ccPayingMuniTextField, ccShortInfoTextField;
+    private JFXTextField ccSearchCitizenTextField, ccGuardianTextField, ccRepresentationTextField, ccPayingMuniTextField, ccShortInfoTextField;
     @FXML
     private JFXTextArea ccSpecialCircumstancesTextArea, ccProcessAgreementsTextArea;
     @FXML
@@ -127,6 +127,9 @@ public class MainUIController implements Initializable {
 
         diaryCreateNoteBtn.setOnAction(event -> SimpleStageBuilder.create("Opret Notat", "CreateNoteUIDocument.fxml").setResizable(false)
                 .setCloseOnUnfocused(true).setControllerFactory(new CreateNoteUIController(diarynotesObservable, String.valueOf(diaryCaseCb.getSelectionModel().getSelectedIndex()), clientList.getSelectionModel().getSelectedItem())).open());
+
+        ccEditCitizenBtn.setOnAction(event -> SimpleStageBuilder.create("Rediger Borger", "EditCitizenUIDocument.fxml").setResizable(false)
+                .setCloseOnUnfocused(true).setControllerFactory(new EditCitizenUIController(ccCitizenListView.getSelectionModel().getSelectedItem())).open());
 
         ccSearchCitizenTextField.textProperty().addListener(listener -> refresh());
         setClientListener();

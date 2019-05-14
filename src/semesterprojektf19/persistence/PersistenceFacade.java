@@ -30,4 +30,6 @@ public interface PersistenceFacade {
     boolean registerCase(Map<String, String> caseDetails, UUID caseUUID, UUID citizenUUID, UUID uuid);
 
     List<Map<String, String>> getCases();
+
+    public boolean editCitizen(Map<String, String> map);
 }
