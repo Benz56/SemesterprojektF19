@@ -1,21 +1,14 @@
 package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-import java.awt.MouseInfo;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -23,7 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import semesterprojektf19.acquaintance.Column;
@@ -126,19 +118,16 @@ public class MainUIController implements Initializable {
         ccEditCitizenBtn.setOnAction(event -> SimpleStageBuilder.create("Rediger Borger", "EditCitizenUIDocument.fxml").setResizable(false)
                 .setCloseOnUnfocused(true).setControllerFactory(new EditCitizenUIController(ccCitizenListView.getSelectionModel().getSelectedItem())).open());
 
-        
         ccSearchCitizenTextField.textProperty().addListener(listener -> refresh());
         setClientListener();
-//        ccExecutingMuniCB.getItems().addAll(registrationFacade.getInstitutionNames());
         diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
         diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             diarynotesListview.getItems().clear();
             diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
-            System.out.println(diaryCaseCb.getSelectionModel().getSelectedIndex());
-            List<List<Map<String, String>>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
-
-            diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
-
+            if (diaryCaseCb.getSelectionModel().getSelectedIndex() != -1) {
+                List<List<Map<String, String>>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
+                diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
+            }
         });
         diarynotesObservable = FXCollections.observableList(diarynotesListview.getItems());
         diarynotesObservable.addListener((ListChangeListener.Change<? extends DiaryItem> event) -> diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this)));
@@ -159,6 +148,9 @@ public class MainUIController implements Initializable {
                 caseCasesCB.getItems().setAll(citizenDetails.get("cases").split("\n"));
                 diaryCaseCb.getItems().clear();
                 diaryCaseCb.getItems().setAll(citizenDetails.get("cases").split("\n"));
+                if (!diaryCaseCb.getItems().isEmpty()) {
+                    diaryCaseCb.getSelectionModel().select(0);
+                }
             }
         });
     }
@@ -168,7 +160,7 @@ public class MainUIController implements Initializable {
         SimpleStageBuilder.create("Opret sag", "CreateCaseUIDocument.fxml")
                 .setResizable(false)
                 .setControllerFactory(new CreateCaseUIController(ccCitizenListView.getSelectionModel().getSelectedItem()))
-                .setOnHiding(()-> refresh())
+                .setOnHiding(() -> refresh())
                 .open();
     }
 

@@ -1,6 +1,5 @@
 package semesterprojektf19.domain;
 
-import semesterprojektf19.acquaintance.UserContainer;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,6 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import semesterprojektf19.acquaintance.Column;
+import semesterprojektf19.acquaintance.UserContainer;
 import semesterprojektf19.persistence.PersistenceFacade;
 import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
