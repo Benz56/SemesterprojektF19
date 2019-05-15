@@ -124,17 +124,14 @@ public class MainUIController implements Initializable {
 
         ccSearchCitizenTextField.textProperty().addListener(listener -> refresh());
         setClientListener();
-        setSearchClientListener();
-//        ccExecutingMuniCB.getItems().addAll(registrationFacade.getInstitutionNames());
         diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
         diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             diarynotesListview.getItems().clear();
             diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
-            System.out.println(diaryCaseCb.getSelectionModel().getSelectedIndex());
-            List<List<Map<String, String>>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
-
-            diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
-
+            if (diaryCaseCb.getSelectionModel().getSelectedIndex() != -1) {
+                List<List<Map<String, String>>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
+                diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
+            }
         });
         diarynotesObservable = FXCollections.observableList(diarynotesListview.getItems());
         diarynotesObservable.addListener((ListChangeListener.Change<? extends DiaryItem> event) -> diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this)));
@@ -155,6 +152,9 @@ public class MainUIController implements Initializable {
                 caseCasesCB.getItems().setAll(citizenDetails.get("cases").split("\n"));
                 diaryCaseCb.getItems().clear();
                 diaryCaseCb.getItems().setAll(citizenDetails.get("cases").split("\n"));
+                if (!diaryCaseCb.getItems().isEmpty()) {
+                    diaryCaseCb.getSelectionModel().select(0);
+                }
             }
         });
     }
