@@ -13,8 +13,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import semesterprojektf19.domain.RegistrationFacadeImpl;
 import semesterprojektf19.domain.RegistrationFacade;
+import semesterprojektf19.domain.RegistrationFacadeImpl;
 
 /**
  * FXML Controller class
@@ -24,8 +24,6 @@ import semesterprojektf19.domain.RegistrationFacade;
 public class RegisterCitizenUIController implements Initializable {
 
     private final RegistrationFacade registrationFacade = new RegistrationFacadeImpl();
-
-    private boolean valid = false;
 
     @FXML
     private JFXTextField firstnameTextField, lastnameTextField, controlNumberTextField, phoneNumberTextField, addressTextField;
@@ -39,24 +37,18 @@ public class RegisterCitizenUIController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        firstnameTextField.textProperty().addListener(listener -> valid = validate());
-        lastnameTextField.textProperty().addListener(listener -> valid = validate());
-        birthdayDatePicker.valueProperty().addListener(listener -> valid = validate());
-        controlNumberTextField.textProperty().addListener(listener -> valid = validate());
-        phoneNumberTextField.textProperty().addListener(listener -> valid = validate());
-        addressTextField.textProperty().addListener(listener -> valid = validate());
     }
 
     @FXML
     private void onCreate() {
-        if (valid) {
+        if (validate()) {
             registrationFacade.registerCitizen(
                     firstnameTextField.getText(),
                     lastnameTextField.getText(),
                     birthdayDatePicker.getValue().toString(),
                     controlNumberTextField.getText(),
                     addressTextField.getText(),
-                    phoneNumberTextField.getText());;
+                    phoneNumberTextField.getText());
             onCancel();
         }
     }
