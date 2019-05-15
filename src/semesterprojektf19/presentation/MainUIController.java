@@ -21,13 +21,10 @@ import javafx.scene.layout.HBox;
 import semesterprojektf19.acquaintance.Column;
 import semesterprojektf19.domain.DomainFacade;
 import semesterprojektf19.domain.DomainFacadeImpl;
-import semesterprojektf19.domain.RegistrationFacade;
-import semesterprojektf19.domain.RegistrationFacadeImpl;
 
 public class MainUIController implements Initializable {
 
     private final DomainFacade domainFacade = new DomainFacadeImpl();
-    private final RegistrationFacade registrationFacade = new RegistrationFacadeImpl();
     private final Map<String, String> userDetails;
     private final Map<JFXButton, AnchorPane> btnPaneMap = new HashMap<>();
     private ObservableList<DiaryItem> diarynotesObservable;
@@ -51,8 +48,6 @@ public class MainUIController implements Initializable {
     private JFXTextField caseCitizenNameTextField, caseCPRTextField, caseAddressTextField;
     @FXML
     private JFXComboBox<String> caseCasesCB;
-    @FXML
-    private JFXListView<?> caseLatestNotesListView;
 
     //Create case nodes:
     @FXML
@@ -60,8 +55,7 @@ public class MainUIController implements Initializable {
     @FXML
     private JFXListView<String> ccCitizenListView;
     @FXML
-    private JFXTextField ccSearchCitizenTextField;
-    private JFXComboBox<String> ccExecutingMuniCB;
+    private JFXTextField ccSearchCitizenTextField, casePhoneTextField;
 
     //Diary nodes.
     @FXML
@@ -83,8 +77,9 @@ public class MainUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        homeHelloLabel.setText(homeHelloLabel.getText() + userDetails.get("fname") + " " + userDetails.get("lname"));
+        homeHelloLabel.setText(homeHelloLabel.getText() + userDetails.get(Column.FNAME.getColumnName()) + " " + userDetails.get(Column.LNAME.getColumnName()));
         if (userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("socialworker")) {
+            homePlaceLabel.setVisible(true);
             homePlaceLabel.setText(homePlaceLabel.getText() + userDetails.get(Column.INSTITUTION.getColumnName()));
         }
         selectedBtn = homeBtn;
@@ -145,13 +140,13 @@ public class MainUIController implements Initializable {
                 diaryCreateNoteBtn.setDisable(false);
                 diaryCaseCb.setDisable(false);
                 Map<String, String> citizenDetails = domainFacade.getCitizenDetails(newValue);
-                caseCitizenNameTextField.setText(citizenDetails.get("name"));
-                caseCPRTextField.setText(citizenDetails.get("cpr"));
-                caseAddressTextField.setText(citizenDetails.get("address"));
+                caseCitizenNameTextField.setText(citizenDetails.get(Column.NAME.getColumnName()));
+                caseCPRTextField.setText(citizenDetails.get(Column.BDAY.getColumnName()));
+                caseAddressTextField.setText(citizenDetails.get(Column.ADDR.getColumnName()));
                 caseCasesCB.getItems().clear();
-                caseCasesCB.getItems().setAll(citizenDetails.get("cases").split("\n"));
+                caseCasesCB.getItems().setAll(citizenDetails.get(Column.CASES.getColumnName()).split("\n"));
                 diaryCaseCb.getItems().clear();
-                diaryCaseCb.getItems().setAll(citizenDetails.get("cases").split("\n"));
+                diaryCaseCb.getItems().setAll(citizenDetails.get(Column.CASES.getColumnName()).split("\n"));
                 if (!diaryCaseCb.getItems().isEmpty()) {
                     diaryCaseCb.getSelectionModel().select(0);
                 }
@@ -191,16 +186,17 @@ public class MainUIController implements Initializable {
     }
 
     private void refresh() {
-        if (!userDetails.get(Column.ROLE.getColumnName()).equals("admin")) {
+        if (!userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("admin")) {
             String selectedItem = clientList.getSelectionModel().getSelectedItem();
-            List<String> institutionCitizens = domainFacade.getInstitutionCitizens();
-            clientList.getItems().setAll(institutionCitizens);
+            List<String> connectedCitizens = domainFacade.getConnectedCitizens();
+            clientList.getItems().setAll(connectedCitizens);
             if (clientList.getItems().contains(selectedItem)) {
                 clientList.getSelectionModel().select(selectedItem);
             }
+            homeCitizenCountLabel.setVisible(true);
+            homeCitizenCountLabel.setText(homeCitizenCountLabel.getText() + domainFacade.getConnectedCitizens().size());
+                    ccCitizenListView.getItems().setAll(domainFacade.matchCitizens(ccSearchCitizenTextField.getText()));
         }
-        homeCitizenCountLabel.setText(homeCitizenCountLabel.getText() + domainFacade.getInstitutionCitizens().size());
-        ccCitizenListView.getItems().setAll(domainFacade.matchCitizens(ccSearchCitizenTextField.getText()));
     }
 
     @FXML

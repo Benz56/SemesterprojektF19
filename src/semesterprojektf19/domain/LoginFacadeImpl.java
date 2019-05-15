@@ -16,23 +16,17 @@ public class LoginFacadeImpl implements LoginFacade {
     @Override
     public Map<String, String> login(String username, String password) {
         Map<String, String> details = new HashMap<>();
-        if (username.equals("admin") && password.equals("admin")) { //Tillader at logge ind uden bruger.
-            details.put(Column.ROLE.getColumnName(), "admin");
-            details.put(Column.FNAME.getColumnName(), "admin");
-            details.put(Column.LNAME.getColumnName(), "admin");
-        } else {
-            details = persistenceFacade.authenticate(username, password);
-            System.out.println("Details returned: " + details);
-            if (details != null) {
-                UserContainer.setUser(new Worker(
-                        UUID.fromString(details.get(Column.UUID.getColumnName())),
-                        details.get(Column.FNAME.getColumnName()),
-                        details.get(Column.LNAME.getColumnName()),
-                        Role.valueOf(details.get(Column.ROLE.getColumnName()).toUpperCase()),
-                        Role.valueOf(details.get(Column.ROLE.getColumnName()).toUpperCase()) == Role.SOCIALWORKER
-                        ? new Institution(details.get(Column.INSTITUTION.getColumnName()), (details.get(Column.INSTITUTIONADDR.getColumnName()))) : null
-                ));
-            }
+        details = persistenceFacade.authenticate(username, password);
+        System.out.println("Details returned: " + details);
+        if (details != null) {
+            UserContainer.setUser(new Worker(
+                    UUID.fromString(details.get(Column.UUID.getColumnName())),
+                    details.get(Column.FNAME.getColumnName()),
+                    details.get(Column.LNAME.getColumnName()),
+                    Role.valueOf(details.get(Column.ROLE.getColumnName()).toUpperCase()),
+                    Role.valueOf(details.get(Column.ROLE.getColumnName()).toUpperCase()) == Role.SOCIALWORKER
+                    ? new Institution(details.get(Column.INSTITUTION.getColumnName()), (details.get(Column.INSTITUTIONADDR.getColumnName()))) : null
+            ));
         }
         return details;
     }

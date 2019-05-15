@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import semesterprojektf19.acquaintance.Column;
+import semesterprojektf19.domain.accesscontrol.Role;
 import semesterprojektf19.acquaintance.UserContainer;
 import semesterprojektf19.persistence.PersistenceFacade;
 import semesterprojektf19.persistence.PersistenceFacadeImpl;
@@ -34,15 +35,20 @@ public class DomainFacadeImpl implements DomainFacade {
     }
 
     @Override
-    public List<String> getInstitutionCitizens() {
+    public List<String> getConnectedCitizens() {
         Person user = UserContainer.getUser();
         if (user != null) {
-            return CitizenManager.INSTANCE.getCitizens().values().stream().filter(citizen -> citizen.getCases().stream().anyMatch(c -> c.getInstitution().equals(user.getInstitution()))).map(Citizen::toString).collect(Collectors.toList());
+            if (user.getRole() == Role.SOCIALWORKER) {
+                return CitizenManager.INSTANCE.getCitizens().values().stream().filter(citizen -> citizen.getCases().stream().anyMatch(c -> c.getInstitution().equals(user.getInstitution()))).map(Citizen::toString).collect(Collectors.toList());
+            } else if (user.getRole() == Role.CASEWORKER) {
+                return CitizenManager.INSTANCE.getCitizens().values().stream().filter(citizen -> citizen.getCases().stream().anyMatch(c -> c.getCaseWorker().equals(user.getUuid()))).map(Citizen::toString).collect(Collectors.toList());
+            }
         } else {
             return Collections.emptyList();
         }
+        return null;
     }
-
+    
     @Override
     public void refresh() {
         CitizenManager.INSTANCE.refresh();
@@ -55,12 +61,12 @@ public class DomainFacadeImpl implements DomainFacade {
         details.put(Column.FNAME.getColumnName(), citizen.getFirstName());
         details.put(Column.LNAME.getColumnName(), citizen.getLastName());
         details.put(Column.PHONE.getColumnName(), citizen.getPhoneNumber());
-        details.put("name", citizen.getFirstName() + " " + citizen.getLastName());
-        details.put(Column.CNUMBER.getColumnName(), citizen.getCpr());
+        details.put(Column.NAME.getColumnName(), citizen.getFirstName() + " " + citizen.getLastName());
         details.put(Column.BDAY.getColumnName(), citizen.getBirthday());
         details.put(Column.ADDR.getColumnName(), citizen.getAddress());
         details.put("cases", citizen.getCases().stream().map(c -> c.getInquiry().getShortInfo()).collect(Collectors.joining("\n")));
-        details.put(Column.CITIZEN.getColumnName(), citizen.getUuid().toString());
+        details.put(Column.UUID.getColumnName(), citizen.getUuid().toString());
+        details.put(Column.CNUMBER.getColumnName(), citizen.getCpr());
         return details;
     }
 
