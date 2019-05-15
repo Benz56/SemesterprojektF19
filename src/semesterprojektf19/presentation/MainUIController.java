@@ -89,7 +89,7 @@ public class MainUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        homeHelloLabel.setText(homeHelloLabel.getText() + userDetails.get("firstname") + " " + userDetails.get("lastname"));
+        homeHelloLabel.setText(homeHelloLabel.getText() + userDetails.get("fname") + " " + userDetails.get("lname"));
         if (userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("socialworker")) {
             homePlaceLabel.setText(homePlaceLabel.getText() + userDetails.get(Column.INSTITUTION.getColumnName()));
         }
