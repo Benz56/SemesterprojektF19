@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import semesterprojektf19.acquaintance.Column;
 
 /**
  *
@@ -38,12 +39,12 @@ public class DiaryItem {
         private final String title, dateOfObs, dateOfEdit, content, creator;
 
         public NoteVersion(Map<String, String> note) {
-            uuid = UUID.fromString(note.get("uuid"));
-            title = note.get("title");
-            dateOfObs = note.get("dateofobs");
-            dateOfEdit = note.get("dateofedit");
-            content = note.get("content");
-            creator = note.get("creator");
+            uuid = UUID.fromString(note.get(Column.UUID.getColumnName()));
+            title = note.get(Column.TITLE.getColumnName());
+            dateOfObs = note.get(Column.DATE_OF_OBS.getColumnName());
+            dateOfEdit = note.get(Column.DATE_OF_EDIT.getColumnName());
+            content = note.get(Column.CONTENT.getColumnName());
+            creator = note.get(Column.CREATOR.getColumnName());
         }
 
         public UUID getUuid() {

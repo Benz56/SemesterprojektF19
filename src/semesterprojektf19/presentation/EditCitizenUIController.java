@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import semesterprojektf19.acquaintance.Column;
 import semesterprojektf19.domain.DomainFacade;
 import semesterprojektf19.domain.DomainFacadeImpl;
 import semesterprojektf19.domain.RegistrationFacade;
@@ -32,11 +33,11 @@ public class EditCitizenUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        firstNameTextField.setText(domainFacade.getCitizenDetails(citizenString).get("firstName"));
-        lastNameTextField.setText(domainFacade.getCitizenDetails(citizenString).get("lastName"));
-        phonenumberTextField.setText(domainFacade.getCitizenDetails(citizenString).get("phoneNumber"));
-        addressTextField.setText(domainFacade.getCitizenDetails(citizenString).get("address"));
-        uuid = domainFacade.getCitizenDetails(citizenString).get("uuid");
+        firstNameTextField.setText(domainFacade.getCitizenDetails(citizenString).get(Column.FNAME.getColumnName()));
+        lastNameTextField.setText(domainFacade.getCitizenDetails(citizenString).get(Column.LNAME.getColumnName()));
+        phonenumberTextField.setText(domainFacade.getCitizenDetails(citizenString).get(Column.PHONE.getColumnName()));
+        addressTextField.setText(domainFacade.getCitizenDetails(citizenString).get(Column.ADDR.getColumnName()));
+        uuid = domainFacade.getCitizenDetails(citizenString).get(Column.CITIZEN.getColumnName());
     }
 
     @FXML

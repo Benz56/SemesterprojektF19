@@ -10,8 +10,8 @@ package semesterprojektf19.acquaintance;
  * @author sofielouise
  */
 public enum Column {
-    USERNAME("username"), PASSWORD("password"), UUID("uuid"), FNAME("fName"),
-    LNAME("lName"), BDAY("bDay"), CNUMBER("cNumber"), ADDR("addr"), PHONE("phone"),
+    USERNAME("username"), PASSWORD("password"), UUID("uuid"), DIARY("diaryuuid"), FNAME("fName"),
+    LNAME("lName"),BDAY("bDay"), CNUMBER("cNumber"), ADDR("addr"), PHONE("phone"),
     ROLE("role"), INSTITUTION("institution"), INSTITUTIONADDR("institutionAddr"),
     CITIZEN("citizenuuid"), CASEWORKER("caseworkeruuid"), SHORTINFO("shortInfo"),
     GUARDIAN("guardianship"), EXECUTINGMUNICIPALITY("executingMunicipality"),
