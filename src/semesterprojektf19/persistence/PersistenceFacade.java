@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.persistence;
 
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-/**
- *
- * @author sofielouise
- */
 public interface PersistenceFacade {
 
     Map<String, String> authenticate(String username, String password);
@@ -27,9 +18,13 @@ public interface PersistenceFacade {
 
     List<Map<String, String>> getCitizens();
 
-    boolean registerCase(Map<String, String> caseDetails, UUID caseUUID, UUID citizenUUID, UUID uuid);
+    boolean registerCase(Map<String, String> caseDetails, UUID caseUUID, UUID citizenUUID, UUID diaryUUID, UUID uuid);
+
+    boolean createDiaryNote(UUID uuid, UUID diaryUUID, UUID editorUUID, String dateOfObs, String dateOfEdit, String title, String content);
 
     List<Map<String, String>> getCases();
 
-    public boolean editCitizen(Map<String, String> map);
+    boolean editCitizen(Map<String, String> map);
+
+    Map<UUID, List<Map<String, String>>> getDiaryNotes(UUID diaryUUID);
 }

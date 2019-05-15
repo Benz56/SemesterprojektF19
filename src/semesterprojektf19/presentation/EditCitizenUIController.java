@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXTextField;
@@ -17,31 +12,19 @@ import semesterprojektf19.domain.DomainFacadeImpl;
 import semesterprojektf19.domain.RegistrationFacade;
 import semesterprojektf19.domain.RegistrationFacadeImpl;
 
-/**
- * FXML Controller class
- *
- * @author Jacob
- */
 public class EditCitizenUIController implements Initializable {
 
-    String uuid;
-    String citizenString;
+    private String uuid, citizenString;
     DomainFacade domainFacade = new DomainFacadeImpl();
     RegistrationFacade registrationFacade = new RegistrationFacadeImpl();
 
     private boolean valid = true;
 
     @FXML
-    private JFXTextField phonenumberTextField;
-    @FXML
-    private JFXTextField addressTextField;
+    private JFXTextField phonenumberTextField, addressTextField, firstNameTextField, lastNameTextField;
     @FXML
     private TextField statusTextField;
-    @FXML
-    private JFXTextField firstNameTextField;
-    @FXML
-    private JFXTextField lastNameTextField;
-
+    
     public EditCitizenUIController(String citizenString) {
         this.citizenString = citizenString;
         System.out.println(this.citizenString);

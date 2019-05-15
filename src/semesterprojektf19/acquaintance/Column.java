@@ -19,7 +19,9 @@ public enum Column {
     CONSENTRELEVANT("consentRelevant"), CONSENTGIVEN("consentObtained"),
     RIGHTTOREPRESENTATION("rightToRep"), INFORMEDONELECTRONICINFO("informed"),
     AGREEMENTSONFURTHERPROCESS("agreementProcess"),
-    SPECIALCURCUMSTANCES("specialCircumstances");
+    SPECIALCURCUMSTANCES("specialCircumstances"), TITLE("title"), 
+    DATE_OF_OBS("dateofobs"), DATE_OF_EDIT("dateofedit"),CONTENT("content"),
+    CREATOR("creator");
     private final String name;
 
     private Column(String name) {
