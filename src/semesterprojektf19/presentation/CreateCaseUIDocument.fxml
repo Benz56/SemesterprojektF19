@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
@@ -15,7 +16,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="@css/OpenCaseUICSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="semesterprojektf19.presentation.CreateCaseUIController">
    <children>
-      <AnchorPane fx:id="createCasePane1" layoutY="38.0" prefHeight="578.0" visible="false" AnchorPane.bottomAnchor="84.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
+      <AnchorPane fx:id="createCasePane1" layoutY="38.0" prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
          <children>
             <Label layoutX="64.0" layoutY="96.0" text="Hvad drejer henvendelsen om?">
                <font>
@@ -82,6 +83,8 @@
                </font>
             </Label>
             <JFXTextField fx:id="shortInfo" focusColor="#43a047" layoutX="64.0" layoutY="52.0" prefHeight="31.0" prefWidth="550.0" promptText="Titel" style="-fx-background-color: white;" unFocusColor="#bfbfbf" />
+            <Label layoutX="56.0" layoutY="31.0" text="*" textFill="#dd1212" />
+            <Label layoutX="56.0" layoutY="98.0" text="*" textFill="#dd1212" />
          </children>
       </AnchorPane>
       <HBox layoutX="63.0" layoutY="20.0" prefHeight="36.0" prefWidth="877.0" spacing="200.0">
@@ -98,7 +101,7 @@
             </Label>
          </children>
       </HBox>
-      <HBox layoutX="452.0" layoutY="632.0" spacing="10.0">
+      <HBox layoutX="451.0" layoutY="645.0" spacing="10.0">
          <children>
             <JFXButton onAction="#onCancel" prefHeight="30.0" prefWidth="141.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Afbryd" textFill="#43a047">
                <font>
@@ -131,7 +134,7 @@
             </Label>
          </children>
       </HBox>
-      <AnchorPane fx:id="createCasePane2" layoutY="38.0" prefHeight="578.0">
+      <AnchorPane fx:id="createCasePane2" layoutY="38.0" prefHeight="578.0" visible="false">
          <children>
             <Label layoutX="64.0" layoutY="96.0" text="Er borgeren indforstået med henvendelsen?">
                <font>
@@ -177,7 +180,7 @@
                   <JFXCheckBox fx:id="rightToRepNo" checkedColor="#43a047" text="Nej" />
                </children>
             </HBox>
-            <Label layoutX="64.0" layoutY="164.0" text="Værgemål og repræsentation">
+            <Label layoutX="63.0" layoutY="159.0" text="Værgemål og repræsentation">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -187,7 +190,7 @@
                   <JFXCheckBox fx:id="guardianship" checkedColor="#43a047" prefHeight="31.0" text="Værgemål:" />
                   <JFXTextField fx:id="txtGuardian" prefHeight="27.0" prefWidth="220.0" />
                   <JFXCheckBox fx:id="reprensentation" checkedColor="#43a047" prefHeight="31.0" text="Repræsentation:" />
-                  <JFXTextField fx:id="txtRep" layoutX="264.0" layoutY="10.0" prefHeight="20.0" prefWidth="311.0" />
+                  <JFXTextField fx:id="txtRep" prefHeight="20.0" prefWidth="311.0" />
                </children>
             </HBox>
             <HBox layoutX="63.0" layoutY="316.0" spacing="20.0">
@@ -197,8 +200,79 @@
                </children>
             </HBox>
             <JFXTextArea fx:id="furtherProcess" layoutX="62.0" layoutY="389.0" prefHeight="160.0" prefWidth="867.0" style="-fx-background-color: white;" />
+            <Label layoutX="55.0" layoutY="228.0" text="*" textFill="#dd1212" />
+            <Label layoutX="55.0" layoutY="291.0" text="*" textFill="#dd1212" />
+            <Label layoutX="57.0" layoutY="361.0" text="*" textFill="#dd1212" />
          </children>
       </AnchorPane>
       <Separator layoutX="63.0" layoutY="49.0" prefHeight="12.0" prefWidth="877.0" />
+      <AnchorPane fx:id="createCasePane3" layoutX="10.0" layoutY="48.0" prefHeight="578.0" visible="false">
+         <children>
+            <Label layoutX="56.0" layoutY="355.0" text="Handle- og betalingskommune">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="57.0" layoutY="14.0" text="Er det relevant at indhente samtykke?">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="56.0" layoutY="134.0" text="Borgerinddragelse - særlige forhold">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="57.0" layoutY="380.0" text="Angiv kun hvilken kommune, hvis det ikke er egen kommune">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <JFXTextArea fx:id="specialCircumstances" layoutX="55.0" layoutY="185.0" prefHeight="160.0" prefWidth="867.0" style="-fx-background-color: white;" />
+            <Label layoutX="57.0" layoutY="159.0" text="Eventuelle særlige forhold der skal adresseres for at borgeren kan inddrages i sagsbehandlingen?">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <HBox layoutX="57.0" layoutY="447.0" spacing="20.0">
+               <children>
+                  <JFXCheckBox checkedColor="#43a047" prefHeight="31.0" text="Anden betalingskommune [angiv hvilke]" />
+                  <JFXTextField fx:id="payingMunicipality" prefHeight="31.0" prefWidth="402.0" />
+               </children>
+            </HBox>
+            <HBox layoutX="57.0" layoutY="407.0" spacing="34.0">
+               <children>
+                  <JFXCheckBox checkedColor="#43a047" prefHeight="31.0" text="Anden handlekommune [angiv hvilke]" />
+                  <JFXTextField fx:id="executingMunicipality" prefHeight="31.0" prefWidth="402.0" />
+               </children>
+            </HBox>
+            <Label layoutX="82.0" layoutY="76.0" text="Hvis ja, angiv hvordan samtykke er modtaget:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <HBox layoutX="82.0" layoutY="103.0" spacing="20.0">
+               <children>
+                  <JFXCheckBox fx:id="oralConsent" checkedColor="#43a047" text="Mundtligt samtykke" />
+                  <JFXCheckBox fx:id="writtenConsent" checkedColor="#43a047" text="Skriftligt samtykke" />
+               </children>
+            </HBox>
+            <HBox layoutX="57.0" layoutY="45.0" spacing="20.0">
+               <children>
+                  <JFXCheckBox fx:id="consentRelevantYes" checkedColor="#43a047" text="Ja" />
+                  <JFXCheckBox checkedColor="#43a047" text="Nej" />
+               </children>
+            </HBox>
+            <JFXComboBox fx:id="institutionCombobox" layoutX="55.0" layoutY="530.0" prefHeight="31.0" prefWidth="141.0" promptText="Institution" />
+            <Label layoutX="56.0" layoutY="493.0" text="Vælg udførende institution">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="48.0" layoutY="16.0" text="*" textFill="#dd1212" />
+            <Label layoutX="48.0" layoutY="136.0" text="*" textFill="#dd1212" />
+            <Label layoutX="48.0" layoutY="495.0" text="*" textFill="#dd1212" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

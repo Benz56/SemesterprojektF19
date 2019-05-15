@@ -7,6 +7,7 @@ package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.awt.MouseInfo;
@@ -29,6 +30,8 @@ import javafx.stage.Stage;
 import semesterprojektf19.acquaintance.Column;
 import semesterprojektf19.domain.DomainFacade;
 import semesterprojektf19.domain.DomainFacadeImpl;
+import semesterprojektf19.domain.RegistrationFacade;
+import semesterprojektf19.domain.RegistrationFacadeImpl;
 
 /**
  * FXML Controller class
@@ -38,7 +41,7 @@ import semesterprojektf19.domain.DomainFacadeImpl;
 public class CreateCaseUIController implements Initializable {
 
     @FXML
-    private AnchorPane createCasePane1, createCasePane2;
+    private AnchorPane createCasePane1, createCasePane2, createCasePane3;
     @FXML
     private JFXTextField shortInfo;
     @FXML
@@ -59,6 +62,7 @@ public class CreateCaseUIController implements Initializable {
     private JFXButton createCase;
 
     private DomainFacade domainFacade = new DomainFacadeImpl();
+    private RegistrationFacade registrationFacade = new RegistrationFacadeImpl();
     private String citizenInfo;
     @FXML
     private JFXCheckBox inquiryOriginCitizen, inquiryOriginRelative, inquiryOriginDoctor;
@@ -79,6 +83,20 @@ public class CreateCaseUIController implements Initializable {
     private final Map<Integer, AnchorPane> anchorPanes;
     @FXML
     private Label txtCitizen;
+    @FXML
+    private Label title;
+    @FXML
+    private JFXTextArea specialCircumstances;
+    @FXML
+    private JFXTextField payingMunicipality;
+    @FXML
+    private JFXCheckBox oralConsent, writtenConsent;
+    @FXML
+    private JFXCheckBox consentRelevantYes;
+    @FXML
+    private JFXComboBox<String> institutionCombobox;
+    @FXML
+    private JFXTextField executingMunicipality;
 
     public CreateCaseUIController(String citizenInfo) {
         this.anchorPanes = new TreeMap<>();
@@ -93,9 +111,11 @@ public class CreateCaseUIController implements Initializable {
         currentPageNumber = 1;
         anchorPanes.put(1, createCasePane1);
         anchorPanes.put(2, createCasePane2);
+        anchorPanes.put(3, createCasePane3);
         showCurrentPane();
         txtCitizen.setText("Borger: " + citizenInfo);
         lblPageNumber.setText("Side " + currentPageNumber + "/" + anchorPanes.size());
+        institutionCombobox.getItems().addAll(registrationFacade.getInstitutionNames());
     }
 
     @FXML
@@ -131,6 +151,7 @@ public class CreateCaseUIController implements Initializable {
     @FXML
     private void onCreateCase(ActionEvent event) {
         Tooltip tooltip = new Tooltip();
+        boolean caseCreated = false;
         if (!shortInfo.getText().isEmpty()) {
             Map<String, String> caseDetails = new HashMap<>();
             caseDetails.put(Column.SHORTINFO.getColumnName(), shortInfo.getText());
@@ -141,14 +162,16 @@ public class CreateCaseUIController implements Initializable {
             caseDetails.put(Column.RIGHTTOREPRESENTATION.getColumnName(), String.valueOf(rightToRepYes.isSelected()));
             caseDetails.put(Column.INFORMEDONELECTRONICINFO.getColumnName(), String.valueOf(electronicAgree.isSelected()));
             caseDetails.put(Column.AGREEMENTSONFURTHERPROCESS.getColumnName(), furtherProcess.getText());
-//            caseDetails.put(Column.SPECIALCURCUMSTANCES.getColumnName(), ccSpecialCircumstancesTextArea.getText());
-//            caseDetails.put(Column.PAYINGMUNICIPALITY.getColumnName(), ccPayingMuniTextField.getText());
-//            caseDetails.put(Column.CONSENTRELEVANT.getColumnName(), String.valueOf(ccConsentRelevantCB.isSelected()));
-//            caseDetails.put(Column.CONSENTGIVEN.getColumnName(), String.valueOf(ccConsentGivenCB.isSelected()));
-//            caseDetails.put(Column.EXECUTINGMUNICIPALITY.getColumnName(), ccExecutingMuniCB.getSelectionModel().getSelectedItem());
+            caseDetails.put(Column.SPECIALCURCUMSTANCES.getColumnName(), specialCircumstances.getText());
+            caseDetails.put(Column.PAYINGMUNICIPALITY.getColumnName(), payingMunicipality.getText());
+            caseDetails.put(Column.CONSENTRELEVANT.getColumnName(), String.valueOf(consentRelevantYes.isSelected()));
+            caseDetails.put(Column.CONSENTGIVEN.getColumnName(), String.valueOf(oralConsent.isSelected()|| writtenConsent.isSelected()));
+            caseDetails.put(Column.INSTITUTION.getColumnName(), institutionCombobox.getSelectionModel().getSelectedItem());
+            caseDetails.put(Column.EXECUTINGMUNICIPALITY.getColumnName(), executingMunicipality.getText());
 
             domainFacade.createCase(caseDetails);
             tooltip.setText("Sag oprettet!");
+            caseCreated = true;
         } else {
             tooltip.setText("Mangler informationer!");
         }
@@ -156,10 +179,13 @@ public class CreateCaseUIController implements Initializable {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executor.schedule(() -> Platform.runLater(() -> tooltip.hide()), 2, TimeUnit.SECONDS);
         executor.shutdown();
+        if (caseCreated) {
+            onCancel();
+        }
     }
 
     @FXML
-    private void onCancel(ActionEvent event) {
+    private void onCancel() {
         ((Stage) next.getScene().getWindow()).close();
     }
 
