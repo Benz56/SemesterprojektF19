@@ -24,7 +24,7 @@ public class Case implements Serializable {
         this.citizen = citizen;
         this.inquiry = new Inquiry(caseDetails.get(Column.SHORTINFO.getColumnName()));
         this.uuid = caseDetails.containsKey(Column.UUID.getColumnName()) ? UUID.fromString(caseDetails.get(Column.UUID.getColumnName())) : UUID.randomUUID();
-        this.diary = new Diary(uuid); // Kan fjernes hvis dagbogen skal oprettes et andet sted, men det skal bare tilhøre sagen.
+        this.diary = new Diary(uuid);
         this.guardianship = caseDetails.get(Column.GUARDIAN.getColumnName());
         this.executingMunicipality = caseDetails.get(Column.EXECUTINGMUNICIPALITY.getColumnName());
         this.representation = caseDetails.get(Column.REPRESENTATION.getColumnName());

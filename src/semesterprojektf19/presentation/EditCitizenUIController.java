@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -18,31 +12,19 @@ import semesterprojektf19.domain.DomainFacadeImpl;
 import semesterprojektf19.domain.RegistrationFacade;
 import semesterprojektf19.domain.RegistrationFacadeImpl;
 
-/**
- * FXML Controller class
- *
- * @author Jacob
- */
 public class EditCitizenUIController implements Initializable {
 
-    String uuid;
-    String citizenString;
+    private String uuid, citizenString;
     DomainFacade domainFacade = new DomainFacadeImpl();
     RegistrationFacade registrationFacade = new RegistrationFacadeImpl();
 
     private boolean valid = true;
 
     @FXML
-    private JFXTextField phonenumberTextField;
-    @FXML
-    private JFXTextField addressTextField;
+    private JFXTextField phonenumberTextField, addressTextField, firstNameTextField, lastNameTextField;
     @FXML
     private TextField statusTextField;
-    @FXML
-    private JFXTextField firstNameTextField;
-    @FXML
-    private JFXTextField lastNameTextField;
-
+    
     public EditCitizenUIController(String citizenString) {
         this.citizenString = citizenString;
         System.out.println(this.citizenString);
@@ -55,16 +37,11 @@ public class EditCitizenUIController implements Initializable {
         phonenumberTextField.setText(domainFacade.getCitizenDetails(citizenString).get("phoneNumber"));
         addressTextField.setText(domainFacade.getCitizenDetails(citizenString).get("address"));
         uuid = domainFacade.getCitizenDetails(citizenString).get("uuid");
-
-        firstNameTextField.textProperty().addListener(listener -> valid = validate());
-        lastNameTextField.textProperty().addListener(listener -> valid = validate());
-        phonenumberTextField.textProperty().addListener(listener -> valid = validate());
-        addressTextField.textProperty().addListener(listener -> valid = validate());
     }
 
     @FXML
-    private void onUpdate(ActionEvent event) {
-        if (valid) {
+    private void onUpdate() {
+        if (validate()) {
             registrationFacade.editCitizen(
                     firstNameTextField.getText(),
                     lastNameTextField.getText(),
@@ -76,7 +53,7 @@ public class EditCitizenUIController implements Initializable {
     }
 
     @FXML
-    private void onCancel(ActionEvent event) {
+    private void onCancel() {
         ((Stage) phonenumberTextField.getScene().getWindow()).close();
     }
 

@@ -1,30 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.domain;
 
 import semesterprojektf19.acquaintance.UserContainer;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import semesterprojektf19.acquaintance.Column;
-import semesterprojektf19.persistence.Persistence;
 import semesterprojektf19.persistence.PersistenceFacade;
 import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
 public class DomainFacadeImpl implements DomainFacade {
 
     private final PersistenceFacade persistenceFacade = new PersistenceFacadeImpl();
-
-    public DomainFacadeImpl() {
-        Persistence.INSTANCE.toString(); //Initialize persistence i.e. create required files.
-    }
 
     @Override
     public void createCase(Map<String, String> caseDetails) {
@@ -34,7 +24,8 @@ public class DomainFacadeImpl implements DomainFacade {
         citizen.addCase(c);
         UUID citizenUUID = citizen.getUuid();
         UUID caseUUID = c.getUUID();
-        persistenceFacade.registerCase(caseDetails, caseUUID, citizenUUID, UserContainer.getUser().getUuid());
+        UUID diaryUUID = c.getDiary().getUuid();
+        persistenceFacade.registerCase(caseDetails, caseUUID, citizenUUID, UserContainer.getUser().getUuid(), diaryUUID);
     }
 
     @Override
@@ -75,43 +66,24 @@ public class DomainFacadeImpl implements DomainFacade {
 
     @Override
     public List<List<Map<String, String>>> getDiaryDetails(String citizenString, int caseIndex) {
-        List<List<Map<String, String>>> notes = new ArrayList<>();
-        Citizen citizen = CitizenManager.INSTANCE.getCitizen(citizenString);
-        citizen.getCase(caseIndex).getDiary().getNotes().forEach(note -> {
-
-            List<Map<String, String>> versions = new ArrayList<>();
-            note.getVersions().forEach(version -> {
-                Map<String, String> content = new HashMap<>();
-                content.put("uuid", version.getUuid().toString());
-                content.put("title", version.getTitel());
-                content.put("obsDate", version.getDateOfObservation());
-                content.put("noteDate", version.getDate().toString());
-                content.put("content", version.getNote());
-                content.put("creator", version.getCreator().getFirstName() + " " + version.getCreator().getLastName());
-                versions.add(content);
-            });
-
-            Collections.reverse(versions);
-            notes.add(versions);
-        });
-        Collections.reverse(notes);
-        return notes;
+        return persistenceFacade.getDiaryNotes(CitizenManager.INSTANCE.getCitizen(citizenString).getCase(caseIndex).getDiary().getUuid()).values().stream().sorted((List<Map<String, String>> o1, List<Map<String, String>> o2) -> o2.get(o2.size() - 1).get("dateofedit").compareTo(o1.get(o1.size() - 1).get("dateofedit"))).collect(Collectors.toList());
     }
 
     @Override
     public Map<String, String> addDiaryNoteVersion(String citizenString, int caseIndex, Map<String, String> details) {
         Citizen citizen = CitizenManager.INSTANCE.getCitizen(citizenString);
         UUID uuid = UUID.fromString(details.get("uuid"));
-        DiaryNote version = new DiaryNote(UUID.fromString(details.get("uuid")), UserContainer.getUser(), details.get("content"), details.get("title"), details.get("obsDate"));
+        DiaryNote version = new DiaryNote(UUID.fromString(details.get("uuid")), UserContainer.getUser(), details.get("content"), details.get("title"), details.get("dateofobs"));
         citizen.getCase(caseIndex).getDiary().getNotes().stream().filter(note -> note.getUuid().equals(uuid)).findFirst().ifPresent(note -> note.addNoteVersion(version));
         Map<String, String> content = new HashMap<>();
         content.put("uuid", version.getUuid().toString());
-        content.put("title", version.getTitel());
-        content.put("obsDate", version.getDateOfObservation());
-        content.put("noteDate", version.getDate().toString());
+        content.put("title", version.getTitle());
+        content.put("dateofobs", version.getDateOfObservation());
+        content.put("dateofedit", version.getDate().toString());
         content.put("content", version.getNote());
         content.put("creator", version.getCreator().getFirstName() + " " + version.getCreator().getLastName());
-        //Husk at gemme i persistens herefter.
+        persistenceFacade.createDiaryNote(version.getUuid(), citizen.getCase(caseIndex).getUUID(), UserContainer.getUser().getUuid(),
+                version.getDateOfObservation(), new Date().toString(), version.getTitle(), version.getNote());
         return content;
 
     }

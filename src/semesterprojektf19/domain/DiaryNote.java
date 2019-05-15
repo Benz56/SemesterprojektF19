@@ -11,19 +11,19 @@ public class DiaryNote implements Serializable {
     private static final long serialVersionUID = 2266792567973358800L;
 
     private final UUID uuid;
-    private String titel, note, dateOfObservation;
+    private String title, note, dateOfObservation;
     private Date date;
     private Person creator;
-    private List<Topic> topics; // til at tilføje emne til note.
-    private List<DiaryNote> noteVersions; // til at holde de forskellige versioner af noten.
+    private List<Topic> topics;
+    private List<DiaryNote> noteVersions;
 
     // TODO Implementer date picker i javaFX. skal holde dato for observation som ikke nødvendigvis er den samme som oprettelses dato 
     // TODO implementere 
-    public DiaryNote(UUID uuid, Person creator, String note, String titel, String dateOfObservation) {
+    public DiaryNote(UUID uuid, Person creator, String note, String title, String dateOfObservation) {
         this.uuid = uuid;
         this.creator = creator;
         this.note = note;
-        this.titel = titel;
+        this.title = title;
         this.dateOfObservation = dateOfObservation;
         this.date = new Date();
         this.topics = new ArrayList<>();
@@ -82,12 +82,12 @@ public class DiaryNote implements Serializable {
         return topics;
     }
 
-    public void setTitel(String titel) {
-        this.titel = titel;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getTitel() {
-        return titel;
+    public String getTitle() {
+        return title;
     }
 
     public void setDateOfObservation(String dateOfObservation) {
@@ -104,7 +104,7 @@ public class DiaryNote implements Serializable {
 
     @Override
     public String toString() {
-        return "Titel: " + this.titel + "\n"
+        return "Titel: " + this.title + "\n"
                 + "Observation foretaget: " + this.dateOfObservation + "\n\n"
                 + this.note + "\n\n\n"
                 + " Sidst redigeret: " + this.date

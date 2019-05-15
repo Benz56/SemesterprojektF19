@@ -184,7 +184,6 @@ public class MainUIController implements Initializable {
         if (!userDetails.get(Column.ROLE.getColumnName()).equals("admin")) {
             String selectedItem = clientList.getSelectionModel().getSelectedItem();
             List<String> institutionCitizens = domainFacade.getInstitutionCitizens();
-            System.out.println("---" + institutionCitizens);
             clientList.getItems().setAll(institutionCitizens);
             if (clientList.getItems().contains(selectedItem)) {
                 clientList.getSelectionModel().select(selectedItem);

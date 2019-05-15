@@ -6,7 +6,6 @@
 package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
@@ -26,8 +25,6 @@ public class RegisterEmployeeUIController implements Initializable {
 
     private final RegistrationFacade registrationFacade = new RegistrationFacadeImpl();
 
-    private boolean valid = false;
-
     @FXML
     private JFXTextField firstnameTextField, lastnameTextField, usernameTextField;
     @FXML
@@ -41,18 +38,11 @@ public class RegisterEmployeeUIController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         roleComboBox.getItems().addAll("Caseworker", "Socialworker", "Admin");
         institutionComboBox.getItems().addAll(registrationFacade.getInstitutionNames());
-        firstnameTextField.textProperty().addListener(listener -> valid = validate());
-        lastnameTextField.textProperty().addListener(listener -> valid = validate());
-        usernameTextField.textProperty().addListener(listener -> valid = validate());
-        passwordPasswordField.textProperty().addListener(listener -> valid = validate());
-        confirmPasswordField.textProperty().addListener(listener -> valid = validate());
-        roleComboBox.valueProperty().addListener(listener -> valid = validate());
-        institutionComboBox.valueProperty().addListener(listener -> valid = validate());
     }
 
     @FXML
     private void onCreate() {
-        if (valid) {
+        if (validate()) {
             if (registrationFacade.registerEmployee(
                     usernameTextField.getText(),
                     passwordPasswordField.getText(),
