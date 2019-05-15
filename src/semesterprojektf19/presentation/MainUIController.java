@@ -68,6 +68,8 @@ public class MainUIController implements Initializable {
     //Admin nodes:
     @FXML
     private JFXButton adminCreateUserBtn, adminEditUserBtn, adminDeleteUserBtn, adminCreateInstitutionBtn;
+    @FXML
+    private JFXButton ccCreateCaseBtn;
 
     public MainUIController(Map<String, String> userDetails) {
         this.userDetails = userDetails;
@@ -100,6 +102,8 @@ public class MainUIController implements Initializable {
             SimpleStageBuilder.create("Opret Borger", "RegisterCitizenUIDocument.fxml").setResizable(false).setCloseOnUnfocused(true).setOnHiding(() -> {
                 domainFacade.refresh();
                 refresh();
+                ccCreateCaseBtn.setDisable(true);
+                ccEditCitizenBtn.setDisable(true);
             }).open();
         });
 
@@ -115,13 +119,14 @@ public class MainUIController implements Initializable {
 
         ccSearchCitizenTextField.textProperty().addListener(listener -> refresh());
         setClientListener();
-
         diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
         diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             diarynotesListview.getItems().clear();
             diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
-            List<List<Map<String, String>>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
-            diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
+            if (diaryCaseCb.getSelectionModel().getSelectedIndex() != -1) {
+                List<List<Map<String, String>>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
+                diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
+            }
         });
         diarynotesObservable = FXCollections.observableList(diarynotesListview.getItems());
         diarynotesObservable.addListener((ListChangeListener.Change<? extends DiaryItem> event) -> diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this)));
@@ -132,6 +137,8 @@ public class MainUIController implements Initializable {
     private void setClientListener() {
         clientList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
+                diaryCreateNoteBtn.setDisable(false);
+                diaryCaseCb.setDisable(false);
                 Map<String, String> citizenDetails = domainFacade.getCitizenDetails(newValue);
                 caseCitizenNameTextField.setText(citizenDetails.get(Column.NAME.getColumnName()));
                 caseCPRTextField.setText(citizenDetails.get(Column.BDAY.getColumnName()));
@@ -140,6 +147,18 @@ public class MainUIController implements Initializable {
                 caseCasesCB.getItems().setAll(citizenDetails.get(Column.CASES.getColumnName()).split("\n"));
                 diaryCaseCb.getItems().clear();
                 diaryCaseCb.getItems().setAll(citizenDetails.get(Column.CASES.getColumnName()).split("\n"));
+                if (!diaryCaseCb.getItems().isEmpty()) {
+                    diaryCaseCb.getSelectionModel().select(0);
+                }
+            }
+        });
+    }
+
+    private void setSearchClientListener() {
+        ccCitizenListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                ccCreateCaseBtn.setDisable(false);
+                ccEditCitizenBtn.setDisable(false);
             }
         });
     }
@@ -148,10 +167,11 @@ public class MainUIController implements Initializable {
     private void onCreateCase(ActionEvent event) {
         SimpleStageBuilder.create("Opret sag", "CreateCaseUIDocument.fxml")
                 .setResizable(false)
-                .setCloseOnUnfocused(true)
                 .setControllerFactory(new CreateCaseUIController(ccCitizenListView.getSelectionModel().getSelectedItem()))
                 .setOnHiding(() -> refresh())
                 .open();
+        ccCreateCaseBtn.setDisable(true);
+        ccEditCitizenBtn.setDisable(true);
     }
 
     private void changePane(JFXButton clickedBtn) {

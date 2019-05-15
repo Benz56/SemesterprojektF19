@@ -1,6 +1,5 @@
 package semesterprojektf19.domain;
 
-import semesterprojektf19.acquaintance.UserContainer;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,6 +9,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import semesterprojektf19.acquaintance.Column;
 import semesterprojektf19.domain.accesscontrol.Role;
+import semesterprojektf19.acquaintance.UserContainer;
 import semesterprojektf19.persistence.PersistenceFacade;
 import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
@@ -66,19 +66,20 @@ public class DomainFacadeImpl implements DomainFacade {
         details.put(Column.ADDR.getColumnName(), citizen.getAddress());
         details.put("cases", citizen.getCases().stream().map(c -> c.getInquiry().getShortInfo()).collect(Collectors.joining("\n")));
         details.put(Column.UUID.getColumnName(), citizen.getUuid().toString());
+        details.put(Column.CNUMBER.getColumnName(), citizen.getCpr());
         return details;
     }
 
     @Override
     public List<List<Map<String, String>>> getDiaryDetails(String citizenString, int caseIndex) {
-        return persistenceFacade.getDiaryNotes(CitizenManager.INSTANCE.getCitizen(citizenString).getCase(caseIndex).getDiary().getUuid()).values().stream().sorted((List<Map<String, String>> o1, List<Map<String, String>> o2) -> o2.get(o2.size() - 1).get("dateofedit").compareTo(o1.get(o1.size() - 1).get("dateofedit"))).collect(Collectors.toList());
+        return persistenceFacade.getDiaryNotes(CitizenManager.INSTANCE.getCitizen(citizenString).getCase(caseIndex).getDiary().getUuid()).values().stream().sorted((List<Map<String, String>> o1, List<Map<String, String>> o2) -> o2.get(o2.size() - 1).get(Column.DATE_OF_EDIT.getColumnName()).compareTo(o1.get(o1.size() - 1).get(Column.DATE_OF_EDIT.getColumnName()))).collect(Collectors.toList());
     }
 
     @Override
     public Map<String, String> addDiaryNoteVersion(String citizenString, int caseIndex, Map<String, String> details) {
         Citizen citizen = CitizenManager.INSTANCE.getCitizen(citizenString);
         UUID uuid = UUID.fromString(details.get(Column.UUID.getColumnName()));
-        DiaryNote version = new DiaryNote(UUID.fromString(details.get(Column.UUID.getColumnName())), UserContainer.getUser(), details.get("content"), details.get("title"), details.get("dateofobs"));
+        DiaryNote version = new DiaryNote(UUID.fromString(details.get(Column.UUID.getColumnName())), UserContainer.getUser(), details.get(Column.CONTENT.getColumnName()), details.get(Column.TITLE.getColumnName()), details.get(Column.DATE_OF_OBS.getColumnName()));
         citizen.getCase(caseIndex).getDiary().getNotes().stream().filter(note -> note.getUuid().equals(uuid)).findFirst().ifPresent(note -> note.addNoteVersion(version));
         Map<String, String> content = new HashMap<>();
         content.put(Column.UUID.getColumnName(), version.getUuid().toString());

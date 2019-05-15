@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import semesterprojektf19.acquaintance.Column;
 import semesterprojektf19.domain.DomainFacade;
 import semesterprojektf19.domain.DomainFacadeImpl;
 import semesterprojektf19.domain.RegistrationFacade;
@@ -14,17 +15,16 @@ import semesterprojektf19.domain.RegistrationFacadeImpl;
 
 public class EditCitizenUIController implements Initializable {
 
-    private String uuid, citizenString;
-    DomainFacade domainFacade = new DomainFacadeImpl();
-    RegistrationFacade registrationFacade = new RegistrationFacadeImpl();
-
-    private boolean valid = true;
+    private final String citizenString;
+    private final DomainFacade domainFacade = new DomainFacadeImpl();
+    private final RegistrationFacade registrationFacade = new RegistrationFacadeImpl();
+    private String uuid;
 
     @FXML
     private JFXTextField phonenumberTextField, addressTextField, firstNameTextField, lastNameTextField;
     @FXML
     private TextField statusTextField;
-    
+
     public EditCitizenUIController(String citizenString) {
         this.citizenString = citizenString;
         System.out.println(this.citizenString);
@@ -32,11 +32,11 @@ public class EditCitizenUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        firstNameTextField.setText(domainFacade.getCitizenDetails(citizenString).get("firstName"));
-        lastNameTextField.setText(domainFacade.getCitizenDetails(citizenString).get("lastName"));
-        phonenumberTextField.setText(domainFacade.getCitizenDetails(citizenString).get("phoneNumber"));
-        addressTextField.setText(domainFacade.getCitizenDetails(citizenString).get("address"));
-        uuid = domainFacade.getCitizenDetails(citizenString).get("uuid");
+        firstNameTextField.setText(domainFacade.getCitizenDetails(citizenString).get(Column.FNAME.getColumnName()));
+        lastNameTextField.setText(domainFacade.getCitizenDetails(citizenString).get(Column.LNAME.getColumnName()));
+        phonenumberTextField.setText(domainFacade.getCitizenDetails(citizenString).get(Column.PHONE.getColumnName()));
+        addressTextField.setText(domainFacade.getCitizenDetails(citizenString).get(Column.ADDR.getColumnName()));
+        uuid = domainFacade.getCitizenDetails(citizenString).get(Column.CITIZEN.getColumnName());
     }
 
     @FXML

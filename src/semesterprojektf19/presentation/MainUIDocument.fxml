@@ -25,7 +25,7 @@
             <Image url="@resources/images/Logo.png" />
          </image>
       </ImageView>
-      <JFXListView fx:id="clientList" maxWidth="-Infinity" prefHeight="700.0" prefWidth="200.0" style="-fx-background-color: #E5E5E5;" styleClass="client-list-view" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="100.0" />
+      <JFXListView fx:id="clientList" layoutY="136.0" maxWidth="-Infinity" prefHeight="664.0" prefWidth="200.0" style="-fx-background-color: #E5E5E5;" styleClass="client-list-view" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="136.0" />
       <GridPane layoutX="200.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="951.0" minWidth="10.0" prefWidth="912.0" />
@@ -115,7 +115,7 @@
                      <graphic>
                         <AnchorPane prefHeight="100.0" prefWidth="100.0">
                            <children>
-                              <FontAwesomeIconView glyphName="SIGN_OUT" layoutX="21.0" layoutY="57.0" size="50" text="" />
+                              <FontAwesomeIconView glyphName="SIGN_OUT" layoutX="20.0" layoutY="57.0" size="50" />
                               <Label layoutX="22.0" layoutY="69.0" style="-fx-text-fill: #43A047;" text="Log ud">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
@@ -159,9 +159,9 @@
             </AnchorPane>
             <AnchorPane fx:id="diaryPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
                <children>
-                  <JFXComboBox fx:id="diaryCaseCb" focusColor="#43a047" layoutX="25.0" layoutY="24.0" prefHeight="31.0" prefWidth="292.0" promptText="Vælg Sag" unFocusColor="#bfbfbf" />
+                  <JFXComboBox fx:id="diaryCaseCb" disable="true" focusColor="#43a047" layoutX="25.0" layoutY="24.0" prefHeight="31.0" prefWidth="292.0" promptText="Vælg Sag" unFocusColor="#bfbfbf" />
                   <JFXListView fx:id="diarynotesListview" layoutX="20.0" layoutY="65.0" prefHeight="613.0" prefWidth="950.0" stylesheets="@css/DiaryListViewCSS.css" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="65.0" />
-                  <JFXButton fx:id="diaryCreateNoteBtn" layoutX="353.0" layoutY="24.0" prefHeight="31.0" prefWidth="186.0" style="-fx-background-color: #E5E5E5;" text="Opret notat" textFill="#43a047" />
+                  <JFXButton fx:id="diaryCreateNoteBtn" disable="true" layoutX="353.0" layoutY="24.0" prefHeight="31.0" prefWidth="186.0" style="-fx-background-color: #E5E5E5;" text="Opret notat" textFill="#43a047" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="casesPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
@@ -222,8 +222,8 @@
                   </Label>
                   <JFXTextField fx:id="ccSearchCitizenTextField" focusColor="#43a047" labelFloat="true" layoutX="20.0" layoutY="60.0" prefHeight="31.0" prefWidth="987.0" promptText="Søg efter borger" unFocusColor="#bfbfbf" />
                   <JFXListView fx:id="ccCitizenListView" layoutX="20.0" layoutY="100.0" prefHeight="540.0" prefWidth="987.0" style="-fx-background-color: #E5E5E5;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" />
-                  <JFXButton layoutX="780.0" layoutY="655.0" onAction="#onCreateCase" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Opret Sag" textFill="#43a047" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
-                  <JFXButton fx:id="ccEditCitizenBtn" layoutX="235.0" layoutY="649.0" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Rediger Borger" textFill="#43a047" />
+                  <JFXButton fx:id="ccCreateCaseBtn" disable="true" layoutX="780.0" layoutY="655.0" onAction="#onCreateCase" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Opret Sag" textFill="#43a047" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+                  <JFXButton fx:id="ccEditCitizenBtn" disable="true" layoutX="235.0" layoutY="655.0" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Rediger Borger" textFill="#43a047" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="235.0" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="adminPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
@@ -239,5 +239,10 @@
                </children></AnchorPane>
          </children>
       </StackPane>
+      <Label layoutY="100.0" prefHeight="36.0" prefWidth="200.0" style="-fx-background-color: #E5E5E5;" text=" Liste af tilknyttede sager">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

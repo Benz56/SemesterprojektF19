@@ -18,10 +18,11 @@ public enum Column {
     PAYINGMUNICIPALITY("payingMunicipality"), REPRESENTATION("representation"),
     CONSENTRELEVANT("consentRelevant"), CONSENTGIVEN("consentObtained"),
     RIGHTTOREPRESENTATION("rightToRep"), INFORMEDONELECTRONICINFO("informed"),
-    AGREEMENTSONFURTHERPROCESS("agreementProcess"), BACKGROUND("background"),
-    SPECIALCURCUMSTANCES("specialCircumstances"), TITLE("title"), 
-    DATE_OF_OBS("dateofobs"), DATE_OF_EDIT("dateofedit"),CONTENT("content"),
-    CREATOR("creator"), CASES("cases");
+    AGREEMENTSONFURTHERPROCESS("agreementProcess"), DIARY("diaryuuid"),
+    SPECIALCURCUMSTANCES("specialCircumstances"), TITLE("title"),
+    DATE_OF_OBS("dateofobs"), DATE_OF_EDIT("dateofedit"), CONTENT("content"),
+    CREATOR("creator"), EDITOR_UUID("editoruuid"), BACKGROUND("background"), CASES("cases");
+
     private final String name;
 
     private Column(String name) {

@@ -99,7 +99,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             pst.setObject(i++, caseUUID);
             pst.setObject(i++, citizenUUID);
             pst.setObject(i++, UserContainer.getUser().getUuid());
-            pst.setString(i++, caseDetails.get(Column.EXECUTINGMUNICIPALITY.getColumnName()));
+            pst.setString(i++, caseDetails.get(Column.INSTITUTION.getColumnName()));
             pst.setString(i++, caseDetails.get(Column.GUARDIAN.getColumnName()));
             pst.setString(i++, caseDetails.get(Column.REPRESENTATION.getColumnName()));
             pst.setString(i++, caseDetails.get(Column.AGREEMENTSONFURTHERPROCESS.getColumnName()));
@@ -117,8 +117,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             pst2.executeUpdate();
         } catch (SQLException e) {
             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, e);
-            System.out.println("CaseID: " + caseUUID.toString());
-
+            System.out.println("SQL exception catched: CaseID: " + caseUUID.toString());
             return true;
         }
         return false;
@@ -199,7 +198,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
         return citizens;
     }
 
-     @Override
+    @Override
     public List<Map<String, String>> getCases() {
         List<Map<String, String>> cases = new ArrayList<>();
         try {
@@ -254,6 +253,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     @Override
     public Map<UUID, List<Map<String, String>>> getDiaryNotes(UUID diaryUUID) {
         Map<UUID, List<Map<String, String>>> notes = new HashMap<>();
+        Map<UUID, String> workerNameCache = new HashMap<>();
         try (PreparedStatement pst = connection.getConnection().prepareStatement("SELECT * FROM diarynote WHERE diaryuuid = ? ORDER BY dateofedit DESC")) {
             pst.setObject(1, diaryUUID);
             try (ResultSet rs = pst.executeQuery()) {
@@ -264,7 +264,15 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
                     map.put(Column.DATE_OF_OBS.getColumnName(), rs.getString(Column.DATE_OF_OBS.getColumnName()));
                     map.put(Column.DATE_OF_EDIT.getColumnName(), rs.getString(Column.DATE_OF_EDIT.getColumnName()));
                     map.put(Column.CONTENT.getColumnName(), rs.getString(Column.CONTENT.getColumnName()));
-                    //map.put(Column.CREATOR.getColumnName(), rs.getString(Column.CREATOR.getColumnName()));
+                    map.put(Column.CREATOR.getColumnName(), workerNameCache.computeIfAbsent(UUID.fromString(rs.getString(Column.EDITOR_UUID.getColumnName())), uuid -> {
+                        try (PreparedStatement pst2 = connection.getConnection().prepareStatement("SELECT " + Column.FNAME.getColumnName() + ", " + Column.LNAME.getColumnName() + " FROM worker WHERE " + Column.UUID.getColumnName() + " = '" + uuid + "'"); ResultSet rs2 = pst2.executeQuery()) {
+                            rs2.next();
+                            return rs2.getString(Column.FNAME.getColumnName()) + " " + rs2.getString(Column.LNAME.getColumnName());
+                        } catch (SQLException ex) {
+                            Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        return "";
+                    }));
                     notes.computeIfAbsent(UUID.fromString(map.get(Column.UUID.getColumnName())), k -> new ArrayList<>()).add(map);
                 }
             } catch (SQLException ex) {
