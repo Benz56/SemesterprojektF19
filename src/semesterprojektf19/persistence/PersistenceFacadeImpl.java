@@ -265,8 +265,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
                     map.put(Column.DATE_OF_OBS.getColumnName(), rs.getString(Column.DATE_OF_OBS.getColumnName()));
                     map.put(Column.DATE_OF_EDIT.getColumnName(), rs.getString(Column.DATE_OF_EDIT.getColumnName()));
                     map.put(Column.CONTENT.getColumnName(), rs.getString(Column.CONTENT.getColumnName()));
-                    UUID workerUuid = UUID.fromString(rs.getString(Column.EDITOR_UUID.getColumnName()));
-                    workerNameCache.computeIfAbsent(workerUuid, uuid -> {
+                    map.put(Column.CREATOR.getColumnName(), workerNameCache.computeIfAbsent(UUID.fromString(rs.getString(Column.EDITOR_UUID.getColumnName())), uuid -> {
                         try (PreparedStatement pst2 = connection.getConnection().prepareStatement("SELECT " + Column.FNAME.getColumnName() + ", " + Column.LNAME.getColumnName() + " FROM worker WHERE " + Column.UUID.getColumnName() + " = '" + uuid + "'"); ResultSet rs2 = pst2.executeQuery()) {
                             rs2.next();
                             return rs2.getString(Column.FNAME.getColumnName()) + " " + rs2.getString(Column.LNAME.getColumnName());
@@ -274,8 +273,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
                             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         return "";
-                    });
-                    map.put(Column.CREATOR.getColumnName(), workerNameCache.get(workerUuid));
+                    }));
                     notes.computeIfAbsent(UUID.fromString(map.get(Column.UUID.getColumnName())), k -> new ArrayList<>()).add(map);
                 }
             } catch (SQLException ex) {
