@@ -68,12 +68,7 @@ public class MainUIController implements Initializable {
     @FXML
     private JFXListView<String> ccCitizenListView;
     @FXML
-    private JFXTextField ccSearchCitizenTextField, ccGuardianTextField, ccRepresentationTextField, ccPayingMuniTextField, ccShortInfoTextField;
-    @FXML
-    private JFXTextArea ccSpecialCircumstancesTextArea, ccProcessAgreementsTextArea;
-    @FXML
-    private JFXCheckBox ccRightToRepCB, ccInformedECardCB, ccConsentRelevantCB, ccConsentGivenCB;
-    @FXML
+    private JFXTextField ccSearchCitizenTextField;
     private JFXComboBox<String> ccExecutingMuniCB;
 
     //Diary nodes.
@@ -131,10 +126,10 @@ public class MainUIController implements Initializable {
         ccEditCitizenBtn.setOnAction(event -> SimpleStageBuilder.create("Rediger Borger", "EditCitizenUIDocument.fxml").setResizable(false)
                 .setCloseOnUnfocused(true).setControllerFactory(new EditCitizenUIController(ccCitizenListView.getSelectionModel().getSelectedItem())).open());
 
+        
         ccSearchCitizenTextField.textProperty().addListener(listener -> refresh());
         setClientListener();
-        ccExecutingMuniCB.getItems().addAll(registrationFacade.getInstitutionNames());
-        
+//        ccExecutingMuniCB.getItems().addAll(registrationFacade.getInstitutionNames());
         diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
         diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             diarynotesListview.getItems().clear();
@@ -167,35 +162,11 @@ public class MainUIController implements Initializable {
 
     @FXML
     private void onCreateCase(ActionEvent event) {
-        Tooltip tooltip = new Tooltip();
-        if (ccCitizenListView.getSelectionModel().getSelectedItem() != null
-                && ccExecutingMuniCB.getSelectionModel().getSelectedItem() != null
-                && !ccRepresentationTextField.getText().isEmpty()
-                && !ccPayingMuniTextField.getText().isEmpty()
-                && !ccShortInfoTextField.getText().isEmpty()) {
-            Map<String, String> caseDetails = new HashMap<>();
-            caseDetails.put(Column.CITIZEN.getColumnName(), ccCitizenListView.getSelectionModel().getSelectedItem());
-            caseDetails.put(Column.GUARDIAN.getColumnName(), ccGuardianTextField.getText());
-            caseDetails.put(Column.EXECUTINGMUNICIPALITY.getColumnName(), ccExecutingMuniCB.getSelectionModel().getSelectedItem());
-            caseDetails.put(Column.REPRESENTATION.getColumnName(), ccRepresentationTextField.getText());
-            caseDetails.put(Column.PAYINGMUNICIPALITY.getColumnName(), ccPayingMuniTextField.getText());
-            caseDetails.put(Column.CONSENTRELEVANT.getColumnName(), String.valueOf(ccConsentRelevantCB.isSelected()));
-            caseDetails.put(Column.CONSENTGIVEN.getColumnName(), String.valueOf(ccConsentGivenCB.isSelected()));
-            caseDetails.put(Column.RIGHTTOREPRESENTATION.getColumnName(), String.valueOf(ccRightToRepCB.isSelected()));
-            caseDetails.put(Column.INFORMEDONELECTRONICINFO.getColumnName(), String.valueOf(ccInformedECardCB.isSelected()));
-            caseDetails.put(Column.AGREEMENTSONFURTHERPROCESS.getColumnName(), ccProcessAgreementsTextArea.getText());
-            caseDetails.put(Column.SPECIALCURCUMSTANCES.getColumnName(), ccSpecialCircumstancesTextArea.getText());
-            caseDetails.put(Column.SHORTINFO.getColumnName(), ccShortInfoTextField.getText());
-            domainFacade.createCase(caseDetails);
-            refresh();
-            tooltip.setText("Sag oprettet!");
-        } else {
-            tooltip.setText("Mangler informationer!");
-        }
-        tooltip.show(((JFXButton) event.getSource()).getScene().getWindow(), MouseInfo.getPointerInfo().getLocation().getX(), MouseInfo.getPointerInfo().getLocation().getY());
-        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-        executor.schedule(() -> Platform.runLater(() -> tooltip.hide()), 2, TimeUnit.SECONDS);
-        executor.shutdown();
+        SimpleStageBuilder.create("Opret sag", "CreateCaseUIDocument.fxml")
+                .setResizable(false)
+                .setControllerFactory(new CreateCaseUIController(ccCitizenListView.getSelectionModel().getSelectedItem()))
+                .setOnHiding(()-> refresh())
+                .open();
     }
 
     private void changePane(JFXButton clickedBtn) {
