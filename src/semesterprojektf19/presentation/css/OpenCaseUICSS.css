@@ -1,0 +1,44 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29-03-2019, 22:41:53
+    Author     : Benjamin Staugaard | Benz56
+*/
+
+* {
+    -fx-prompt-text-fill: #BFBFBF;
+}
+
+.glyph-icon {
+    -fx-fill: #43A047;
+}
+
+.jfx-combo-box .input-line {
+    -fx-background-color: -fx-prompt-text-fill;
+}
+
+.jfx-text-area .input-line{
+    -fx-background-color: #43A047;
+}
+.jfx-text-area {
+    -fx-background-color: white;
+}
+
+.jfx-text-field .input-line{
+    -fx-background-color: #43A047;
+}
+.jfx-text-field {
+    -fx-background-color: white;
+}
+
+.jfx-button {
+    -fx-text-fill:  #43A047;
+    -fx-background-color: #E5E5E5;
+    -fx-font-size: 16; 
+}
+.anchor-pane {
+    -fx-background-color: #cccccc;
+}
