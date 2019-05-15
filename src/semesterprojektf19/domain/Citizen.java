@@ -56,7 +56,7 @@ public class Citizen extends Person {
 
     @Override
     public String toString() {
-        return getFirstName() + " " + getLastName() + " (Birthday: " + birthday + ")\n";
+        return getFirstName() + " " + getLastName() + " (" + birthday + ")\n";
     }
 
     public String getAddress() {

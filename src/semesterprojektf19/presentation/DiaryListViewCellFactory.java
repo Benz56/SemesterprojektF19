@@ -66,7 +66,7 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
         editButton.setDisable(true);
         editButton.setPrefWidth(120);
         versionsButton.setPrefWidth(120);
-        VBox buttons = new VBox(-8, new HBox(10, editButton, versionsButton), toggleEdit);
+        VBox buttons = new VBox(0, new HBox(10, editButton, versionsButton), toggleEdit);
         AnchorPane.setBottomAnchor(buttons, -8D);
         AnchorPane.setLeftAnchor(buttons, 10D);
 
