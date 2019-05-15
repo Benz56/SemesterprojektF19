@@ -22,6 +22,7 @@ public enum Column {
     SPECIALCURCUMSTANCES("specialCircumstances"), TITLE("title"),
     DATE_OF_OBS("dateofobs"), DATE_OF_EDIT("dateofedit"), CONTENT("content"),
     CREATOR("creator"), EDITOR_UUID("editoruuid"), BACKGROUND("background");
+
     private final String name;
 
     private Column(String name) {

@@ -15,17 +15,16 @@ import semesterprojektf19.domain.RegistrationFacadeImpl;
 
 public class EditCitizenUIController implements Initializable {
 
-    private String uuid, citizenString;
-    DomainFacade domainFacade = new DomainFacadeImpl();
-    RegistrationFacade registrationFacade = new RegistrationFacadeImpl();
-
-    private boolean valid = true;
+    private final String citizenString;
+    private final DomainFacade domainFacade = new DomainFacadeImpl();
+    private final RegistrationFacade registrationFacade = new RegistrationFacadeImpl();
+    private String uuid;
 
     @FXML
     private JFXTextField phonenumberTextField, addressTextField, firstNameTextField, lastNameTextField;
     @FXML
     private TextField statusTextField;
-    
+
     public EditCitizenUIController(String citizenString) {
         this.citizenString = citizenString;
         System.out.println(this.citizenString);
