@@ -21,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.Stage;
+import semesterprojektf19.acquaintance.Column;
 import semesterprojektf19.domain.DiaryNoteFacade;
 import semesterprojektf19.domain.DiaryNoteFacadeImpl;
 
@@ -74,9 +75,9 @@ public class CreateNoteUIController implements Initializable {
                 && datePicker.getValue() != null) {
             noteDetails.put("index", index);
             noteDetails.put("citizenInfo", citizenInfo);
-            noteDetails.put("title", titleTextField.getText());
-            noteDetails.put("note", noteEditor.getHtmlText());
-            noteDetails.put("dateOfObservation", datePicker.getValue().toString());
+            noteDetails.put(Column.TITLE.getColumnName(), titleTextField.getText());
+            noteDetails.put(Column.CONTENT.getColumnName(), noteEditor.getHtmlText());
+            noteDetails.put(Column.DATE_OF_OBS.getColumnName(), datePicker.getValue().toString());
             Map<String, String> savedNote = diaryNoteFacade.createNote(noteDetails);
             diarynotesObservable.add(0, new DiaryItem(new ArrayList<>(Arrays.asList(savedNote))));
 

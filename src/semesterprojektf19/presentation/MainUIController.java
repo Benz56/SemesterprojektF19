@@ -134,8 +134,11 @@ public class MainUIController implements Initializable {
         diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             diarynotesListview.getItems().clear();
             diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
+            System.out.println(diaryCaseCb.getSelectionModel().getSelectedIndex());
             List<List<Map<String, String>>> diaryNoteDetails = domainFacade.getDiaryDetails(clientList.getSelectionModel().getSelectedItem(), diaryCaseCb.getSelectionModel().getSelectedIndex());
+
             diaryNoteDetails.forEach(note -> diarynotesListview.getItems().add(new DiaryItem(note)));
+
         });
         diarynotesObservable = FXCollections.observableList(diarynotesListview.getItems());
         diarynotesObservable.addListener((ListChangeListener.Change<? extends DiaryItem> event) -> diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this)));

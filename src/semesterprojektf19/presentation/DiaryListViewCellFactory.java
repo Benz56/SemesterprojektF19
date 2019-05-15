@@ -23,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.HTMLEditor;
 import javafx.util.Callback;
+import semesterprojektf19.acquaintance.Column;
 
 /**
  *
@@ -106,11 +107,11 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
                 originDate.setText(diaryItem.getDiaryVersions().get(0).getDateOfEdit());
                 editButton.setOnAction(event -> {
                     Map<String, String> content = new HashMap<>();
-                    content.put("uuid", diaryItem.getDiaryVersions().get(0).getUuid().toString());
-                    content.put("title", diaryItem.getDiaryVersions().get(0).getTitle());
-                    content.put("dateofedit", diaryItem.getDiaryVersions().get(0).getDateOfEdit());
-                    content.put("dateofobs", diaryItem.getDiaryVersions().get(0).getDateOfObs());
-                    content.put("content", diaryNoteEditor.getHtmlText());
+                    content.put(Column.UUID.getColumnName(), diaryItem.getDiaryVersions().get(0).getUuid().toString());
+                    content.put(Column.TITLE.getColumnName(), diaryItem.getDiaryVersions().get(0).getTitle());
+                    content.put(Column.DATE_OF_EDIT.getColumnName(), diaryItem.getDiaryVersions().get(0).getDateOfEdit());
+                    content.put(Column.DATE_OF_OBS.getColumnName(), diaryItem.getDiaryVersions().get(0).getDateOfObs());
+                    content.put(Column.CONTENT.getColumnName(), diaryNoteEditor.getHtmlText());
                     Map<String, String> savedVersion = mainUIController.getDomainFacade().addDiaryNoteVersion(mainUIController.getClientList().getSelectionModel().getSelectedItem(), mainUIController.getDiaryCaseCb().getSelectionModel().getSelectedIndex(), content);
                     diaryItem.addNewVersion(savedVersion);
                 });
