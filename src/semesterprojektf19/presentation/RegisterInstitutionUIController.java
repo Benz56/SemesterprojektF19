@@ -31,20 +31,16 @@ public class RegisterInstitutionUIController implements Initializable {
     @FXML
     private JFXTextField nameTextField;
 
-    private boolean valid = false;
-
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        addressTextField.textProperty().addListener(listener -> valid = validate());
-        nameTextField.textProperty().addListener(listener -> valid = validate());
     }
 
     @FXML
     private void onCreate() {
-        if (valid) {
+        if (validate()) {
             registrationFacade.registerInstitution(nameTextField.getText(), addressTextField.getText());
             onCancel();
         }
