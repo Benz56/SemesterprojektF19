@@ -219,9 +219,9 @@
                </children></AnchorPane>
          </children>
       </StackPane>
-      <Label layoutY="100.0" prefHeight="36.0" prefWidth="200.0" style="-fx-background-color: #E5E5E5;" text=" Liste af tilknyttede sager">
+      <Label layoutY="100.0" prefHeight="36.0" prefWidth="200.0" style="-fx-background-color: #E5E5E5;" text="     Liste af tilknyttede sager">
          <font>
-            <Font name="System Bold" size="16.0" />
+            <Font size="16.0" />
          </font>
       </Label>
    </children>
