@@ -74,6 +74,8 @@ public class MainUIController implements Initializable {
     //Admin nodes:
     @FXML
     private JFXButton adminCreateUserBtn, adminEditUserBtn, adminDeleteUserBtn, adminCreateInstitutionBtn;
+    @FXML
+    private JFXButton ccCreateCaseBtn;
 
     public MainUIController(Map<String, String> userDetails) {
         this.userDetails = userDetails;
@@ -105,6 +107,8 @@ public class MainUIController implements Initializable {
             SimpleStageBuilder.create("Opret Borger", "RegisterCitizenUIDocument.fxml").setResizable(false).setCloseOnUnfocused(true).setOnHiding(() -> {
                 domainFacade.refresh();
                 refresh();
+                ccCreateCaseBtn.setDisable(true);
+                ccEditCitizenBtn.setDisable(true);
             }).open();
         });
 
@@ -155,6 +159,15 @@ public class MainUIController implements Initializable {
         });
     }
 
+    private void setSearchClientListener() {
+        ccCitizenListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                ccCreateCaseBtn.setDisable(false);
+                ccEditCitizenBtn.setDisable(false);
+            }
+        });
+    }
+
     @FXML
     private void onCreateCase(ActionEvent event) {
         SimpleStageBuilder.create("Opret sag", "CreateCaseUIDocument.fxml")
@@ -162,6 +175,8 @@ public class MainUIController implements Initializable {
                 .setControllerFactory(new CreateCaseUIController(ccCitizenListView.getSelectionModel().getSelectedItem()))
                 .setOnHiding(() -> refresh())
                 .open();
+        ccCreateCaseBtn.setDisable(true);
+        ccEditCitizenBtn.setDisable(true);
     }
 
     private void changePane(JFXButton clickedBtn) {
