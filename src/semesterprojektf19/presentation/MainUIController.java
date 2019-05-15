@@ -163,7 +163,6 @@ public class MainUIController implements Initializable {
     private void onCreateCase(ActionEvent event) {
         SimpleStageBuilder.create("Opret sag", "CreateCaseUIDocument.fxml")
                 .setResizable(false)
-                .setCloseOnUnfocused(true)
                 .setControllerFactory(new CreateCaseUIController(ccCitizenListView.getSelectionModel().getSelectedItem()))
                 .setOnHiding(()-> refresh())
                 .open();

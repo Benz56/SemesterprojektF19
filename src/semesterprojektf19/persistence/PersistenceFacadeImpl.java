@@ -99,7 +99,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             pst.setObject(i++, caseUUID);
             pst.setObject(i++, citizenUUID);
             pst.setObject(i++, UserContainer.getUser().getUuid());
-            pst.setString(i++, caseDetails.get(Column.EXECUTINGMUNICIPALITY.getColumnName()));
+            pst.setString(i++, caseDetails.get(Column.INSTITUTION.getColumnName()));
             pst.setString(i++, caseDetails.get(Column.GUARDIAN.getColumnName()));
             pst.setString(i++, caseDetails.get(Column.REPRESENTATION.getColumnName()));
             pst.setString(i++, caseDetails.get(Column.AGREEMENTSONFURTHERPROCESS.getColumnName()));
@@ -117,8 +117,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
             pst2.executeUpdate();
         } catch (SQLException e) {
             Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, e);
-            System.out.println("CaseID: " + caseUUID.toString());
-
+            System.out.println("SQL exception catched: CaseID: " + caseUUID.toString());
             return true;
         }
         return false;
