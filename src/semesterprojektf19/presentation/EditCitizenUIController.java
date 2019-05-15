@@ -3,7 +3,6 @@ package semesterprojektf19.presentation;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -38,16 +37,11 @@ public class EditCitizenUIController implements Initializable {
         phonenumberTextField.setText(domainFacade.getCitizenDetails(citizenString).get("phoneNumber"));
         addressTextField.setText(domainFacade.getCitizenDetails(citizenString).get("address"));
         uuid = domainFacade.getCitizenDetails(citizenString).get("uuid");
-
-        firstNameTextField.textProperty().addListener(listener -> valid = validate());
-        lastNameTextField.textProperty().addListener(listener -> valid = validate());
-        phonenumberTextField.textProperty().addListener(listener -> valid = validate());
-        addressTextField.textProperty().addListener(listener -> valid = validate());
     }
 
     @FXML
-    private void onUpdate(ActionEvent event) {
-        if (valid) {
+    private void onUpdate() {
+        if (validate()) {
             registrationFacade.editCitizen(
                     firstNameTextField.getText(),
                     lastNameTextField.getText(),
@@ -59,7 +53,7 @@ public class EditCitizenUIController implements Initializable {
     }
 
     @FXML
-    private void onCancel(ActionEvent event) {
+    private void onCancel() {
         ((Stage) phonenumberTextField.getScene().getWindow()).close();
     }
 
