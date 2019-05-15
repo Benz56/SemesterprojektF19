@@ -20,8 +20,8 @@ public interface DomainFacade {
 
     public void refresh();
 
-    public List<String> getInstitutionCitizens();
-
+    public List<String> getConnectedCitizens();
+    
     public Map<String, String> getCitizenDetails(String citizen);
 
     public List<List<Map<String, String>>> getDiaryDetails(String citizen, int index);

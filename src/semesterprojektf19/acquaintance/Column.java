@@ -11,7 +11,7 @@ package semesterprojektf19.acquaintance;
  */
 public enum Column {
     USERNAME("username"), PASSWORD("password"), UUID("uuid"), FNAME("fName"),
-    LNAME("lName"), BDAY("bDay"), CNUMBER("cNumber"), ADDR("addr"), PHONE("phone"),
+    LNAME("lName"), NAME("name"), BDAY("bDay"), CNUMBER("cNumber"), ADDR("addr"), PHONE("phone"),
     ROLE("role"), INSTITUTION("institution"), INSTITUTIONADDR("institutionAddr"),
     CITIZEN("citizenuuid"), CASEWORKER("caseworkeruuid"), SHORTINFO("shortInfo"),
     GUARDIAN("guardianship"), EXECUTINGMUNICIPALITY("executingMunicipality"),
@@ -21,7 +21,7 @@ public enum Column {
     AGREEMENTSONFURTHERPROCESS("agreementProcess"), BACKGROUND("background"),
     SPECIALCURCUMSTANCES("specialCircumstances"), TITLE("title"), 
     DATE_OF_OBS("dateofobs"), DATE_OF_EDIT("dateofedit"),CONTENT("content"),
-    CREATOR("creator");
+    CREATOR("creator"), CASES("cases");
     private final String name;
 
     private Column(String name) {
