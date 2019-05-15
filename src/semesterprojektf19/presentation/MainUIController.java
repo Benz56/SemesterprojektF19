@@ -134,7 +134,7 @@ public class MainUIController implements Initializable {
         ccSearchCitizenTextField.textProperty().addListener(listener -> refresh());
         setClientListener();
         ccExecutingMuniCB.getItems().addAll(registrationFacade.getInstitutionNames());
-
+        
         diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this));
         diaryCaseCb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             diarynotesListview.getItems().clear();
@@ -151,6 +151,8 @@ public class MainUIController implements Initializable {
     private void setClientListener() {
         clientList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
+                diaryCreateNoteBtn.setDisable(false);
+                diaryCaseCb.setDisable(false);
                 Map<String, String> citizenDetails = domainFacade.getCitizenDetails(newValue);
                 caseCitizenNameTextField.setText(citizenDetails.get("name"));
                 caseCPRTextField.setText(citizenDetails.get("cpr"));
