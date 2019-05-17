@@ -1,5 +1,6 @@
 package semesterprojektf19.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import semesterprojektf19.acquaintance.UserContainer;
 import java.util.Map;
@@ -9,7 +10,7 @@ import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
 public class DiaryNoteFacadeImpl implements DiaryNoteFacade {
 
-    PersistenceFacade persistence = new PersistenceFacadeImpl();
+    private final PersistenceFacade persistence = new PersistenceFacadeImpl();
 
     @Override
     public Map<String, String> createNote(Map<String, String> noteDetails) {
@@ -21,13 +22,13 @@ public class DiaryNoteFacadeImpl implements DiaryNoteFacade {
         Map<String, String> content = new HashMap<>();
         content.put(Column.UUID.getColumnName(), diaryNote.getUuid().toString());
         content.put(Column.TITLE.getColumnName(), diaryNote.getTitle());
-        content.put(Column.DATE_OF_OBS.getColumnName(), diaryNote.getDateOfObservation());
-        content.put(Column.DATE_OF_EDIT.getColumnName(), diaryNote.getDate().toString());
+        content.put(Column.DATE_OF_OBS.getColumnName(), new SimpleDateFormat("yyyy-MM-dd").format(diaryNote.getDateOfObservation()));
+        content.put(Column.DATE_OF_EDIT.getColumnName(), new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(diaryNote.getDate()).split(".")[0]);
         content.put(Column.CONTENT.getColumnName(), diaryNote.getNote());
         content.put(Column.CREATOR.getColumnName(), diaryNote.getCreator().getFirstName() + " " + diaryNote.getCreator().getLastName());
         persistence.createDiaryNote(diaryNote.getUuid(), casefile.getDiary().getUuid(),
-                UserContainer.getUser().getUuid(), diaryNote.getDateOfObservation(),
-                diaryNote.getDate().toString(), diaryNote.getTitle(), diaryNote.getNote());
+                UserContainer.getUser().getUuid(), diaryNote.getDateOfObservation().getTime(),
+                diaryNote.getDate().getTime(), diaryNote.getTitle(), diaryNote.getNote());
         return content;
     }
 }

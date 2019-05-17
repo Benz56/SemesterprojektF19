@@ -130,7 +130,7 @@ public class MainUIController implements Initializable {
         });
         diarynotesObservable = FXCollections.observableList(diarynotesListview.getItems());
         diarynotesObservable.addListener((ListChangeListener.Change<? extends DiaryItem> event) -> diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this)));
-
+        setSearchClientListener();
         refresh();
     }
 
