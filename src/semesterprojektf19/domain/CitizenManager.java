@@ -18,12 +18,7 @@ public enum CitizenManager {
 
     private CitizenManager() {
         citizensMap = new TreeMap<>();
-        List<Map<String, String>> cases = persistenceFacade.getCases();
-        for (Map<String, String> citizenMap : persistenceFacade.getCitizens()) {
-            Citizen citizen = new Citizen(citizenMap);
-            addCitizen(citizen);
-            citizen.setCases(cases.stream().filter(details -> details.get(Column.CITIZEN.getColumnName()).equals(citizen.getUuid().toString())).map(details -> new Case(details, citizen)).collect(Collectors.toList()));
-        }
+        refresh();
     }
 
     public Citizen addCitizen(Citizen citizen) {
@@ -100,8 +95,11 @@ public enum CitizenManager {
 
     public void refresh() {
         citizensMap.clear();
+        List<Map<String, String>> cases = persistenceFacade.getCases();
         for (Map<String, String> citizenMap : persistenceFacade.getCitizens()) {
-            addCitizen(new Citizen(citizenMap));
+            Citizen citizen = new Citizen(citizenMap);
+            addCitizen(citizen);
+            citizen.setCases(cases.stream().filter(details -> details.get(Column.CITIZEN.getColumnName()).equals(citizen.getUuid().toString())).map(details -> new Case(details, citizen)).collect(Collectors.toList()));
         }
     }
 }
