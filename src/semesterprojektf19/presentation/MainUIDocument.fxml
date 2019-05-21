@@ -241,7 +241,7 @@
       </StackPane>
       <Label alignment="CENTER" layoutY="100.0" prefHeight="36.0" prefWidth="200.0" style="-fx-background-color: #BFBFBF;" text=" Tilknyttede sager" textAlignment="CENTER" textFill="#43a047">
          <font>
-            <Font name="System Bold" size="16.0" />
+            <Font size="16.0" />
          </font>
       </Label>
    </children>
