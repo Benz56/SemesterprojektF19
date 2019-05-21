@@ -1,18 +1,22 @@
 package semesterprojektf19.domain;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DiaryNote implements Serializable {
 
     private static final long serialVersionUID = 2266792567973358800L;
 
     private final UUID uuid;
-    private String title, note, dateOfObservation;
-    private Date date;
+    private String title, note;
+    private Date date, dateOfObservation;
     private Person creator;
     private List<Topic> topics;
     private List<DiaryNote> noteVersions;
@@ -24,7 +28,11 @@ public class DiaryNote implements Serializable {
         this.creator = creator;
         this.note = note;
         this.title = title;
-        this.dateOfObservation = dateOfObservation;
+        try {
+            this.dateOfObservation = new SimpleDateFormat("yyyy-MM-dd").parse(dateOfObservation);
+        } catch (ParseException ex) {
+            Logger.getLogger(DiaryNote.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.date = new Date();
         this.topics = new ArrayList<>();
         this.noteVersions = new ArrayList<>();
@@ -38,7 +46,7 @@ public class DiaryNote implements Serializable {
         return note;
     }
 
-    public String getDateOfObservation() {
+    public Date getDateOfObservation() {
         return dateOfObservation;
     }
 
@@ -90,7 +98,7 @@ public class DiaryNote implements Serializable {
         return title;
     }
 
-    public void setDateOfObservation(String dateOfObservation) {
+    public void setDateOfObservation(Date dateOfObservation) {
         this.dateOfObservation = dateOfObservation;
     }
 

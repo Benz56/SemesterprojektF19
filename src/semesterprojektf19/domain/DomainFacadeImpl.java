@@ -1,5 +1,6 @@
 package semesterprojektf19.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -84,12 +85,12 @@ public class DomainFacadeImpl implements DomainFacade {
         Map<String, String> content = new HashMap<>();
         content.put(Column.UUID.getColumnName(), version.getUuid().toString());
         content.put(Column.TITLE.getColumnName(), version.getTitle());
-        content.put(Column.DATE_OF_OBS.getColumnName(), version.getDateOfObservation());
-        content.put(Column.DATE_OF_EDIT.getColumnName(), version.getDate().toString());
+        content.put(Column.DATE_OF_OBS.getColumnName(), new SimpleDateFormat("yyyy-MM-dd").format(version.getDateOfObservation()));
+        content.put(Column.DATE_OF_EDIT.getColumnName(), new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(version.getDate()).split(".")[0]);
         content.put(Column.CONTENT.getColumnName(), version.getNote());
         content.put(Column.CREATOR.getColumnName(), version.getCreator().getFirstName() + " " + version.getCreator().getLastName());
         persistenceFacade.createDiaryNote(version.getUuid(), citizen.getCase(caseIndex).getUUID(), UserContainer.getUser().getUuid(),
-                version.getDateOfObservation(), new Date().toString(), version.getTitle(), version.getNote());
+                version.getDateOfObservation().getTime(), System.currentTimeMillis(), version.getTitle(), version.getNote());
         return content;
 
     }

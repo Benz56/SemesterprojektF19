@@ -1,9 +1,11 @@
 package semesterprojektf19.persistence;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -124,13 +126,13 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     }
 
     @Override
-    public boolean createDiaryNote(UUID uuid, UUID diaryuuid, UUID editoruuid, String dateOfObs, String dateOfEdit, String title, String content) {
+    public boolean createDiaryNote(UUID uuid, UUID diaryuuid, UUID editoruuid, long dateOfObs, long dateOfEdit, String title, String content) {
         try (PreparedStatement pst = connection.getConnection().prepareStatement("INSERT INTO diarynote VALUES (?,?,?,?,?,?,?)")) {
             int i = 1;
             pst.setObject(i++, uuid);
             pst.setObject(i++, diaryuuid);
-            pst.setString(i++, dateOfObs);
-            pst.setString(i++, dateOfEdit);
+            pst.setDate(i++, new Date(dateOfObs));
+            pst.setTimestamp(i++, new Timestamp(dateOfEdit));
             pst.setObject(i++, editoruuid);
             pst.setString(i++, title);
             pst.setString(i++, content);

@@ -15,9 +15,9 @@
       <JFXPasswordField fx:id="passwordPasswordField" focusColor="#43a047" labelFloat="true" layoutX="200.0" layoutY="86.0" prefHeight="25.0" prefWidth="140.0" promptText="Adgangskode" unFocusColor="#bfbfbf" />
       <JFXPasswordField fx:id="confirmPasswordField" focusColor="#43a047" labelFloat="true" layoutX="30.0" layoutY="141.0" prefHeight="25.0" prefWidth="140.0" promptText="Bekræft adgangskode" unFocusColor="#bfbfbf" />
       <JFXComboBox fx:id="roleComboBox" focusColor="#43a047" layoutX="200.0" layoutY="141.0" prefHeight="25.0" prefWidth="140.0" promptText="Rolle" unFocusColor="#bfbfbf" />
+      <JFXComboBox fx:id="institutionComboBox" focusColor="#43a047" layoutX="30.0" layoutY="196.0" prefHeight="28.0" prefWidth="310.0" promptText="Institution" unFocusColor="#bfbfbf" />
       <TextField fx:id="statusTextField" editable="false" focusTraversable="false" layoutX="30.0" layoutY="239.0" prefHeight="25.0" prefWidth="310.0" style="-fx-text-fill: red;" />
       <JFXButton layoutX="30.0" layoutY="289.0" onAction="#onCreate" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #E5E5E5;" text="Opret" />
       <JFXButton cancelButton="true" layoutX="200.0" layoutY="289.0" onAction="#onCancel" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #E5E5E5;" text="Afbryd" />
-      <JFXComboBox fx:id="institutionComboBox" disable="true" focusColor="#43a047" layoutX="30.0" layoutY="196.0" prefHeight="28.0" prefWidth="310.0" promptText="Institution" unFocusColor="#bfbfbf" />
    </children>
 </AnchorPane>

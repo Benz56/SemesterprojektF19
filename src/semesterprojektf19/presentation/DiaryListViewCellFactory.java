@@ -114,6 +114,7 @@ public class DiaryListViewCellFactory implements Callback<ListView<DiaryItem>, L
                     content.put(Column.CONTENT.getColumnName(), diaryNoteEditor.getHtmlText());
                     Map<String, String> savedVersion = mainUIController.getDomainFacade().addDiaryNoteVersion(mainUIController.getClientList().getSelectionModel().getSelectedItem(), mainUIController.getDiaryCaseCb().getSelectionModel().getSelectedIndex(), content);
                     diaryItem.addNewVersion(savedVersion);
+                    toggleEdit.setSelected(false);
                 });
                 versionsButton.setOnAction(event -> SimpleStageBuilder.create(diaryItem.getDiaryVersions().get(0).getTitle() + " Note versioner", "DiaryNoteVersionsUIDocument.fxml").setControllerFactory(new DiaryNoteVersionsUIController(diaryItem)).setCloseOnUnfocused(true).open());
                 setGraphic(titledPane);
