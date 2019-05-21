@@ -83,21 +83,7 @@ public class MainUIController implements Initializable {
             homePlaceLabel.setText(homePlaceLabel.getText() + userDetails.get(Column.INSTITUTION.getColumnName()));
         }
         selectedBtn = homeBtn;
-        btnPaneMap.put(homeBtn, homePane);
-        btnPaneMap.put(casesBtn, casesPane);
-        btnPaneMap.put(diaryBtn, diaryPane);
-        if (userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("admin")) {
-            btnPaneMap.put(adminBtn, adminPane);
-        } else {
-            ((HBox) adminBtn.getParent()).getChildren().remove(adminBtn);
-        }
-        if (userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("caseworker") || userDetails.get(Column.ROLE.getColumnName()).equalsIgnoreCase("admin")) {
-            btnPaneMap.put(casesCreateBtn, createCasePane);
-        } else {
-            ((HBox) casesCreateBtn.getParent()).getChildren().remove(casesCreateBtn);
-        }
-
-        btnPaneMap.keySet().forEach(btn -> btn.setOnAction(event -> changePane((JFXButton) event.getSource())));
+        initializeBtnPaneMap();
         ccCreateCitizenBtn.setOnAction(event -> {
             SimpleStageBuilder.create("Opret Borger", "RegisterCitizenUIDocument.fxml").setResizable(false).setCloseOnUnfocused(true).setOnHiding(() -> {
                 domainFacade.refresh();
@@ -132,6 +118,25 @@ public class MainUIController implements Initializable {
         diarynotesObservable.addListener((ListChangeListener.Change<? extends DiaryItem> event) -> diarynotesListview.setCellFactory(new DiaryListViewCellFactory(this)));
         setSearchClientListener();
         refresh();
+    }
+
+    private void initializeBtnPaneMap() {
+        btnPaneMap.put(homeBtn, homePane);
+        btnPaneMap.put(casesBtn, casesPane);
+        btnPaneMap.put(diaryBtn, diaryPane);
+        btnPaneMap.put(adminBtn, adminPane);
+        btnPaneMap.put(casesCreateBtn, createCasePane);
+        btnPaneMap.keySet().forEach(btn -> btn.setOnAction(event -> changePane((JFXButton) event.getSource())));
+
+        switch (userDetails.get(Column.ROLE.getColumnName()).toLowerCase()) {
+            case "admin":
+                ((HBox) adminBtn.getParent()).getChildren().removeAll(casesBtn, diaryBtn, casesCreateBtn);
+                break;
+            case "socialworker":
+                ((HBox) adminBtn.getParent()).getChildren().removeAll(casesCreateBtn);
+            case "caseworker":
+                ((HBox) adminBtn.getParent()).getChildren().removeAll(adminBtn);
+        }
     }
 
     private void setClientListener() {
@@ -195,7 +200,7 @@ public class MainUIController implements Initializable {
             }
             homeCitizenCountLabel.setVisible(true);
             homeCitizenCountLabel.setText(homeCitizenCountLabel.getText() + domainFacade.getConnectedCitizens().size());
-                    ccCitizenListView.getItems().setAll(domainFacade.matchCitizens(ccSearchCitizenTextField.getText()));
+            ccCitizenListView.getItems().setAll(domainFacade.matchCitizens(ccSearchCitizenTextField.getText()));
         }
     }
 
