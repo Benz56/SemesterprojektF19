@@ -2,7 +2,6 @@ package semesterprojektf19.domain;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +48,7 @@ public class DomainFacadeImpl implements DomainFacade {
         }
         return null;
     }
-    
+
     @Override
     public void refresh() {
         CitizenManager.INSTANCE.refresh();
@@ -86,7 +85,7 @@ public class DomainFacadeImpl implements DomainFacade {
         content.put(Column.UUID.getColumnName(), version.getUuid().toString());
         content.put(Column.TITLE.getColumnName(), version.getTitle());
         content.put(Column.DATE_OF_OBS.getColumnName(), new SimpleDateFormat("yyyy-MM-dd").format(version.getDateOfObservation()));
-        content.put(Column.DATE_OF_EDIT.getColumnName(), new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(version.getDate()).split(".")[0]);
+        content.put(Column.DATE_OF_EDIT.getColumnName(), new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(version.getDate()).split("\\.")[0]);
         content.put(Column.CONTENT.getColumnName(), version.getNote());
         content.put(Column.CREATOR.getColumnName(), version.getCreator().getFirstName() + " " + version.getCreator().getLastName());
         persistenceFacade.createDiaryNote(version.getUuid(), citizen.getCase(caseIndex).getUUID(), UserContainer.getUser().getUuid(),
