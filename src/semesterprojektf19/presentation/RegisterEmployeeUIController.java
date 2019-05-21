@@ -38,6 +38,9 @@ public class RegisterEmployeeUIController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         roleComboBox.getItems().addAll("Caseworker", "Socialworker", "Admin");
         institutionComboBox.getItems().addAll(registrationFacade.getInstitutionNames());
+        roleComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            institutionComboBox.setDisable(!newValue.equalsIgnoreCase("SOCIALWORKER"));
+        });
     }
 
     @FXML
@@ -87,7 +90,7 @@ public class RegisterEmployeeUIController implements Initializable {
         } else if (roleComboBox.getSelectionModel().getSelectedItem() == null) {
             statusTextField.setText("Rolle ikke valgt!");
             return false;
-        } else if (roleComboBox.getSelectionModel().getSelectedItem().toUpperCase().equals("SOCIALWORKER")) {
+        } else if (roleComboBox.getSelectionModel().getSelectedItem().equalsIgnoreCase("SOCIALWORKER")) {
             institutionComboBox.setDisable(false);
             if (institutionComboBox.getSelectionModel().getSelectedItem() == null) {
                 statusTextField.setText("Institution ikke valgt!");

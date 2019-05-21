@@ -27,4 +27,6 @@ public interface PersistenceFacade {
     boolean editCitizen(Map<String, String> map);
 
     Map<UUID, List<Map<String, String>>> getDiaryNotes(UUID diaryUUID);
+
+    public void registerInstitution(String name, String address);
 }

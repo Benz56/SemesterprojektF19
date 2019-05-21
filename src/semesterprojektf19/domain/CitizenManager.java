@@ -1,6 +1,5 @@
 package semesterprojektf19.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -36,48 +35,6 @@ public enum CitizenManager {
 
     public Citizen getCitizen(UUID uuid) {
         return citizensMap.values().stream().filter(citizen -> citizen.getUuid().equals(uuid)).findFirst().orElse(null);
-    }
-
-    /**
-     *
-     * @param birthday is the users birthday in the format DDMMYY
-     * @param name is part of the users name. For example: "Peter", "Andersen"
-     * or "Peter Andersen"
-     * @return a list of citizens that match the search
-     */
-    public List<Citizen> searchCitizens(String birthday, String name) {
-        List<Citizen> citizensResult = new ArrayList<>();
-
-        if (!birthday.isEmpty() && !name.isEmpty()) {
-            citizensResult.addAll(searchCitizensByBirthday(birthday));
-            citizensResult.retainAll(searchCitizensByName(name));
-        } else if (!birthday.isEmpty() && name.isEmpty()) {
-            citizensResult.addAll(searchCitizensByBirthday(birthday));
-        } else if (birthday.isEmpty() && !name.isEmpty()) {
-            citizensResult.addAll(searchCitizensByName(name));
-        }
-
-        return citizensResult;
-    }
-
-    public List<Citizen> searchCitizensByBirthday(String birthday) {
-        List<Citizen> citizensWithSameBirthday = new ArrayList<>();
-        for (Citizen citizen : citizensMap.values()) {
-            if (citizen.getBirthday().equals(birthday)) {
-                citizensWithSameBirthday.add(citizen);
-            }
-        }
-        return citizensWithSameBirthday;
-    }
-
-    public List<Citizen> searchCitizensByName(String name) {
-        List<Citizen> citizensWithSameName = new ArrayList<>();
-        for (Citizen citizen : citizensMap.values()) {
-            if (name.contains(citizen.getLastName()) || name.contains(citizen.getFirstName())) {
-                citizensWithSameName.add(citizen);
-            }
-        }
-        return citizensWithSameName;
     }
 
     public Map<String, Citizen> getCitizens() {

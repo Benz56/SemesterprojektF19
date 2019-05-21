@@ -55,8 +55,9 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
     }
     
     @Override
-    public void registerInstitution(String name, String adress) {
-        Institution institution = new Institution(name, adress);
+    public void registerInstitution(String name, String address) {
+     //   Institution institution = new Institution(name, address);
+        persistenceFacade.registerInstitution(name, address);
 //        Persistence.INSTANCE.writeObjectToFile("institutions/" + institution.getName() + ".ser", institution, false);
     }
     
