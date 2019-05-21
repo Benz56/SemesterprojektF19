@@ -21,6 +21,8 @@ import javafx.stage.Stage;
  */
 public final class SimpleStageBuilder {
 
+    private static final Image ICON = new Image(SimpleStageBuilder.class.getResource("resources/images/windowlogo.png").toExternalForm());
+
     public static SimpleStageBuilder create(String windowTitle, String fxmlDocument) {
         return new SimpleStageBuilder(windowTitle, fxmlDocument);
     }
@@ -30,7 +32,7 @@ public final class SimpleStageBuilder {
     private Initializable controllerFactory;
     private Runnable onHiding;
     private Node windowNode;
- 
+
     private SimpleStageBuilder(String windowTitle, String fxmlDocument) {
         this.windowTitle = windowTitle;
         this.fxmlDocument = fxmlDocument;
@@ -60,13 +62,13 @@ public final class SimpleStageBuilder {
         this.windowNode = windowNode;
         return this;
     }
-    
+
     public void open() {
         Stage stage = new Stage();
         stage.setTitle(windowTitle);
         stage.setResizable(resizable);
-        stage.getIcons().add(new Image(SimpleStageBuilder.class.getResource("resources/images/windowlogo.png").toExternalForm()));
-        
+        stage.getIcons().add(ICON);
+
         if (closeOnUnfocused) {
             stage.focusedProperty().addListener((observable, oldFocus, newFocus) -> {
                 if (!newFocus) {
