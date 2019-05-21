@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import semesterprojektf19.acquaintance.Column;
-import semesterprojektf19.domain.accesscontrol.Role;
 import semesterprojektf19.acquaintance.UserContainer;
+import semesterprojektf19.domain.accesscontrol.Role;
 import semesterprojektf19.persistence.PersistenceFacade;
 import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
@@ -31,7 +31,7 @@ public class DomainFacadeImpl implements DomainFacade {
 
     @Override
     public List<String> matchCitizens(String contains) {
-        return CitizenManager.INSTANCE.getCitizens().values().stream().map(Citizen::toString).filter(citizen -> citizen.toLowerCase().contains(contains.toLowerCase())).collect(Collectors.toList());
+        return CitizenManager.INSTANCE.getCitizens().values().stream().map(Citizen::toString).filter(citizen -> citizen.toLowerCase().contains(contains.toLowerCase())).sorted().collect(Collectors.toList());
     }
 
     @Override

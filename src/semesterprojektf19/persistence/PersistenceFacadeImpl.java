@@ -285,4 +285,17 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
         }
         return notes;
     }
+
+    @Override
+    public void registerInstitution(String name, String address) {
+         try (PreparedStatement pst = connection.getConnection().prepareStatement("INSERT INTO institution VALUES (?,?) ON CONFLICT (name) DO UPDATE "
+                 + "SET name = excluded.name, addr = excluded.addr")) {
+            int i = 1;
+            pst.setString(i++, name);
+            pst.setString(i++, address);
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(PersistenceFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
