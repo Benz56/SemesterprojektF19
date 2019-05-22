@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -134,7 +137,7 @@
       </GridPane>
       <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
-            <AnchorPane fx:id="homePane" prefHeight="700.0" prefWidth="1000.0">
+            <AnchorPane fx:id="homePane" prefHeight="700.0" prefWidth="1000.0" visible="false">
                <children>
                   <VBox layoutX="50.0" layoutY="50.0">
                      <children>
@@ -164,54 +167,6 @@
                   <JFXButton fx:id="diaryCreateNoteBtn" disable="true" layoutX="353.0" layoutY="24.0" prefHeight="31.0" prefWidth="186.0" style="-fx-background-color: #E5E5E5;" text="Opret notat" textFill="#43a047" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="casesPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
-               <children>
-                  <GridPane layoutX="50.0" layoutY="46.0">
-                     <columnConstraints>
-                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" valignment="BOTTOM" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" valignment="BOTTOM" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" valignment="BOTTOM" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Label text="Borger:">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <JFXTextField fx:id="caseCitizenNameTextField" editable="false" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" />
-                        <Label text="Fødselsdag:" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <JFXTextField fx:id="caseCPRTextField" editable="false" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="Adresse:" GridPane.rowIndex="2">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <JFXTextField fx:id="caseAddressTextField" editable="false" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="Phone:" GridPane.rowIndex="3">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <JFXTextField fx:id="casePhoneTextField" editable="false" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                     </children>
-                  </GridPane>
-                  <JFXComboBox fx:id="caseCasesCB" layoutX="50.0" layoutY="198.0" prefHeight="25.0" prefWidth="359.0" AnchorPane.leftAnchor="50.0" />
-                  <Label layoutX="50.0" layoutY="181.0" text="Sager:">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
             <AnchorPane fx:id="createCasePane" prefHeight="700.0" prefWidth="1000.0" visible="false">
                <children>
                   <JFXButton fx:id="ccCreateCitizenBtn" layoutX="20.0" layoutY="655.0" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" style="-fx-background-color: #E5E5E5;" text="Opret Ny Borger" textFill="#43a047" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
@@ -237,6 +192,186 @@
                      </children>
                   </HBox>
                </children></AnchorPane>
+            <AnchorPane fx:id="casesPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="@css/OpenCaseUICSS.css">
+               <children>
+                  <VBox layoutX="14.0" layoutY="14.0" spacing="3.0">
+                     <children>
+                        <Label prefHeight="36.0" text="Borgerinformationer" textFill="#43a047">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Label>
+                        <Separator prefHeight="12.0" prefWidth="352.0" />
+                        <Label layoutX="10.0" layoutY="64.0" text="Navn">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="caseNameTextField" editable="false" focusColor="#43a047" layoutX="10.0" layoutY="82.0" prefHeight="30.0" prefWidth="402.0" promptText="Navn" style="-fx-background-color: white;" unFocusColor="#bfbfbf" />
+                        <Label text="Fødselsdag">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <JFXTextField fx:id="caseBirthdayTextfield" editable="false" focusColor="#43a047" prefHeight="30.0" prefWidth="402.0" promptText="Fødselsdag" style="-fx-background-color: white;" unFocusColor="#bfbfbf" />
+                        <Label text="Adresse">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                        </Label>
+                        <JFXTextField fx:id="caseAddressTextField" editable="false" focusColor="#43a047" prefHeight="30.0" prefWidth="402.0" promptText="Adresse" style="-fx-background-color: white;" unFocusColor="#bfbfbf" />
+                        <Label text="Telefon">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <JFXTextField fx:id="casePhoneTextField" editable="false" focusColor="#43a047" prefHeight="30.0" prefWidth="402.0" promptText="Telefon" style="-fx-background-color: white;" unFocusColor="#bfbfbf" />
+                        <Label text="Sager">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <JFXListView fx:id="caseCasesListView" prefHeight="360.0" prefWidth="402.0" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="441.0" layoutY="14.0" prefHeight="671.0" prefWidth="506.0" spacing="3.0">
+                     <children>
+                        <Label fx:id="txtCitizen1" prefHeight="36.0" text="Sagsdetaljer" textFill="#43a047">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Label>
+                        <Separator prefHeight="12.0" prefWidth="352.0" />
+                        <Label text="Titel på henvendelsen">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <JFXTextField fx:id="shortInfo" editable="false" focusColor="#43a047" prefHeight="31.0" prefWidth="550.0" promptText="Titel" style="-fx-background-color: white;" unFocusColor="#bfbfbf" />
+                        <Label text="Baggrund for henvendelsen">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                        </Label>
+                        <JFXTextArea fx:id="background" editable="false" focusColor="#43a047" prefHeight="70.0" prefWidth="506.0" promptText="Baggrund" style="-fx-background-color: white;" unFocusColor="#bfbfbf" />
+                        <HBox spacing="20.0" />
+                        <Label text="Er borgeren informeret om ret til bisidder og partsrepræsentation?">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox spacing="20.0">
+                           <children>
+                              <JFXCheckBox fx:id="rightToRepYes" checkedColor="#43a047" disable="true" text="Ja" />
+                              <JFXCheckBox fx:id="rightToRepNo" checkedColor="#43a047" disable="true" text="Nej" />
+                           </children>
+                        </HBox>
+                        <Label text="Er borgeren informeret om, at oplysningerne vil blive registreret elektronisk?">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox spacing="20.0">
+                           <children>
+                              <JFXCheckBox fx:id="electronicAgree" checkedColor="#43a047" disable="true" text="Ja" />
+                              <JFXCheckBox fx:id="electronicDisagree" checkedColor="#43a047" disable="true" text="Nej" />
+                           </children>
+                        </HBox>
+                        <Label text="Hvilke aftaler er indgået med borgeren om det videre forløb?">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                        </Label>
+                        <JFXTextArea fx:id="furtherProcess" editable="false" prefHeight="70.0" prefWidth="506.0" promptText="Aftale om det videre forløb" style="-fx-background-color: white;" />
+                        <Label text="Er der indhentet samtykke?">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox spacing="20.0">
+                           <children>
+                              <JFXCheckBox fx:id="consentRelevantYes" checkedColor="#43a047" disable="true" text="Ja" />
+                              <JFXCheckBox checkedColor="#43a047" disable="true" text="Nej" />
+                           </children>
+                        </HBox>
+                        <Label text="Hvis ja, hvordan er samtykke modtaget?">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets left="25.0" top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox spacing="20.0">
+                           <children>
+                              <JFXCheckBox fx:id="oralConsent" checkedColor="#43a047" text="Mundtligt samtykke" />
+                              <JFXCheckBox fx:id="writtenConsent" checkedColor="#43a047" text="Skriftligt samtykke" />
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets left="25.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Label text="Borgerinddragelse - særlige forhold">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                        </Label>
+                        <JFXTextArea fx:id="specialCircumstances" prefHeight="70.0" prefWidth="867.0" promptText="Særlige forhold" style="-fx-background-color: white;" />
+                        <Label text="Udførende institution">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                        </Label>
+                        <JFXTextField fx:id="institution" editable="false" focusColor="#43a047" prefHeight="31.0" prefWidth="550.0" promptText="Institution" style="-fx-background-color: white;" unFocusColor="#bfbfbf" />
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
          </children>
       </StackPane>
       <Label alignment="CENTER" layoutY="100.0" prefHeight="36.0" prefWidth="200.0" style="-fx-background-color: #BFBFBF;" text=" Tilknyttede sager" textAlignment="CENTER" textFill="#43a047">

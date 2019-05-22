@@ -1,8 +1,10 @@
 package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.HashMap;
@@ -47,20 +49,36 @@ public class MainUIController implements Initializable {
     //Home nodes:
     @FXML
     private Label homeHelloLabel, homePlaceLabel, homeCitizenCountLabel;
+    @FXML
+    private JFXTextField caseCitizenNameTextField;
+    @FXML
+    private JFXTextField caseNameTextField, caseBirthdayTextfield;
+    @FXML
+    private JFXListView<String> caseCasesListView;
 
     // Case nodes:
     @FXML
-    private JFXTextField caseCitizenNameTextField, caseCPRTextField, caseAddressTextField;
-    @FXML
-    private JFXComboBox<String> caseCasesCB;
+    private JFXTextField caseAddressTextField;
 
     //Create case nodes:
     @FXML
-    private JFXButton ccCreateCitizenBtn, ccEditCitizenBtn;
+    private JFXButton ccCreateCitizenBtn, ccEditCitizenBtn, ccCreateCaseBtn;
     @FXML
     private JFXListView<String> ccCitizenListView;
     @FXML
-    private JFXTextField ccSearchCitizenTextField, casePhoneTextField;
+    private JFXTextField ccSearchCitizenTextField, casePhoneTextField, shortInfo;
+    @FXML
+    private JFXTextArea background;
+    @FXML
+    private JFXCheckBox rightToRepYes, rightToRepNo;
+    @FXML
+    private JFXCheckBox electronicAgree, electronicDisagree;
+    @FXML
+    private JFXCheckBox consentRelevantYes, oralConsent, writtenConsent;
+    @FXML
+    private JFXTextArea furtherProcess, specialCircumstances;
+    @FXML
+    private JFXTextField institution;
 
     //Diary nodes:
     @FXML
@@ -74,7 +92,7 @@ public class MainUIController implements Initializable {
     @FXML
     private JFXButton adminCreateUserBtn, adminEditUserBtn, adminDeleteUserBtn, adminCreateInstitutionBtn;
     @FXML
-    private JFXButton ccCreateCaseBtn;
+    private Label txtCitizen1;
 
     public MainUIController(Map<String, String> userDetails) {
         this.userDetails = userDetails;
@@ -150,11 +168,12 @@ public class MainUIController implements Initializable {
                 diaryCreateNoteBtn.setDisable(false);
                 diaryCaseCb.setDisable(false);
                 Map<String, String> citizenDetails = domainFacade.getCitizenDetails(newValue);
-                caseCitizenNameTextField.setText(citizenDetails.get(Column.NAME.getColumnName()));
-                caseCPRTextField.setText(citizenDetails.get(Column.BDAY.getColumnName()));
+                caseNameTextField.setText(citizenDetails.get(Column.NAME.getColumnName()));
+                caseBirthdayTextfield.setText(citizenDetails.get(Column.BDAY.getColumnName()));
                 caseAddressTextField.setText(citizenDetails.get(Column.ADDR.getColumnName()));
-                caseCasesCB.getItems().clear();
-                caseCasesCB.getItems().setAll(citizenDetails.get(Column.CASES.getColumnName()).split("\n"));
+                casePhoneTextField.setText(citizenDetails.get(Column.PHONE.getColumnName()));
+                caseCasesListView.getItems().clear();
+//                caseCasesListView.getItems().setAll(citizenDetails.get(Column.CASES.getColumnName()).split("\n"));
                 diaryCaseCb.getItems().clear();
                 diaryCaseCb.getItems().setAll(citizenDetails.get(Column.CASES.getColumnName()).split("\n"));
                 if (!diaryCaseCb.getItems().isEmpty()) {
