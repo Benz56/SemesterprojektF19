@@ -64,7 +64,7 @@ public class DomainFacadeImpl implements DomainFacade {
         details.put(Column.NAME.getColumnName(), citizen.getFirstName() + " " + citizen.getLastName());
         details.put(Column.BDAY.getColumnName(), citizen.getBirthday());
         details.put(Column.ADDR.getColumnName(), citizen.getAddress());
-        details.put("cases", citizen.getCases().stream().map(c -> c.getInquiry().getShortInfo()).collect(Collectors.joining("\n")));
+        details.put(Column.CASES.getColumnName(), citizen.getCases().stream().map(c -> c.getInquiry().getShortInfo()).collect(Collectors.joining("\n")));
         details.put(Column.UUID.getColumnName(), citizen.getUuid().toString());
         details.put(Column.CNUMBER.getColumnName(), citizen.getCpr());
         return details;

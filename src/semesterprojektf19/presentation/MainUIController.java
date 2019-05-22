@@ -168,7 +168,7 @@ public class MainUIController implements Initializable {
                 caseAddressTextField.setText(citizenDetails.get(Column.ADDR.getColumnName()));
                 casePhoneTextField.setText(citizenDetails.get(Column.PHONE.getColumnName()));
                 caseCasesListView.getItems().clear();
-//                caseCasesListView.getItems().setAll(citizenDetails.get(Column.CASES.getColumnName()).split("\n"));
+                caseCasesListView.getItems().setAll(citizenDetails.get(Column.CASES.getColumnName()).split("\n"));
                 diaryCaseCb.getItems().clear();
                 diaryCaseCb.getItems().setAll(citizenDetails.get(Column.CASES.getColumnName()).split("\n"));
                 if (!diaryCaseCb.getItems().isEmpty()) {
