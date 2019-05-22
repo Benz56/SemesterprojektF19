@@ -10,6 +10,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -137,16 +138,16 @@
       </GridPane>
       <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
-            <AnchorPane fx:id="homePane" prefHeight="700.0" prefWidth="1000.0" visible="false">
+            <AnchorPane fx:id="homePane" prefHeight="700.0" prefWidth="1000.0">
                <children>
                   <VBox layoutX="50.0" layoutY="50.0">
                      <children>
-                        <Label fx:id="homeHelloLabel" prefHeight="35.0" prefWidth="757.0" text="Hej ">
+                        <Label fx:id="homeHelloLabel" prefHeight="35.0" prefWidth="757.0" text="Hej, ">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="homeCitizenCountLabel" prefHeight="35.0" prefWidth="757.0" text="Antal tilknyttede borgere: " visible="false">
+                        <Label fx:id="homeCitizenCountLabel" prefHeight="35.0" prefWidth="757.0" text="Tilknyttede borgere: " visible="false">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -158,6 +159,10 @@
                         </Label>
                      </children>
                   </VBox>
+                  <TextArea layoutX="50.0" layoutY="207.0" prefHeight="181.0" prefWidth="608.0" />
+                  <TextArea layoutX="50.0" layoutY="442.0" prefHeight="181.0" prefWidth="608.0" />
+                  <Label layoutX="50.0" layoutY="184.0" text="Nyheder" />
+                  <Label layoutX="50.0" layoutY="416.0" text="Notater" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="diaryPane" prefHeight="700.0" prefWidth="1000.0" visible="false">
@@ -192,7 +197,7 @@
                      </children>
                   </HBox>
                </children></AnchorPane>
-            <AnchorPane fx:id="casesPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="@css/OpenCaseUICSS.css">
+            <AnchorPane fx:id="casesPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="@css/OpenCaseUICSS.css" visible="false">
                <children>
                   <VBox layoutX="14.0" layoutY="14.0" spacing="3.0">
                      <children>
