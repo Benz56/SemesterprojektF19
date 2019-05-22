@@ -243,7 +243,7 @@
                               <Insets top="5.0" />
                            </VBox.margin>
                         </Label>
-                        <JFXListView fx:id="caseCasesListView" prefHeight="360.0" prefWidth="402.0" />
+                        <JFXListView fx:id="caseCasesListView" prefHeight="360.0" prefWidth="402.0" style="-fx-background-color: #E5E5E5;" />
                      </children>
                   </VBox>
                   <VBox layoutX="441.0" layoutY="14.0" prefHeight="671.0" prefWidth="506.0" spacing="3.0">
