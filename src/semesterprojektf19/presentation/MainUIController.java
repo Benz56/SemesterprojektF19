@@ -22,6 +22,11 @@ import semesterprojektf19.acquaintance.Column;
 import semesterprojektf19.domain.DomainFacade;
 import semesterprojektf19.domain.DomainFacadeImpl;
 
+/**
+ * FXML Controller Class
+ *
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public class MainUIController implements Initializable {
 
     private final DomainFacade domainFacade = new DomainFacadeImpl();
@@ -57,7 +62,7 @@ public class MainUIController implements Initializable {
     @FXML
     private JFXTextField ccSearchCitizenTextField, casePhoneTextField;
 
-    //Diary nodes.
+    //Diary nodes:
     @FXML
     private JFXComboBox<String> diaryCaseCb;
     @FXML

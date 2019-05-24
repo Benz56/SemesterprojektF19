@@ -4,6 +4,10 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public final class Postgres {
 
     //url syntax for database connection: (driver:sqltype://server:port/)

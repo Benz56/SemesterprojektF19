@@ -9,6 +9,10 @@ import java.util.Map;
 import java.util.UUID;
 import semesterprojektf19.acquaintance.Column;
 
+/**
+ *
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public class Person implements Comparable<Person>, Serializable {
 
     private final UUID uuid;
@@ -17,7 +21,6 @@ public class Person implements Comparable<Person>, Serializable {
     private Institution institution;
     private List<Case> cases = new ArrayList<>();
 
-    //UUID - institution
     public Person(UUID uuid, String firstName, String lastName, Role role) {
         this.uuid = uuid;
         this.firstName = firstName;

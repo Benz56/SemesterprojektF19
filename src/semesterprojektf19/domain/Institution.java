@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ *
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public class Institution implements Serializable {
 
     private final Map<UUID, Worker> workers = new HashMap<>();
@@ -44,5 +48,5 @@ public class Institution implements Serializable {
         }
         return this.name.equals(((Institution) obj).name);
     }
-    
+
 }

@@ -288,8 +288,8 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 
     @Override
     public void registerInstitution(String name, String address) {
-         try (PreparedStatement pst = connection.getConnection().prepareStatement("INSERT INTO institution VALUES (?,?) ON CONFLICT (name) DO UPDATE "
-                 + "SET name = excluded.name, addr = excluded.addr")) {
+        try (PreparedStatement pst = connection.getConnection().prepareStatement("INSERT INTO institution VALUES (?,?) ON CONFLICT (name) DO UPDATE "
+                + "SET name = excluded.name, addr = excluded.addr")) {
             int i = 1;
             pst.setString(i++, name);
             pst.setString(i++, address);

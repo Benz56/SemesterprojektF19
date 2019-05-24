@@ -3,8 +3,12 @@ package semesterprojektf19.domain.accesscontrol;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ *
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public enum Role {
-    CASEWORKER(), //TODO implementer permisions.
+    CASEWORKER(),
     SOCIALWORKER(),
     CITIZEN(),
     ADMIN(Permission.ALL);

@@ -7,6 +7,10 @@ import semesterprojektf19.acquaintance.Column;
 import semesterprojektf19.domain.accesscontrol.Role;
 //import semesterprojektf19.persistence.Persistence;
 
+/**
+ *
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public class Citizen extends Person {
 
     private final String cpr, controlNumber, birthday;
@@ -78,7 +82,7 @@ public class Citizen extends Person {
 //    public void saveToFile() {
 //        Persistence.INSTANCE.writeObjectToFile("citizens/" + birthday + controlNumber + ".ser", this, false);
 //    }
-
+    
     @Override
     public Map<String, String> getMap() {
         Map<String, String> personMap = new HashMap<>(super.getMap());

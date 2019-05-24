@@ -10,6 +10,10 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public class DiaryNote implements Serializable {
 
     private static final long serialVersionUID = 2266792567973358800L;
@@ -21,8 +25,6 @@ public class DiaryNote implements Serializable {
     private List<Topic> topics;
     private List<DiaryNote> noteVersions;
 
-    // TODO Implementer date picker i javaFX. skal holde dato for observation som ikke nødvendigvis er den samme som oprettelses dato 
-    // TODO implementere 
     public DiaryNote(UUID uuid, Person creator, String note, String title, String dateOfObservation) {
         this.uuid = uuid;
         this.creator = creator;
