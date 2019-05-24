@@ -19,6 +19,15 @@ public class Case implements Serializable {
     private Institution institution;
     private static final long serialVersionUID = 5173068602800697696L;
 
+    public Case(UUID uuid, UUID caseWorker, Citizen citizen, boolean consentObtained, Institution institution) {
+        this.uuid = uuid;
+        this.caseWorker = caseWorker;
+        this.citizen = citizen;
+        this.consentObtained = consentObtained;
+        this.institution = institution;
+        this.diary = new Diary(uuid);
+    }
+
     public Case(Map<String, String> caseDetails, Citizen citizen) {
         this.caseWorker = caseDetails.containsKey(Column.CASEWORKER.getColumnName()) ? UUID.fromString(caseDetails.get(Column.CASEWORKER.getColumnName())) : UserContainer.getUser().getUuid();
         this.citizen = citizen;
