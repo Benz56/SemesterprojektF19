@@ -31,3 +31,7 @@ and open the template in the editor.
     -fx-font-weight: bold;
     -fx-text-fill: #43A047;
 }
+
+.jfx-check-box{
+    -fx-opacity: 1;
+}
