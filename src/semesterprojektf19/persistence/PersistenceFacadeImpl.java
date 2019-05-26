@@ -263,8 +263,9 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
                     Map<String, String> map = new HashMap<>();
                     map.put(Column.UUID.getColumnName(), rs.getString(Column.UUID.getColumnName()));
                     map.put(Column.TITLE.getColumnName(), rs.getString(Column.TITLE.getColumnName()));
-                    map.put(Column.DATE_OF_OBS.getColumnName(), rs.getString(Column.DATE_OF_OBS.getColumnName()));
-                    map.put(Column.DATE_OF_EDIT.getColumnName(), rs.getString(Column.DATE_OF_EDIT.getColumnName()));
+                    String date = rs.getString(Column.DATE_OF_OBS.getColumnName());
+                    map.put(Column.DATE_OF_OBS.getColumnName(), date.substring(8, 10) + "-" + date.substring(5, 7) + "-" + date.substring(0, 4));
+                    map.put(Column.DATE_OF_EDIT.getColumnName(), String.valueOf(rs.getTimestamp(Column.DATE_OF_EDIT.getColumnName()).getTime()));
                     map.put(Column.CONTENT.getColumnName(), rs.getString(Column.CONTENT.getColumnName()));
                     map.put(Column.CREATOR.getColumnName(), workerNameCache.computeIfAbsent(UUID.fromString(rs.getString(Column.EDITOR_UUID.getColumnName())), uuid -> {
                         try (PreparedStatement pst2 = connection.getConnection().prepareStatement("SELECT " + Column.FNAME.getColumnName() + ", " + Column.LNAME.getColumnName() + " FROM worker WHERE " + Column.UUID.getColumnName() + " = '" + uuid + "'"); ResultSet rs2 = pst2.executeQuery()) {

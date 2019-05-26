@@ -13,7 +13,7 @@ import semesterprojektf19.persistence.PersistenceFacadeImpl;
  */
 public class RegistrationFacadeImpl implements RegistrationFacade {
 
-    PersistenceFacade persistenceFacade = new PersistenceFacadeImpl();
+    private final PersistenceFacade persistenceFacade = new PersistenceFacadeImpl();
 
     @Override
     public void registerCitizen(String firstName, String lastName, String birthday, String controlNumber, String address, String phoneNumber) {
@@ -51,9 +51,7 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
 
     @Override
     public void registerInstitution(String name, String address) {
-        //   Institution institution = new Institution(name, address);
         persistenceFacade.registerInstitution(name, address);
-//        Persistence.INSTANCE.writeObjectToFile("institutions/" + institution.getName() + ".ser", institution, false);
     }
 
     @Override
@@ -69,7 +67,6 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
         citizen.setAddress(address);
         citizen.setPhoneNumber(phoneNumber);
         persistenceFacade.editCitizen(citizen.getMap());
-
     }
 
 }

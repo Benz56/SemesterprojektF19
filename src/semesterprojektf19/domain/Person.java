@@ -1,7 +1,6 @@
 package semesterprojektf19.domain;
 
 import semesterprojektf19.domain.accesscontrol.Role;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +12,7 @@ import semesterprojektf19.acquaintance.Column;
  *
  * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
  */
-public class Person implements Comparable<Person>, Serializable {
+public class Person implements Comparable<Person> {
 
     private final UUID uuid;
     private String firstName, lastName;

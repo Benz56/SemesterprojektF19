@@ -3,6 +3,9 @@ package semesterprojektf19.presentation;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,7 +43,7 @@ public class RegisterCitizenUIController implements Initializable {
             registrationFacade.registerCitizen(
                     firstnameTextField.getText(),
                     lastnameTextField.getText(),
-                    birthdayDatePicker.getValue().toString(),
+                    new SimpleDateFormat("dd-MM-yyyy").format(Date.from(birthdayDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant())),
                     controlNumberTextField.getText(),
                     addressTextField.getText(),
                     phoneNumberTextField.getText());

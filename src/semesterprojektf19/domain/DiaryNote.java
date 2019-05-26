@@ -31,7 +31,7 @@ public class DiaryNote implements Serializable {
         this.note = note;
         this.title = title;
         try {
-            this.dateOfObservation = new SimpleDateFormat("yyyy-MM-dd").parse(dateOfObservation);
+            this.dateOfObservation = new SimpleDateFormat("dd-MM-yyyy").parse(dateOfObservation);
         } catch (ParseException ex) {
             Logger.getLogger(DiaryNote.class.getName()).log(Level.SEVERE, null, ex);
         }

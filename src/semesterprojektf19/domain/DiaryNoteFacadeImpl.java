@@ -26,8 +26,8 @@ public class DiaryNoteFacadeImpl implements DiaryNoteFacade {
         Map<String, String> content = new HashMap<>();
         content.put(Column.UUID.getColumnName(), diaryNote.getUuid().toString());
         content.put(Column.TITLE.getColumnName(), diaryNote.getTitle());
-        content.put(Column.DATE_OF_OBS.getColumnName(), new SimpleDateFormat("yyyy-MM-dd").format(diaryNote.getDateOfObservation()));
-        content.put(Column.DATE_OF_EDIT.getColumnName(), new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(diaryNote.getDate()).split("\\.")[0]);
+        content.put(Column.DATE_OF_OBS.getColumnName(), new SimpleDateFormat("dd-MM-yyyy").format(diaryNote.getDateOfObservation()));
+        content.put(Column.DATE_OF_EDIT.getColumnName(), new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(diaryNote.getDate()).split("\\.")[0]);
         content.put(Column.CONTENT.getColumnName(), diaryNote.getNote());
         content.put(Column.CREATOR.getColumnName(), diaryNote.getCreator().getFirstName() + " " + diaryNote.getCreator().getLastName());
         persistence.createDiaryNote(diaryNote.getUuid(), casefile.getDiary().getUuid(),
