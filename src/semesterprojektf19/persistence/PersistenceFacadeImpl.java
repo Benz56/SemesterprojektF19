@@ -18,15 +18,9 @@ import semesterprojektf19.acquaintance.UserContainer;
 
 public class PersistenceFacadeImpl implements PersistenceFacade {
 
-    private final Postgres connection;
-
-    public PersistenceFacadeImpl() {
-        connection = new Postgres();
-    }
-
     @Override
     public Map<String, String> authenticate(String username, String password) {
-        try (PreparedStatement pst = connection.getConnection().prepareStatement("SELECT * FROM account WHERE username = ? AND password = crypt(?, password)")) {
+        try (PreparedStatement pst = Postgres.getConnection().prepareStatement("SELECT * FROM account WHERE username = ? AND password = crypt(?, password)")) {
             pst.setString(1, username);
             pst.setString(2, password);
             try (ResultSet rs = pst.executeQuery()) {
@@ -51,13 +45,13 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
         System.out.println("Registering...");
         try {
             System.out.println("Trying to register...");
-            try (PreparedStatement pstAccount = connection.getConnection().prepareStatement("INSERT INTO account VALUES (?, ?, crypt(?, gen_salt('bf')));")) {
+            try (PreparedStatement pstAccount = Postgres.getConnection().prepareStatement("INSERT INTO account VALUES (?, ?, crypt(?, gen_salt('bf')));")) {
                 pstAccount.setObject(1, uuid);
                 pstAccount.setString(2, username);
                 pstAccount.setString(3, password);
                 pstAccount.executeUpdate();
             }
-            try (PreparedStatement pst = connection.getConnection().prepareStatement("INSERT INTO worker VALUES (?,?,?,?,?)")) {
+            try (PreparedStatement pst = Postgres.getConnection().prepareStatement("INSERT INTO worker VALUES (?,?,?,?,?)")) {
                 int i = 1;
                 pst.setObject(i++, uuid);
                 pst.setString(i++, personInfo.get(Column.FNAME.getColumnName()));
@@ -76,7 +70,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 
     @Override
     public boolean registerCitizen(Map<String, String> personInfo) {
-        try (PreparedStatement pst = connection.getConnection().prepareStatement("INSERT INTO citizen VALUES (?,?,?,?,?,?,?)")) {
+        try (PreparedStatement pst = Postgres.getConnection().prepareStatement("INSERT INTO citizen VALUES (?,?,?,?,?,?,?)")) {
             int i = 1;
             pst.setObject(i++, UUID.fromString(personInfo.get(Column.UUID.getColumnName())));
             pst.setString(i++, personInfo.get(Column.FNAME.getColumnName()));
@@ -95,8 +89,8 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 
     @Override
     public boolean registerCase(Map<String, String> caseDetails, UUID caseUUID, UUID citizenUUID, UUID workerUUID, UUID diaryUUID) {
-        try (PreparedStatement pst = connection.getConnection().prepareStatement("INSERT INTO casefile VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                PreparedStatement pst2 = connection.getConnection().prepareStatement("INSERT INTO diary VALUES (?,?)")) {
+        try (PreparedStatement pst = Postgres.getConnection().prepareStatement("INSERT INTO casefile VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                PreparedStatement pst2 = Postgres.getConnection().prepareStatement("INSERT INTO diary VALUES (?,?)")) {
             int i = 1;
             pst.setObject(i++, caseUUID);
             pst.setObject(i++, citizenUUID);
@@ -127,7 +121,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 
     @Override
     public boolean createDiaryNote(UUID uuid, UUID diaryuuid, UUID editoruuid, long dateOfObs, long dateOfEdit, String title, String content) {
-        try (PreparedStatement pst = connection.getConnection().prepareStatement("INSERT INTO diarynote VALUES (?,?,?,?,?,?,?)")) {
+        try (PreparedStatement pst = Postgres.getConnection().prepareStatement("INSERT INTO diarynote VALUES (?,?,?,?,?,?,?)")) {
             int i = 1;
             pst.setObject(i++, uuid);
             pst.setObject(i++, diaryuuid);
@@ -147,7 +141,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     @Override
     public Map<String, String> getWorkerDetails(UUID uuid) {
         Map<String, String> workerDetails = new HashMap<>();
-        try (PreparedStatement pst = connection.getConnection().prepareStatement("SELECT * FROM worker WHERE uuid = ?")) {
+        try (PreparedStatement pst = Postgres.getConnection().prepareStatement("SELECT * FROM worker WHERE uuid = ?")) {
             pst.setObject(1, uuid);
             try (ResultSet rs = pst.executeQuery()) {
                 rs.next();
@@ -168,7 +162,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     public Map<String, String> getInstitutions() {
         Map<String, String> institutions = new HashMap<>();
         try {
-            try (Statement st = connection.getConnection().createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM institution;")) {
+            try (Statement st = Postgres.getConnection().createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM institution;")) {
                 while (rs.next()) {
                     institutions.put(rs.getString(1), rs.getString(2));
                 }
@@ -182,7 +176,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     @Override
     public List<Map<String, String>> getCitizens() {
         List<Map<String, String>> citizens = new ArrayList<>();
-        try (Statement st = connection.getConnection().createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM citizen")) {
+        try (Statement st = Postgres.getConnection().createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM citizen")) {
             while (rs.next()) {
                 Map<String, String> citizenDetails = new HashMap<>();
                 citizenDetails.put(Column.UUID.getColumnName(), rs.getString(Column.UUID.getColumnName()));
@@ -204,7 +198,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     public List<Map<String, String>> getCases() {
         List<Map<String, String>> cases = new ArrayList<>();
         try {
-            try (Statement st = connection.getConnection().createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM caseFile")) {
+            try (Statement st = Postgres.getConnection().createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM caseFile")) {
                 while (rs.next()) {
                     Map<String, String> caseDetails = new HashMap<>();
                     caseDetails.put(Column.UUID.getColumnName(), rs.getString(Column.UUID.getColumnName()));
@@ -235,7 +229,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     @Override
     public boolean editCitizen(Map<String, String> personInfo) {
         try {
-            try (PreparedStatement pst = connection.getConnection().prepareStatement("UPDATE citizen SET fname = ?, lname = ?, addr = ?, phone = ? WHERE uuid = ?")) {
+            try (PreparedStatement pst = Postgres.getConnection().prepareStatement("UPDATE citizen SET fname = ?, lname = ?, addr = ?, phone = ? WHERE uuid = ?")) {
                 int i = 1;
                 pst.setString(i++, personInfo.get(Column.FNAME.getColumnName()));
                 pst.setString(i++, personInfo.get(Column.LNAME.getColumnName()));
@@ -256,7 +250,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
     public Map<UUID, List<Map<String, String>>> getDiaryNotes(UUID diaryUUID) {
         Map<UUID, List<Map<String, String>>> notes = new HashMap<>();
         Map<UUID, String> workerNameCache = new HashMap<>();
-        try (PreparedStatement pst = connection.getConnection().prepareStatement("SELECT * FROM diarynote WHERE diaryuuid = ? ORDER BY dateofedit DESC")) {
+        try (PreparedStatement pst = Postgres.getConnection().prepareStatement("SELECT * FROM diarynote WHERE diaryuuid = ? ORDER BY dateofedit DESC")) {
             pst.setObject(1, diaryUUID);
             try (ResultSet rs = pst.executeQuery()) {
                 while (rs.next()) {
@@ -268,7 +262,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
                     map.put(Column.DATE_OF_EDIT.getColumnName(), String.valueOf(rs.getTimestamp(Column.DATE_OF_EDIT.getColumnName()).getTime()));
                     map.put(Column.CONTENT.getColumnName(), rs.getString(Column.CONTENT.getColumnName()));
                     map.put(Column.CREATOR.getColumnName(), workerNameCache.computeIfAbsent(UUID.fromString(rs.getString(Column.EDITOR_UUID.getColumnName())), uuid -> {
-                        try (PreparedStatement pst2 = connection.getConnection().prepareStatement("SELECT " + Column.FNAME.getColumnName() + ", " + Column.LNAME.getColumnName() + " FROM worker WHERE " + Column.UUID.getColumnName() + " = '" + uuid + "'"); ResultSet rs2 = pst2.executeQuery()) {
+                        try (PreparedStatement pst2 = Postgres.getConnection().prepareStatement("SELECT " + Column.FNAME.getColumnName() + ", " + Column.LNAME.getColumnName() + " FROM worker WHERE " + Column.UUID.getColumnName() + " = '" + uuid + "'"); ResultSet rs2 = pst2.executeQuery()) {
                             rs2.next();
                             return rs2.getString(Column.FNAME.getColumnName()) + " " + rs2.getString(Column.LNAME.getColumnName());
                         } catch (SQLException ex) {
@@ -289,7 +283,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 
     @Override
     public void registerInstitution(String name, String address) {
-        try (PreparedStatement pst = connection.getConnection().prepareStatement("INSERT INTO institution VALUES (?,?) ON CONFLICT (name) DO UPDATE "
+        try (PreparedStatement pst = Postgres.getConnection().prepareStatement("INSERT INTO institution VALUES (?,?) ON CONFLICT (name) DO UPDATE "
                 + "SET name = excluded.name, addr = excluded.addr")) {
             int i = 1;
             pst.setString(i++, name);
