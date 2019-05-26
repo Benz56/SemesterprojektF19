@@ -70,8 +70,10 @@ public class CreateNoteUIController implements Initializable {
             noteDetails.put("citizenInfo", citizenInfo);
             noteDetails.put(Column.TITLE.getColumnName(), titleTextField.getText());
             noteDetails.put(Column.CONTENT.getColumnName(), noteEditor.getHtmlText());
-            noteDetails.put(Column.DATE_OF_OBS.getColumnName(), datePicker.getValue().toString());
+            String date = datePicker.getValue().toString();
+            noteDetails.put(Column.DATE_OF_OBS.getColumnName(), date.substring(8, 10) + "-" + date.substring(5, 7) + "-" + date.substring(0, 4));
             Map<String, String> savedNote = diaryNoteFacade.createNote(noteDetails);
+            System.out.println(noteDetails.get(Column.DATE_OF_OBS.getColumnName()));
             diarynotesObservable.add(0, new DiaryItem(new ArrayList<>(Arrays.asList(savedNote))));
 
             // For closing the stage
