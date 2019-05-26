@@ -10,27 +10,26 @@ import java.util.logging.Logger;
  */
 public final class Postgres {
 
+    static {
+        openConnection();
+    }
     //url syntax for database connection: (driver:sqltype://server:port/)
     private final static String URL = "jdbc:postgresql://egboosted-beehive-do-user-6026035-0.db.ondigitalocean.com:25060/defaultdb?autoReconnect=true&sslmode=require";
     private final static String USERNAME = "doadmin";
     private final static String PASSWORD = "ij7o5cn750qeaz46";
-    private Connection connection;
+    private static Connection connection;
 
-    public Postgres() {
-        openConnection();
-    }
-
-    public void openConnection() {
+    public static void openConnection() {
         try {
             if (connection == null || connection.isClosed()) {
-                this.connection = DriverManager.getConnection(Postgres.URL, Postgres.USERNAME, Postgres.PASSWORD);
+                connection = DriverManager.getConnection(Postgres.URL, Postgres.USERNAME, Postgres.PASSWORD);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Postgres.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         try {
             connection.createStatement().executeQuery("SELECT 1");
         } catch (SQLRecoverableException ignored) {
@@ -42,7 +41,7 @@ public final class Postgres {
         return connection;
     }
 
-    public void closeDb() {
+    public static void closeDb() {
         if (connection != null) {
             try {
                 connection.close();
