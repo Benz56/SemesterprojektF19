@@ -21,15 +21,15 @@ public class DiaryNote implements Serializable {
     private List<Topic> topics;
     private List<DiaryNote> noteVersions;
 
-    // TODO Implementer date picker i javaFX. skal holde dato for observation som ikke nødvendigvis er den samme som oprettelses dato 
-    // TODO implementere 
+    // TODO Implementer date picker i javaFX. skal holde dato for observation som ikke nødvendigvis er den samme som oprettelses dato
+    // TODO implementere
     public DiaryNote(UUID uuid, Person creator, String note, String title, String dateOfObservation) {
         this.uuid = uuid;
         this.creator = creator;
         this.note = note;
         this.title = title;
         try {
-            this.dateOfObservation = new SimpleDateFormat("yyyy-MM-dd").parse(dateOfObservation);
+            this.dateOfObservation = new SimpleDateFormat("dd-MM-yyyy").parse(dateOfObservation);
         } catch (ParseException ex) {
             Logger.getLogger(DiaryNote.class.getName()).log(Level.SEVERE, null, ex);
         }

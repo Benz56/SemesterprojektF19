@@ -5,6 +5,7 @@
  */
 package semesterprojektf19.presentation;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class DiaryItem {
 
     public DiaryItem(List<Map<String, String>> note) {
         note.forEach(entry -> {
-            diaryVersions.add(new NoteVersion(entry));
+            diaryVersions.add(new NoteVersion(entry, true));
         });
     }
 
@@ -30,7 +31,7 @@ public class DiaryItem {
     }
 
     public void addNewVersion(Map<String, String> content) {
-        diaryVersions.add(0, new NoteVersion(content));
+        diaryVersions.add(0, new NoteVersion(content, false));
     }
 
     public class NoteVersion {
@@ -38,11 +39,11 @@ public class DiaryItem {
         private final UUID uuid;
         private final String title, dateOfObs, dateOfEdit, content, creator;
 
-        public NoteVersion(Map<String, String> note) {
+        public NoteVersion(Map<String, String> note, boolean format) {
             uuid = UUID.fromString(note.get(Column.UUID.getColumnName()));
             title = note.get(Column.TITLE.getColumnName());
             dateOfObs = note.get(Column.DATE_OF_OBS.getColumnName());
-            dateOfEdit = note.get(Column.DATE_OF_EDIT.getColumnName());
+            dateOfEdit = !format ? note.get(Column.DATE_OF_EDIT.getColumnName()) : new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Long.parseLong(note.get(Column.DATE_OF_EDIT.getColumnName()))).split("\\.")[0];
             content = note.get(Column.CONTENT.getColumnName());
             creator = note.get(Column.CREATOR.getColumnName());
         }
