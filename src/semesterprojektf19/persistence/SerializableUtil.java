@@ -11,6 +11,10 @@
 //import java.util.logging.Level;
 //import java.util.logging.Logger;
 //
+///**
+// *
+// * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+// */
 //public final class SerializableUtil {
 //
 //    public static void writeObject(String file, Object object, boolean append) {

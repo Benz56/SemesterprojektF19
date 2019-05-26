@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXTextField;
@@ -16,9 +11,9 @@ import semesterprojektf19.domain.RegistrationFacade;
 import semesterprojektf19.domain.RegistrationFacadeImpl;
 
 /**
- * FXML Controller class
- *
- * @author DanThai
+ * FXML Controller Class
+ * 
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
  */
 public class RegisterInstitutionUIController implements Initializable {
 

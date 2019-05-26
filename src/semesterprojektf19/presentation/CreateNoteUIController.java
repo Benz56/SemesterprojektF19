@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXButton;
@@ -26,9 +21,9 @@ import semesterprojektf19.domain.DiaryNoteFacade;
 import semesterprojektf19.domain.DiaryNoteFacadeImpl;
 
 /**
- * FXML Controller class
+ * FXML Controller Class
  *
- * @author Jacob
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
  */
 public class CreateNoteUIController implements Initializable {
 
@@ -44,9 +39,7 @@ public class CreateNoteUIController implements Initializable {
     @FXML
     private JFXDatePicker datePicker;
     @FXML
-    private JFXButton createNoteBtn;
-    @FXML
-    private JFXButton cancelBtn;
+    private JFXButton createNoteBtn, cancelBtn;
     @FXML
     private HTMLEditor noteEditor;
 

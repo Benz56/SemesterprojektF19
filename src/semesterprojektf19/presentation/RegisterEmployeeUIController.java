@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXComboBox;
@@ -18,8 +13,8 @@ import semesterprojektf19.domain.RegistrationFacade;
 import semesterprojektf19.domain.RegistrationFacadeImpl;
 
 /**
- *
- * @author Benjamin Staugaard | Benz56
+ * 
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
  */
 public class RegisterEmployeeUIController implements Initializable {
 

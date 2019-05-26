@@ -6,6 +6,10 @@ import java.util.UUID;
 import semesterprojektf19.acquaintance.Column;
 import semesterprojektf19.domain.accesscontrol.Role;
 
+/**
+ *
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public class Citizen extends Person {
 
     private final String cpr, controlNumber, birthday;

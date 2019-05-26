@@ -13,6 +13,11 @@ import semesterprojektf19.domain.DomainFacadeImpl;
 import semesterprojektf19.domain.RegistrationFacade;
 import semesterprojektf19.domain.RegistrationFacadeImpl;
 
+/**
+ * FXML Controller Class
+ * 
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public class EditCitizenUIController implements Initializable {
 
     private final String citizenString;

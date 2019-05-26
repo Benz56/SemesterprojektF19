@@ -6,6 +6,10 @@ import java.util.UUID;
 import semesterprojektf19.acquaintance.Column;
 import semesterprojektf19.acquaintance.UserContainer;
 
+/**
+ *
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public class Case implements Serializable {
 
     private final UUID uuid;

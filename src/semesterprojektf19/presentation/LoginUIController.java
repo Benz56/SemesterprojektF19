@@ -18,6 +18,11 @@ import javafx.util.Duration;
 import semesterprojektf19.domain.LoginFacadeImpl;
 import semesterprojektf19.domain.LoginFacade;
 
+/**
+ * FXML Controller Class
+ * 
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public class LoginUIController implements Initializable {
 
     /**
@@ -25,14 +30,11 @@ public class LoginUIController implements Initializable {
      * received from the various listeners in this controller.
      */
     private final LoginFacade loginFacade = new LoginFacadeImpl();
-
     /**
      * Determines whether the logon menu is selected or the register menu.
      */
     private static final int IDLE_DURATION = 30;
-
     private IdleMonitor mainIdleMonitor;
-
     private boolean isLoginMenu = true;
     @FXML
     private JFXButton loginMenuBtn, registerMenuBtn, loginBtn, forgotPasswordBtn;

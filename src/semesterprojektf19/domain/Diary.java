@@ -6,6 +6,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ *
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public class Diary implements Serializable {
 
     private Case caseFile;

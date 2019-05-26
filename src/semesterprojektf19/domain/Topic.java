@@ -1,7 +1,10 @@
 package semesterprojektf19.domain;
 
+/**
+ *
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public enum Topic {
     CRITICAL, NON_CRITICAL, PERSONAL, REPRESENTATION, STATUS, AGREEMENT;
 
-    // Tilføj gerne flere "Emner", der skal fungere som filters for at give overblik over mange dagbøger.
 }

@@ -13,6 +13,10 @@ import semesterprojektf19.domain.accesscontrol.Role;
 import semesterprojektf19.persistence.PersistenceFacade;
 import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
+/**
+ *
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public class DomainFacadeImpl implements DomainFacade {
 
     private final PersistenceFacade persistenceFacade = new PersistenceFacadeImpl();
@@ -91,6 +95,5 @@ public class DomainFacadeImpl implements DomainFacade {
         persistenceFacade.createDiaryNote(version.getUuid(), citizen.getCase(caseIndex).getUUID(), UserContainer.getUser().getUuid(),
                 version.getDateOfObservation().getTime(), System.currentTimeMillis(), version.getTitle(), version.getNote());
         return content;
-
     }
 }

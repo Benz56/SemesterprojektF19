@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.presentation;
 
 import com.jfoenix.controls.JFXButton;
@@ -34,9 +29,9 @@ import semesterprojektf19.domain.RegistrationFacade;
 import semesterprojektf19.domain.RegistrationFacadeImpl;
 
 /**
- * FXML Controller class
- *
- * @author sofielouise
+ * FXML Controller Class
+ * 
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
  */
 public class CreateCaseUIController implements Initializable {
 
@@ -48,10 +43,10 @@ public class CreateCaseUIController implements Initializable {
     private JFXTextArea background;
     @FXML
     private JFXCheckBox citizenSeekYes, citizenSeekNo;
-    //ydelser
+    // Ydelser
     @FXML
     private JFXCheckBox y105, y101, y102, y85, y84, y108, y80, y87, y89;
-    //tilbud
+    // Tilbud
     @FXML
     private JFXCheckBox t1, t2, t3, t4, t5, t6, t7, t8, t9;
     @FXML
@@ -73,30 +68,19 @@ public class CreateCaseUIController implements Initializable {
     @FXML
     private JFXCheckBox electronicAgree, electronicDisagree;
     @FXML
-    private JFXTextArea furtherProcess;
+    private JFXTextArea furtherProcess, specialCircumstances;
     @FXML
     private JFXCheckBox rightToRepYes, rightToRepNo;
     @FXML
-    private JFXTextField txtGuardian, txtRep;
-
+    private JFXTextField txtGuardian, txtRep, executingMunicipality, payingMunicipality;
     private int currentPageNumber;
     private final Map<Integer, AnchorPane> anchorPanes;
     @FXML
-    private Label txtCitizen;
+    private Label txtCitizen, title;
     @FXML
-    private Label title;
-    @FXML
-    private JFXTextArea specialCircumstances;
-    @FXML
-    private JFXTextField payingMunicipality;
-    @FXML
-    private JFXCheckBox oralConsent, writtenConsent;
-    @FXML
-    private JFXCheckBox consentRelevantYes;
+    private JFXCheckBox oralConsent, writtenConsent, consentRelevantYes;
     @FXML
     private JFXComboBox<String> institutionCombobox;
-    @FXML
-    private JFXTextField executingMunicipality;
 
     public CreateCaseUIController(String citizenInfo) {
         this.anchorPanes = new TreeMap<>();

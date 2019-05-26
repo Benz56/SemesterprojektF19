@@ -1,5 +1,9 @@
 package semesterprojektf19.domain;
 
+/**
+ *
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public class TargetArea {
 
     private String informationFromCitizen, informationFromOthers, comments;

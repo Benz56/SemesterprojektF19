@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public class Inquiry implements Serializable {
 
     private String shortInfo, background, origin;

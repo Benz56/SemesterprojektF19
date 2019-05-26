@@ -9,6 +9,10 @@ import semesterprojektf19.domain.accesscontrol.Role;
 import semesterprojektf19.persistence.PersistenceFacade;
 import semesterprojektf19.persistence.PersistenceFacadeImpl;
 
+/**
+ *
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public class LoginFacadeImpl implements LoginFacade {
 
     PersistenceFacade persistenceFacade = new PersistenceFacadeImpl();

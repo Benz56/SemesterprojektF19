@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package semesterprojektf19.acquaintance;
 
 /**
  *
- * @author sofielouise
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
  */
 public enum Column {
     USERNAME("username"), PASSWORD("password"), UUID("uuid"), FNAME("fName"),

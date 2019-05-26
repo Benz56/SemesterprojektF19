@@ -4,6 +4,10 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import semesterprojektf19.presentation.SimpleStageBuilder;
 
+/**
+ *
+ * @author Gruppe 22 på SE/ST E19, MMMI, Syddansk Universitet
+ */
 public class EGBoosted extends Application {
 
     @Override
