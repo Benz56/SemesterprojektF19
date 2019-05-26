@@ -32,13 +32,18 @@ public class DiaryItem {
     public class NoteVersion {
 
         private final UUID uuid;
-        private final String title, dateOfObs, dateOfEdit, content, creator;
+        private final String title, dateOfObs, content, creator;
+        private String dateOfEdit;
 
         public NoteVersion(Map<String, String> note, boolean format) {
             uuid = UUID.fromString(note.get(Column.UUID.getColumnName()));
             title = note.get(Column.TITLE.getColumnName());
             dateOfObs = note.get(Column.DATE_OF_OBS.getColumnName());
-            dateOfEdit = !format ? note.get(Column.DATE_OF_EDIT.getColumnName()) : new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Long.parseLong(note.get(Column.DATE_OF_EDIT.getColumnName()))).split("\\.")[0];
+            try {
+                dateOfEdit = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Long.parseLong(note.get(Column.DATE_OF_EDIT.getColumnName()))).split("\\.")[0];
+            } catch (NumberFormatException e) {
+                dateOfEdit = note.get(Column.DATE_OF_EDIT.getColumnName());
+            }
             content = note.get(Column.CONTENT.getColumnName());
             creator = note.get(Column.CREATOR.getColumnName());
         }
